@@ -1,0 +1,25 @@
+/* stylelint-disable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --color-attijari-navy:  #0F2460;
+  --color-attijari-blue:  #1A3A8F;
+  --color-attijari-mid:   #2563EB;
+  --color-attijari-light: #EEF2F9;
+}
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}

@@ -1,0 +1,544 @@
+[
+    {
+        "id": "9b02112f-3cfd-4666-afa5-e70b0a5a4140",
+        "categorie": "Assurance & Prévoyance",
+        "theme": "CAPITAL PLUS",
+        "titre": "Fructifiez votre argent en toute sécurité",
+        "description": "Attijari bank vous propose CAPITAL PLUS, produit d'assurance vie par capitalisation qui permet de réaliser un placement financier sans aucun risque, garanti à une échéance déterminée lors de la souscription.",
+        "avantages": [
+            "{'titre_avantage': 'Accessibilité', 'description_avantage': 'Souscription à partir de 5 000DT.'}",
+            "{'titre_avantage': 'Rentabilité', 'description_avantage': \"Rémunération attractive avec une réduction d'impot avantageuse.\"}",
+            "{'titre_avantage': 'Souplesse', 'description_avantage': 'Disposer du capital constitué en partie ou en totalité, En cas de besoin, vous pouvez effectuer une avance, un retrait partiel ou un retrait total.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Assurance & Prévoyance Theme : CAPITAL PLUS Titre : Fructifiez votre argent en toute sécurité Description : Attijari bank vous propose CAPITAL PLUS, produit d'assurance vie par capitalisation qui permet de réaliser un placement financier sans aucun risque, garanti à une échéance déterminée lors de la souscription. Avantages : {'titre_avantage': 'Accessibilité', 'description_avantage': 'Souscription à partir de 5 000DT.'} {'titre_avantage': 'Rentabilité', 'description_avantage': \"Rémunération attractive avec une réduction d'impot avantageuse.\"} {'titre_avantage': 'Souplesse', 'description_avantage': 'Disposer du capital constitué en partie ou en totalité, En cas de besoin, vous pouvez effectuer une avance, un retrait partiel ou un retrait total.'}"
+    },
+    {
+        "id": "862def3c-d5d5-4bbe-b6c4-5915f9f7a4b3",
+        "categorie": "Assurance & Prévoyance",
+        "theme": "Épargne Toumouhi",
+        "titre": "Mieux épargner pour mieux vivre votre argent !",
+        "description": "Attijari bank vous propose le plan épargne TOUMOUHI, garanti par Attijari Assurance, comme solution de précaution pour constituer progressivement et au rythme qui vous convient, une épargne pour financer vos projets d'avenir, votre retraite ou vous prémunir contre les aléas de la vie.",
+        "avantages": [
+            "{'titre_avantage': 'Rentabilité', 'description_avantage': \"Une formule à rendement sûr et attrayant avec un taux minimum garanti auquel s'ajoute un bonus annuel qui varie selon les bénéfices réalisés.\"}",
+            "{'titre_avantage': 'Fiscalité avantageuse', 'description_avantage': 'Avantages fiscaux importants.'}",
+            "{'titre_avantage': 'Flexibilité', 'description_avantage': \"Fixez librement le montant de l'augmentation annuelle des primes périodiques, Au terme du contrat, choisissez la modalité du versement de l'épargne constituée, selon votre convenance.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Assurance & Prévoyance Theme : Épargne Toumouhi Titre : Mieux épargner pour mieux vivre votre argent ! Description : Attijari bank vous propose le plan épargne TOUMOUHI, garanti par Attijari Assurance, comme solution de précaution pour constituer progressivement et au rythme qui vous convient, une épargne pour financer vos projets d'avenir, votre retraite ou vous prémunir contre les aléas de la vie. Avantages : {'titre_avantage': 'Rentabilité', 'description_avantage': \"Une formule à rendement sûr et attrayant avec un taux minimum garanti auquel s'ajoute un bonus annuel qui varie selon les bénéfices réalisés.\"} {'titre_avantage': 'Fiscalité avantageuse', 'description_avantage': 'Avantages fiscaux importants.'} {'titre_avantage': 'Flexibilité', 'description_avantage': \"Fixez librement le montant de l'augmentation annuelle des primes périodiques, Au terme du contrat, choisissez la modalité du versement de l'épargne constituée, selon votre convenance.\"}"
+    },
+    {
+        "id": "fea61461-d973-428c-8299-496faf18da42",
+        "categorie": "Assurance & Prévoyance",
+        "theme": "Épargne Awledi",
+        "titre": "Mieux épargner pour mieux garantir l'avenir de vos enfants !",
+        "description": "Attijari bank vous propose l'Epargne AWLEDI garanti par Attijari Assurance, une solution qui vous permet de constituer progressivement une épargne au profit de vos enfants et d'anticiper les imprévus.",
+        "avantages": [
+            "{'titre_avantage': \"Une garantie de l'avenir de votre enfant\", 'description_avantage': \"Constituez un capital pour prémunir l'avenir de votre enfant dés son jeune âge. Souscrire au contrat Awledi garantit le versemnet d'une rente éducation trimestrielle , ainsi que la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident.\"}",
+            "{'titre_avantage': 'Une solution accessible', 'description_avantage': 'Épargnez à votre rythme à tout moment'}",
+            "{'titre_avantage': 'Fiscalité avantageuse', 'description_avantage': \"Bénéficiez de l'avantage fiscal\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Assurance & Prévoyance Theme : Épargne Awledi Titre : Mieux épargner pour mieux garantir l'avenir de vos enfants ! Description : Attijari bank vous propose l'Epargne AWLEDI garanti par Attijari Assurance, une solution qui vous permet de constituer progressivement une épargne au profit de vos enfants et d'anticiper les imprévus. Avantages : {'titre_avantage': \"Une garantie de l'avenir de votre enfant\", 'description_avantage': \"Constituez un capital pour prémunir l'avenir de votre enfant dés son jeune âge. Souscrire au contrat Awledi garantit le versemnet d'une rente éducation trimestrielle , ainsi que la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident.\"} {'titre_avantage': 'Une solution accessible', 'description_avantage': 'Épargnez à votre rythme à tout moment'} {'titre_avantage': 'Fiscalité avantageuse', 'description_avantage': \"Bénéficiez de l'avantage fiscal\"}"
+    },
+    {
+        "id": "ce848eae-cd9b-4eec-85f9-c3cc42c4d8c0",
+        "categorie": "Assurance & Prévoyance",
+        "theme": "Rahet Beli",
+        "titre": "Protégez votre famille contre les incertitudes de l'avenir !",
+        "description": "Attijari bank vous propose une assuarnce sur la vie \"RAHET BELI\", garanti par Attijari Assurance, qui assure la sécurité financière à vos biens aimés, en les protégeant contre les épreuves difficiles de la vie.",
+        "avantages": [
+            "{'titre_avantage': 'Une potection appropriée de votre famille', 'description_avantage': \"Rahet Beli garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez.\"}",
+            "{'titre_avantage': 'Une solution souple', 'description_avantage': \"Vous choisissez l'option de garantie et le mode de paiement qui vous conviennent.\"}",
+            "{'titre_avantage': 'Accessibilité', 'description_avantage': 'Des primes d’assurance adaptées à votre budget et à votre âge.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Assurance & Prévoyance Theme : Rahet Beli Titre : Protégez votre famille contre les incertitudes de l'avenir ! Description : Attijari bank vous propose une assuarnce sur la vie \"RAHET BELI\", garanti par Attijari Assurance, qui assure la sécurité financière à vos biens aimés, en les protégeant contre les épreuves difficiles de la vie. Avantages : {'titre_avantage': 'Une potection appropriée de votre famille', 'description_avantage': \"Rahet Beli garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez.\"} {'titre_avantage': 'Une solution souple', 'description_avantage': \"Vous choisissez l'option de garantie et le mode de paiement qui vous conviennent.\"} {'titre_avantage': 'Accessibilité', 'description_avantage': 'Des primes d’assurance adaptées à votre budget et à votre âge.'}"
+    },
+    {
+        "id": "279ebc17-a634-42c7-aefb-082f6485774b",
+        "categorie": "Assurance & Prévoyance",
+        "theme": "SANADI",
+        "titre": "Assurez  vous et vos proches en cas de baisse des revenus",
+        "description": "Attijari bank vous propose l'offre d'assurance SANADI, garanti par Attijari Assurances, comme solution adéquate pour maintenir vos revenus et pallier aux frais imprévisibles en cas d'arret de travail suite à une hospitalisation.",
+        "avantages": [
+            "{'titre_avantage': 'Formalité simple à la souscription', 'description_avantage': 'Accomplissement simple des formalités.'}",
+            "{'titre_avantage': 'Accessibilité/ facilité', 'description_avantage': 'Des primes d’assurance accessibles.'}",
+            "{'titre_avantage': 'Règlement rapide', 'description_avantage': 'Règlement de votre sinistre en moins de 72houvrables après réception de votre dossier.'}",
+            "{'titre_avantage': 'Souplesse', 'description_avantage': 'Modification possible des conditions de votre contrat.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Assurance & Prévoyance Theme : SANADI Titre : Assurez vous et vos proches en cas de baisse des revenus Description : Attijari bank vous propose l'offre d'assurance SANADI, garanti par Attijari Assurances, comme solution adéquate pour maintenir vos revenus et pallier aux frais imprévisibles en cas d'arret de travail suite à une hospitalisation. Avantages : {'titre_avantage': 'Formalité simple à la souscription', 'description_avantage': 'Accomplissement simple des formalités.'} {'titre_avantage': 'Accessibilité/ facilité', 'description_avantage': 'Des primes d’assurance accessibles.'} {'titre_avantage': 'Règlement rapide', 'description_avantage': 'Règlement de votre sinistre en moins de 72houvrables après réception de votre dossier.'} {'titre_avantage': 'Souplesse', 'description_avantage': 'Modification possible des conditions de votre contrat.'}"
+    },
+    {
+        "id": "5318be89-bf8a-4963-9b68-454e5fe5b2a5",
+        "categorie": "Banque à distance",
+        "theme": "Attijari UP",
+        "titre": "Votre application bancaire fait peau neuve !",
+        "description": "Découvrez Attijari Up, votre nouvelle application pour gérer vos comptes à distance, en toute sécurité. Profitez d’une expérience améliorée, d’une interface intuitive, et de fonctionnalités enrichies pour simplifier votre quotidien bancaire. L'application est disponible sur les stores. attijariup.com.tn/landingPage.html",
+        "avantages": [],
+        "extra": {
+            "details": {
+                "presentation": "Découvrez Attijari UP, votre nouvelle application pour gérer vos comptes à distance, en toute sécurité. Profitez d’une expérience améliorée, d’une interface intuitive, et de fonctionnalités enrichies pour simplifier votre quotidien bancaire. L'application est disponible sur les stores.",
+                "migration_steps": [
+                    "1 Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).",
+                    "2 Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe). Si vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345",
+                    "3 Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail. Ces coordonnées seront utilisées pour vous envoyer vos codes de validation et vos nouveaux accès.",
+                    "4 Renseignez le mot de passe provisoire reçu par mail /SMS et créez votre nouveau mot de passe en respectant les critères indiqués : • Minimum 10 caractères • Au moins une lettre en majuscule • Au moins une lettre en minuscule • Au moins un caractère spécial (@, . , #, /, -, !, ?, *, &)",
+                    "5 Connectez-vous en utilisant le mot de passe que vous avez créé et votre identifiant Attijari Up reçu par mail. • Il est possible d’enregistrer votre nouvel identifiant sur l’appareil en cochant « Se souvenir de moi » • Vous pouvez également activer la connexion par biométrie (empreinte ou face ID) à partir du Menu dans l’application (Administration)",
+                    "Si vous n’êtes pas équipé avec Attijari Realtime contactez votre agence afin de souscrire à Attijari UP."
+                ],
+                "faq": [
+                    {
+                        "question": "Que faire si mon mot de passe provisoire est expiré ?",
+                        "reponse": "Si votre mot de passe provisoire est expiré, veuillez contacter nos conseillers dédiés au 71 111 345 ou par mail au CONTACT@ATTIJARIUP.COM.TN et un lien de reprise vous sera envoyé. En raison de la durée de validité du mot de passe provisoire, veuillez utiliser le dernier mot de passe provisoire ainsi que le dernier lien contenus au niveau du mail envoyé."
+                    },
+                    {
+                        "question": "Comment créer mon nouveau de passe Attijari Up ?",
+                        "reponse": "Après avoir renseigné votre mot de passe provisoire reçu par Mail/SMS, choisissez un mot de passe composé minimum de 10 caractères, et contenant une majuscule, une minuscule et un caractère spécial Parmi la liste suivante : ! \" # $ % & ' ( ) * + , - . / : ; <=> ? @ [ \\ ] ^ ` { | } ~ . Connectez-vous ensuite en utilisant votre identifiant Attijari Up reçu par mail/SMS et le mot de passe que vous avez créé"
+                    },
+                    {
+                        "question": "Après avoir créé mon nouveau mot de passe, je n’arrive pas accéder à l’application. Que faire ?",
+                        "reponse": "La création du nouveau mot de passe est la dernière étape avant d’accéder à votre espace Attijari Up. Pour vous connecter, il vous suffit alors d’utiliser votre nouvel identifiant Attijari Up reçu par mail, ainsi que le mot de passe que vous créé. Astuce: Au niveau de l’écran d’authentification, activez l’option « Se souvenir de moi » pour sauvegarder votre identifiant. Vous pouvez également activer la connexion par empreinte digitale (sur Andoird) ou Face ID (sur IOS)"
+                    },
+                    {
+                        "question": "Que faire si j’ai oublié mon mot de passe Attijari Up?",
+                        "reponse": "Si vous avez oublié votre mot de passe, accédez à l’écran d’authentification Attijari UP, cliquez sur « Mot de passe oublié », saisissez votre identifiant, puis validez. Un mot de passe temporaire ainsi qu’un lien de réinitialisation vous seront alors envoyés par Mail/SMS. Renseignez le mot de passe provisoire au niveau du lien de réinitialisation reçu, puis créez votre nouveau mot de passe. Il vous suffit ensuite de vous connecter en utilisant votre Identifiant Attijari Up et le mot de passe que vous avez créé. Astuce: Si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone, nous vous recommandons d’activer ce mode de connexion pour accéder à Attijari Up. Pour cela, connectez-vous en activant l’option « se souvenir de moi » au niveau de l’écran d’authentification. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis connexion par biométrie. Activez ensuite la biométrie, puis renseignez votre mot de passe. Une confirmation de votre empreinte ou face ID vous sera alors demandée."
+                    },
+                    {
+                        "question": "Que faire en cas de blocage de mon accès ?",
+                        "reponse": "Si votre compte est bloqué, nous vous invitons à contacter notre service client dédié au 71 111 345 (appel non surtaxé), disponible du lundi au vendredi de 8h à 18h et le samedi de 8h à 13h , ou par mail au CONTACT@ATTIJARIUP.COM.TN .Un lien de réinitialisation et un mot de passe temporaire vous seront envoyés. Utilisez ce lien pour renseigner le mot de passe provisoire et créer votre nouveau mot de passe. Il vous suffit ensuite de vous connecter en utilisant votre Identifiant Attijari Up ainsi que le mot de passe que vous avez créé."
+                    },
+                    {
+                        "question": "Est-il nécessaire de saisir mon identifiant Attijari Up à chaque connexion ?",
+                        "reponse": "Vous pouvez sauvegarder votre identifiant en activant l’option « se souvenir de moi» au niveau de l’écran d’authentification avant de vous connecter. Vous pouvez également activer l’accès par empreinte digitale (Anrdoid) ou Face ID (IOS) si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone. Pour activer la connexion par Face ID ou empreinte digitale, activez d’abord l’option « se souvenir de moi » au niveau de l’écran d’authentification avant de vous connecter. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis activez la Connexion par biométrie. Renseignez ensuite votre mot de passe, une confirmation de votre empreinte ou face ID vous sera alors demandée."
+                    },
+                    {
+                        "question": "Comment activer la connexion via empreinte/face ID ?",
+                        "reponse": "Si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone, vous pouvez activer ce mode de connexion pour accéder à Attijari Up. Pour cela, connectez-vous en activant l’option « se souvenir de moi » au niveau de l’écran d’authentification. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis connexion par biométrie. Activez ensuite la biométrie, puis renseignez votre mot de passe. Une confirmation de votre empreinte ou face ID vous sera alors demandée."
+                    }
+                ],
+                "support": {
+                    "telephone": "71 111 345",
+                    "email": "CONTACT@ATTIJARIUP.COM.TN"
+                }
+            }
+        },
+        "text_for_embedding": "Categorie : Banque à distance Theme : Attijari UP Titre : Votre application bancaire fait peau neuve ! Description : Découvrez Attijari Up, votre nouvelle application pour gérer vos comptes à distance, en toute sécurité. Profitez d’une expérience améliorée, d’une interface intuitive, et de fonctionnalités enrichies pour simplifier votre quotidien bancaire. L'application est disponible sur les stores. attijariup.com.tn/landingPage.html Informations supplementaires : {\"details\": {\"presentation\": \"Découvrez Attijari UP, votre nouvelle application pour gérer vos comptes à distance, en toute sécurité. Profitez d’une expérience améliorée, d’une interface intuitive, et de fonctionnalités enrichies pour simplifier votre quotidien bancaire. L'application est disponible sur les stores.\", \"migration_steps\": [\"1 Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).\", \"2 Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe). Si vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345\", \"3 Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail. Ces coordonnées seront utilisées pour vous envoyer vos codes de validation et vos nouveaux accès.\", \"4 Renseignez le mot de passe provisoire reçu par mail /SMS et créez votre nouveau mot de passe en respectant les critères indiqués : • Minimum 10 caractères • Au moins une lettre en majuscule • Au moins une lettre en minuscule • Au moins un caractère spécial (@, . , #, /, -, !, ?, *, &)\", \"5 Connectez-vous en utilisant le mot de passe que vous avez créé et votre identifiant Attijari Up reçu par mail. • Il est possible d’enregistrer votre nouvel identifiant sur l’appareil en cochant « Se souvenir de moi » • Vous pouvez également activer la connexion par biométrie (empreinte ou face ID) à partir du Menu dans l’application (Administration)\", \"Si vous n’êtes pas équipé avec Attijari Realtime contactez votre agence afin de souscrire à Attijari UP.\"], \"faq\": [{\"question\": \"Que faire si mon mot de passe provisoire est expiré ?\", \"reponse\": \"Si votre mot de passe provisoire est expiré, veuillez contacter nos conseillers dédiés au 71 111 345 ou par mail au CONTACT@ATTIJARIUP.COM.TN et un lien de reprise vous sera envoyé. En raison de la durée de validité du mot de passe provisoire, veuillez utiliser le dernier mot de passe provisoire ainsi que le dernier lien contenus au niveau du mail envoyé.\"}, {\"question\": \"Comment créer mon nouveau de passe Attijari Up ?\", \"reponse\": \"Après avoir renseigné votre mot de passe provisoire reçu par Mail/SMS, choisissez un mot de passe composé minimum de 10 caractères, et contenant une majuscule, une minuscule et un caractère spécial Parmi la liste suivante : ! \\\" # $ % & ' ( ) * + , - . / : ; <=> ? @ [ \\\\ ] ^ ` { | } ~ . Connectez-vous ensuite en utilisant votre identifiant Attijari Up reçu par mail/SMS et le mot de passe que vous avez créé\"}, {\"question\": \"Après avoir créé mon nouveau mot de passe, je n’arrive pas accéder à l’application. Que faire ?\", \"reponse\": \"La création du nouveau mot de passe est la dernière étape avant d’accéder à votre espace Attijari Up. Pour vous connecter, il vous suffit alors d’utiliser votre nouvel identifiant Attijari Up reçu par mail, ainsi que le mot de passe que vous créé. Astuce: Au niveau de l’écran d’authentification, activez l’option « Se souvenir de moi » pour sauvegarder votre identifiant. Vous pouvez également activer la connexion par empreinte digitale (sur Andoird) ou Face ID (sur IOS)\"}, {\"question\": \"Que faire si j’ai oublié mon mot de passe Attijari Up?\", \"reponse\": \"Si vous avez oublié votre mot de passe, accédez à l’écran d’authentification Attijari UP, cliquez sur « Mot de passe oublié », saisissez votre identifiant, puis validez. Un mot de passe temporaire ainsi qu’un lien de réinitialisation vous seront alors envoyés par Mail/SMS. Renseignez le mot de passe provisoire au niveau du lien de réinitialisation reçu, puis créez votre nouveau mot de passe. Il vous suffit ensuite de vous connecter en utilisant votre Identifiant Attijari Up et le mot de passe que vous avez créé. Astuce: Si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone, nous vous recommandons d’activer ce mode de connexion pour accéder à Attijari Up. Pour cela, connectez-vous en activant l’option « se souvenir de moi » au niveau de l’écran d’authentification. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis connexion par biométrie. Activez ensuite la biométrie, puis renseignez votre mot de passe. Une confirmation de votre empreinte ou face ID vous sera alors demandée.\"}, {\"question\": \"Que faire en cas de blocage de mon accès ?\", \"reponse\": \"Si votre compte est bloqué, nous vous invitons à contacter notre service client dédié au 71 111 345 (appel non surtaxé), disponible du lundi au vendredi de 8h à 18h et le samedi de 8h à 13h , ou par mail au CONTACT@ATTIJARIUP.COM.TN .Un lien de réinitialisation et un mot de passe temporaire vous seront envoyés. Utilisez ce lien pour renseigner le mot de passe provisoire et créer votre nouveau mot de passe. Il vous suffit ensuite de vous connecter en utilisant votre Identifiant Attijari Up ainsi que le mot de passe que vous avez créé.\"}, {\"question\": \"Est-il nécessaire de saisir mon identifiant Attijari Up à chaque connexion ?\", \"reponse\": \"Vous pouvez sauvegarder votre identifiant en activant l’option « se souvenir de moi» au niveau de l’écran d’authentification avant de vous connecter. Vous pouvez également activer l’accès par empreinte digitale (Anrdoid) ou Face ID (IOS) si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone. Pour activer la connexion par Face ID ou empreinte digitale, activez d’abord l’option « se souvenir de moi » au niveau de l’écran d’authentification avant de vous connecter. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis activez la Connexion par biométrie. Renseignez ensuite votre mot de passe, une confirmation de votre empreinte ou face ID vous sera alors demandée.\"}, {\"question\": \"Comment activer la connexion via empreinte/face ID ?\", \"reponse\": \"Si le déverrouillage par face ID ou empreinte digitale est activé au niveau de votre smartphone, vous pouvez activer ce mode de connexion pour accéder à Attijari Up. Pour cela, connectez-vous en activant l’option « se souvenir de moi » au niveau de l’écran d’authentification. Puis accéder à votre application, au niveau du Menu, se rendre dans la rubrique Administration, Réglages puis connexion par biométrie. Activez ensuite la biométrie, puis renseignez votre mot de passe. Une confirmation de votre empreinte ou face ID vous sera alors demandée.\"}], \"support\": {\"telephone\": \"71 111 345\", \"email\": \"CONTACT@ATTIJARIUP.COM.TN\"}}}"
+    },
+    {
+        "id": "35255290-4f64-4ee5-8ef6-10bcebd5fcbc",
+        "categorie": "Banque à distance",
+        "theme": "DIMA TOUNSI",
+        "titre": "Où que vous soyez, en Tunisie ou dans votre pays d'accueil !",
+        "description": "Une équipe d’experts mobilisée pour vous assister au quotidien et répondre à vos demandes d’informations concernant les offres packagées, les crédits, les canaux de transfert d’argent, les ouvertures de comptes en ligne, la gestion des réclamations à distance, etc.",
+        "avantages": [],
+        "extra": {
+            "details": {
+                "avantages": [
+                    {
+                        "titre_avantage": "Disponibilité",
+                        "description_avantage": "Une équipe dédiée est à votre disposition pour vous assiter au quotidien"
+                    },
+                    {
+                        "titre_avantage": "Expertise",
+                        "description_avantage": "Notre équipe a été formée spécifiquement pour prendre en charge vos demandes d’informations et répondre à vos interrogations"
+                    },
+                    {
+                        "titre_avantage": "Divers canaux de communication",
+                        "description_avantage": "Par téléphone sur une ligne dédiée, par email ou par WhatsApp, DIMA TOUNSI demeure à votre écoute"
+                    }
+                ]
+            }
+        },
+        "text_for_embedding": "Categorie : Banque à distance Theme : DIMA TOUNSI Titre : Où que vous soyez, en Tunisie ou dans votre pays d'accueil ! Description : Une équipe d’experts mobilisée pour vous assister au quotidien et répondre à vos demandes d’informations concernant les offres packagées, les crédits, les canaux de transfert d’argent, les ouvertures de comptes en ligne, la gestion des réclamations à distance, etc. Informations supplementaires : {\"details\": {\"avantages\": [{\"titre_avantage\": \"Disponibilité\", \"description_avantage\": \"Une équipe dédiée est à votre disposition pour vous assiter au quotidien\"}, {\"titre_avantage\": \"Expertise\", \"description_avantage\": \"Notre équipe a été formée spécifiquement pour prendre en charge vos demandes d’informations et répondre à vos interrogations\"}, {\"titre_avantage\": \"Divers canaux de communication\", \"description_avantage\": \"Par téléphone sur une ligne dédiée, par email ou par WhatsApp, DIMA TOUNSI demeure à votre écoute\"}]}}"
+    },
+    {
+        "id": "a5782f1f-c2e5-4413-abb9-9ed6a5b6fe60",
+        "categorie": "Banque à distance",
+        "theme": "Crédit à la consommation 100% en ligne",
+        "titre": "Crédit à la consommation 100% en ligne",
+        "description": "Faites votre demande de crédit à la consommation en quelques clics. Quel que soit votre besoin, rachat ou nouveau crédit, vous pouvez simuler et demander votre crédit sans vous déplacer en agence, en cliquant ici",
+        "avantages": [],
+        "extra": {
+            "details": {
+                "avantages": [
+                    {
+                        "titre_avantage": "Formalités rapides et sécurisées",
+                        "description_avantage": "Demande de crédit en quelques clics seulement."
+                    },
+                    {
+                        "titre_avantage": "Crédit à la consommation 100% en ligne",
+                        "description_avantage": "Sans vous déplacer en agence"
+                    }
+                ]
+            }
+        },
+        "text_for_embedding": "Categorie : Banque à distance Theme : Crédit à la consommation 100% en ligne Titre : Crédit à la consommation 100% en ligne Description : Faites votre demande de crédit à la consommation en quelques clics. Quel que soit votre besoin, rachat ou nouveau crédit, vous pouvez simuler et demander votre crédit sans vous déplacer en agence, en cliquant ici Informations supplementaires : {\"details\": {\"avantages\": [{\"titre_avantage\": \"Formalités rapides et sécurisées\", \"description_avantage\": \"Demande de crédit en quelques clics seulement.\"}, {\"titre_avantage\": \"Crédit à la consommation 100% en ligne\", \"description_avantage\": \"Sans vous déplacer en agence\"}]}}"
+    },
+    {
+        "id": "b749eac4-e06a-4399-99c4-3184f2080843",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Platinum",
+        "titre": "La carte Platinum Mastercard plus qu'une carte, un statut !",
+        "description": "Offrez vous une carte haut de gamme aux privilèges exceptionnels: Accès gratuit aux salons d'aéroports-Lounges, réduction sur les voitures de location, assurance et assistance voyage à l’étranger et en Tunisie.",
+        "avantages": [
+            "{'titre_avantage': 'Carte Haut de Gamme Dual', 'description_avantage': \"Bénéficiez de deux comptes sur la même carte pour vos opérations effectuées en Tunisie et à l'étranger, avec des capacités de retrait et de paiement élevés.\"}",
+            "{'titre_avantage': \"Des privilèges exclusifs à l'univers Platinum Mastercard\", 'description_avantage': \"Accédez à un univers d'expériences uniques associé à votre style de vie.\"}",
+            "{'titre_avantage': \"Garanties d'assurance et d'assistance confortables\", 'description_avantage': \"Disposez de plusieurs services d'assistance et d'assurance aux garanties étendues.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Platinum Titre : La carte Platinum Mastercard plus qu'une carte, un statut ! Description : Offrez vous une carte haut de gamme aux privilèges exceptionnels: Accès gratuit aux salons d'aéroports-Lounges, réduction sur les voitures de location, assurance et assistance voyage à l’étranger et en Tunisie. Avantages : {'titre_avantage': 'Carte Haut de Gamme Dual', 'description_avantage': \"Bénéficiez de deux comptes sur la même carte pour vos opérations effectuées en Tunisie et à l'étranger, avec des capacités de retrait et de paiement élevés.\"} {'titre_avantage': \"Des privilèges exclusifs à l'univers Platinum Mastercard\", 'description_avantage': \"Accédez à un univers d'expériences uniques associé à votre style de vie.\"} {'titre_avantage': \"Garanties d'assurance et d'assistance confortables\", 'description_avantage': \"Disposez de plusieurs services d'assistance et d'assurance aux garanties étendues.\"}"
+    },
+    {
+        "id": "408392e9-23d3-47bb-85e9-bea71fb4ad40",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Gold Nationale",
+        "titre": "Optez pour la carte Gold nationale",
+        "description": "Bénéficiez de plafonds de retraits et paiements élevés et profitez de services d'assistance.",
+        "avantages": [
+            "{'titre_avantage': 'Pour mes besoins au quotidien', 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement importantes.'}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}",
+            "{'titre_avantage': \"Mes garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance en tunisie et à l'etranger.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Gold Nationale Titre : Optez pour la carte Gold nationale Description : Bénéficiez de plafonds de retraits et paiements élevés et profitez de services d'assistance. Avantages : {'titre_avantage': 'Pour mes besoins au quotidien', 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement importantes.'} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"} {'titre_avantage': \"Mes garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance en tunisie et à l'etranger.\"}"
+    },
+    {
+        "id": "d4ca71df-6c0b-4b40-80ae-e446a73896af",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Gold Internationale",
+        "titre": "Optez pour la carte Gold internationale",
+        "description": "Bénéficiez de plafonds de retraits et paiements à l'etranger élevés et profitez de services d'assistance.",
+        "avantages": [
+            "{'titre_avantage': \"Pour mes besoins à l'étranger\", 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement élevés.'}",
+            "{'titre_avantage': \"Mes garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance.\"}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au système 3D Secure ( tout en respectant la réglemantation de change).\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Gold Internationale Titre : Optez pour la carte Gold internationale Description : Bénéficiez de plafonds de retraits et paiements à l'etranger élevés et profitez de services d'assistance. Avantages : {'titre_avantage': \"Pour mes besoins à l'étranger\", 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement élevés.'} {'titre_avantage': \"Mes garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance.\"} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au système 3D Secure ( tout en respectant la réglemantation de change).\"}"
+    },
+    {
+        "id": "f7344e8e-63a5-44d8-a770-eb1582878a46",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Visa Nationale",
+        "titre": "Optez pour la carte Visa nationale",
+        "description": "La carte qu'il vous faut pour vos besoins au quotidien.",
+        "avantages": [
+            "{'titre_avantage': 'Pour mes besoins au quotidien', 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement confortables.'}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}",
+            "{'titre_avantage': \"Mes garanties d'assurance\", 'description_avantage': 'Profitez des prestations .'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Visa Nationale Titre : Optez pour la carte Visa nationale Description : La carte qu'il vous faut pour vos besoins au quotidien. Avantages : {'titre_avantage': 'Pour mes besoins au quotidien', 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement confortables.'} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"} {'titre_avantage': \"Mes garanties d'assurance\", 'description_avantage': 'Profitez des prestations .'}"
+    },
+    {
+        "id": "6e662439-b237-48b2-a8f1-11089b501254",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Visa Internationale",
+        "titre": "Optez pour la carte Visa Internationale",
+        "description": "Bénéficiez d'une carte VISA de retraits et paiements à l'etranger.",
+        "avantages": [
+            "{'titre_avantage': \"Pour mes besoins à l'étranger\", 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement confortables.'}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}",
+            "{'titre_avantage': \"Mes garanties d'assurance\", 'description_avantage': \"Profitez des prestations d'assurance.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Visa Internationale Titre : Optez pour la carte Visa Internationale Description : Bénéficiez d'une carte VISA de retraits et paiements à l'etranger. Avantages : {'titre_avantage': \"Pour mes besoins à l'étranger\", 'description_avantage': 'Bénéficiez de capacités de retrait et de paiement confortables.'} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"} {'titre_avantage': \"Mes garanties d'assurance\", 'description_avantage': \"Profitez des prestations d'assurance.\"}"
+    },
+    {
+        "id": "d5d7816e-95ac-4933-924c-a4ac926125a0",
+        "categorie": "Carte bancaire",
+        "theme": "Carte TAWA TAWA",
+        "titre": "Optez pour la carte TAWA TAWA",
+        "description": "Votre porte-monnaie électronique.",
+        "avantages": [
+            "{'titre_avantage': 'Une carte simple pour une gestion autonome', 'description_avantage': \"Bénéficiez d'une carte rechargeable sans compte bancaire.\"}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}",
+            "{'titre_avantage': 'Une carte pour maitriser votre budget', 'description_avantage': 'Aucun risque de découvert ! Vous ne pouvez dépenser que la somme disponible sur votre carte.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte TAWA TAWA Titre : Optez pour la carte TAWA TAWA Description : Votre porte-monnaie électronique. Avantages : {'titre_avantage': 'Une carte simple pour une gestion autonome', 'description_avantage': \"Bénéficiez d'une carte rechargeable sans compte bancaire.\"} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"} {'titre_avantage': 'Une carte pour maitriser votre budget', 'description_avantage': 'Aucun risque de découvert ! Vous ne pouvez dépenser que la somme disponible sur votre carte.'}"
+    },
+    {
+        "id": "99afd125-42db-47f8-8efd-4ad9b3b6b6c1",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Iddikhar",
+        "titre": "Optez pour la carte Iddikhar incluse dans le pack Iddikhar",
+        "description": "Remplacez votre livret classique par une carte d'épargne incluse dans le pack Iddikhar.",
+        "avantages": [
+            "{'titre_avantage': 'Mon épargne est accessible', 'description_avantage': 'Acccédez à votre épargne à tout moment uprès de toutes les GAB de Attijari bank.'}",
+            "{'titre_avantage': 'Mon compte est rémunéré', 'description_avantage': \"Bénéficiez d'une rémunération en intérêts, versée trimestriellement.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Iddikhar Titre : Optez pour la carte Iddikhar incluse dans le pack Iddikhar Description : Remplacez votre livret classique par une carte d'épargne incluse dans le pack Iddikhar. Avantages : {'titre_avantage': 'Mon épargne est accessible', 'description_avantage': 'Acccédez à votre épargne à tout moment uprès de toutes les GAB de Attijari bank.'} {'titre_avantage': 'Mon compte est rémunéré', 'description_avantage': \"Bénéficiez d'une rémunération en intérêts, versée trimestriellement.\"}"
+    },
+    {
+        "id": "74ac57b1-2b35-4f30-adac-26e7cf4b9b93",
+        "categorie": "Carte bancaire",
+        "theme": "Carte voyage",
+        "titre": "Optez pour la carte voyage",
+        "description": "Voyagez sereinement avec votre carte Allocation touristique \"Voyage\".",
+        "avantages": [
+            "{'titre_avantage': \"Je reserve mon hotel à l'étranger en toute sécurité\", 'description_avantage': \"Reservation d'hôtel à l'étranger sur internet à partir de la Tunisie.\"}",
+            "{'titre_avantage': 'votre allocation touristique disponible en toute securité', 'description_avantage': 'Disposez de votre argent sur la carte pour eviter tout risque de perte ou vol.'}",
+            "{'titre_avantage': \"Une Assitance à l'étranger en cas de besoin\", 'description_avantage': \"Bénéficiez, en option, d'une assistance à l'étranger avec un tarif avantageux .\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte voyage Titre : Optez pour la carte voyage Description : Voyagez sereinement avec votre carte Allocation touristique \"Voyage\". Avantages : {'titre_avantage': \"Je reserve mon hotel à l'étranger en toute sécurité\", 'description_avantage': \"Reservation d'hôtel à l'étranger sur internet à partir de la Tunisie.\"} {'titre_avantage': 'votre allocation touristique disponible en toute securité', 'description_avantage': 'Disposez de votre argent sur la carte pour eviter tout risque de perte ou vol.'} {'titre_avantage': \"Une Assitance à l'étranger en cas de besoin\", 'description_avantage': \"Bénéficiez, en option, d'une assistance à l'étranger avec un tarif avantageux .\"}"
+    },
+    {
+        "id": "d53bd756-2974-492d-896b-cdbaed394a50",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Oulidha",
+        "titre": "Espérentistes, Optez pour la carte Oulidha",
+        "description": "Votre carte co-brandée avec le club sportif EST \"Éspérance Sportive de Tunis\".",
+        "avantages": [
+            "{'titre_avantage': 'Une carte simple pour une gestion autonome', 'description_avantage': \"Bénéficiez d'une carte rechargeable sans compte bancaire, carte disponibel au niveau de Taraji Store ou bien à certaines agences Attijari bank.\"}",
+            "{'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Oulidha Titre : Espérentistes, Optez pour la carte Oulidha Description : Votre carte co-brandée avec le club sportif EST \"Éspérance Sportive de Tunis\". Avantages : {'titre_avantage': 'Une carte simple pour une gestion autonome', 'description_avantage': \"Bénéficiez d'une carte rechargeable sans compte bancaire, carte disponibel au niveau de Taraji Store ou bien à certaines agences Attijari bank.\"} {'titre_avantage': 'Des achats en ligne en toute sécurité', 'description_avantage': \"Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure.\"}"
+    },
+    {
+        "id": "0c432713-96c9-4e38-b492-aacbfe5f293e",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Technologique",
+        "titre": "Optez pour la Carte Technologique",
+        "description": "La Carte Technologique est une carte Internationale utilisable exclusivement sur internet qui vous permet de régler vos transactions en ligne sur des sites étrangers à concurrence d’une allocation annuelle autorisée.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Technologique Titre : Optez pour la Carte Technologique Description : La Carte Technologique est une carte Internationale utilisable exclusivement sur internet qui vous permet de régler vos transactions en ligne sur des sites étrangers à concurrence d’une allocation annuelle autorisée."
+    },
+    {
+        "id": "c3992ba4-983e-4800-8192-4be87eb6ac1f",
+        "categorie": "Carte bancaire",
+        "theme": "Carte Corp Internationale",
+        "titre": "Optez pour la Carte Corp Internationale",
+        "description": "La carte « Attijari Corp internationale» est une carte pratique pour une gestion optimale de vos frais de déplacement professionnels à l’étranger.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Carte bancaire Theme : Carte Corp Internationale Titre : Optez pour la Carte Corp Internationale Description : La carte « Attijari Corp internationale» est une carte pratique pour une gestion optimale de vos frais de déplacement professionnels à l’étranger."
+    },
+    {
+        "id": "49dfcf2b-e681-4f54-ba2a-8aaaa2c11ff8",
+        "categorie": "Crédit",
+        "theme": "Crédit Rachat externe",
+        "titre": "Aussitôt exprimé, aussitôt satisfait…",
+        "description": "Réduisez vos mensualités avec notre solution \"Crédit Rachat externe\" qui vous permet de fusionner tous vos engagements en une seule solution abordable.",
+        "avantages": [
+            "{'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'}",
+            "{'titre_avantage': 'Délai de remboursement', 'description_avantage': 'La durée de remboursement varient selon votre capacité de remboursement.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Crédit Theme : Crédit Rachat externe Titre : Aussitôt exprimé, aussitôt satisfait… Description : Réduisez vos mensualités avec notre solution \"Crédit Rachat externe\" qui vous permet de fusionner tous vos engagements en une seule solution abordable. Avantages : {'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'} {'titre_avantage': 'Délai de remboursement', 'description_avantage': 'La durée de remboursement varient selon votre capacité de remboursement.'}"
+    },
+    {
+        "id": "07a064c2-edbd-406c-b2d0-ab863419707f",
+        "categorie": "Crédit",
+        "theme": "Crédit à la consommation 100% en ligne",
+        "titre": "Crédit à la consommation 100% en ligne",
+        "description": "Faites votre demande de crédit à la consommation en quelques clics.Quel que soit votre besoin, rachat ou nouveau crédit, vous pouvez simuler et demander votre crédit sans vous déplacer en agence, encliquant ici",
+        "avantages": [
+            "{'titre_avantage': 'Formalités rapides et sécurisées', 'description_avantage': 'Demande de crédit en quelques clics seulement.'}",
+            "{'titre_avantage': 'Crédit à la consommation 100% en ligne', 'description_avantage': 'Sans vous déplacer en agence'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Crédit Theme : Crédit à la consommation 100% en ligne Titre : Crédit à la consommation 100% en ligne Description : Faites votre demande de crédit à la consommation en quelques clics.Quel que soit votre besoin, rachat ou nouveau crédit, vous pouvez simuler et demander votre crédit sans vous déplacer en agence, encliquant ici Avantages : {'titre_avantage': 'Formalités rapides et sécurisées', 'description_avantage': 'Demande de crédit en quelques clics seulement.'} {'titre_avantage': 'Crédit à la consommation 100% en ligne', 'description_avantage': 'Sans vous déplacer en agence'}"
+    },
+    {
+        "id": "408ad995-fc2a-4107-a34f-3d7c67d560e3",
+        "categorie": "Crédit",
+        "theme": "Crédit Études",
+        "titre": "Vous êtes parent et  vous vous sousciez de fianncer  les études de vos enfants ainsi que les dépenses associées : frais d’inscription et frais d’études?",
+        "description": "Attijari bank vous apporte la solution de financement \"Crédit Études\".",
+        "avantages": [
+            "{'titre_avantage': 'Couverture totale du besoin de financement', 'description_avantage': \"Le crédit Études permet de financer jusqu'à 100% des frais d'inscription et d'études.\"}",
+            "{'titre_avantage': 'Plafond important', 'description_avantage': 'Montant plafonné à 10 000 TND par année d’études et dans la limite de votre capacité de remboursement.'}",
+            "{'titre_avantage': 'Durée de remboursement confortable', 'description_avantage': \"Bénéficiez d'une durée de remboursement allant jusqu’à 12 mois.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Crédit Theme : Crédit Études Titre : Vous êtes parent et vous vous sousciez de fianncer les études de vos enfants ainsi que les dépenses associées : frais d’inscription et frais d’études? Description : Attijari bank vous apporte la solution de financement \"Crédit Études\". Avantages : {'titre_avantage': 'Couverture totale du besoin de financement', 'description_avantage': \"Le crédit Études permet de financer jusqu'à 100% des frais d'inscription et d'études.\"} {'titre_avantage': 'Plafond important', 'description_avantage': 'Montant plafonné à 10 000 TND par année d’études et dans la limite de votre capacité de remboursement.'} {'titre_avantage': 'Durée de remboursement confortable', 'description_avantage': \"Bénéficiez d'une durée de remboursement allant jusqu’à 12 mois.\"}"
+    },
+    {
+        "id": "bd044300-a612-4464-b40c-484694b3a156",
+        "categorie": "Crédit",
+        "theme": "Crédit Personnel (CREDEX)",
+        "titre": "Aussitôt exprimé, aussitôt satisfait...",
+        "description": "Vous souhaitez refaire votre cuisine, acheter une voiture, partir en voyage ou vous faites face à un imprévu?Le crédit à la consommation CREDEX est la solution rapide à vos dépenses planifiées ou imprévues.",
+        "avantages": [
+            "{'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'}",
+            "{'titre_avantage': 'Délai de remboursement', 'description_avantage': \"Bénéficiez d'une durée de remboursement pouvant aller jusqu'à 3 ans.\"}",
+            "{'titre_avantage': 'Montant du crédit', 'description_avantage': 'Montant plafonné à 10 000 TND.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Crédit Theme : Crédit Personnel (CREDEX) Titre : Aussitôt exprimé, aussitôt satisfait... Description : Vous souhaitez refaire votre cuisine, acheter une voiture, partir en voyage ou vous faites face à un imprévu?Le crédit à la consommation CREDEX est la solution rapide à vos dépenses planifiées ou imprévues. Avantages : {'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'} {'titre_avantage': 'Délai de remboursement', 'description_avantage': \"Bénéficiez d'une durée de remboursement pouvant aller jusqu'à 3 ans.\"} {'titre_avantage': 'Montant du crédit', 'description_avantage': 'Montant plafonné à 10 000 TND.'}"
+    },
+    {
+        "id": "9c9d1f14-e501-4fd3-827a-f32591dc6924",
+        "categorie": "Crédit",
+        "theme": "Crédit Tahssin Pro",
+        "titre": "Aussitôt exprimé, aussitôt satisfait…",
+        "description": "Améliorez votre espace de travail avec la solution \"Tahssin\" proposée par Attijari bank qui vous permet d'obtenir les fonds nécéssaires pour réaliser vos projets d'aménagement de votre intérieur.",
+        "avantages": [
+            "{'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'}",
+            "{'titre_avantage': 'Délai de remboursement', 'description_avantage': \"Bénéficiez d'une durée de remboursement allant jusqu'à 7 ans.\"}",
+            "{'titre_avantage': 'Montant du crédit', 'description_avantage': '80% du coût de l’investissement pouvant atteindre 40 mD.'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Crédit Theme : Crédit Tahssin Pro Titre : Aussitôt exprimé, aussitôt satisfait… Description : Améliorez votre espace de travail avec la solution \"Tahssin\" proposée par Attijari bank qui vous permet d'obtenir les fonds nécéssaires pour réaliser vos projets d'aménagement de votre intérieur. Avantages : {'titre_avantage': 'Formalités simples et rapides', 'description_avantage': 'Immédiatement après accomplissement des formalités.'} {'titre_avantage': 'Délai de remboursement', 'description_avantage': \"Bénéficiez d'une durée de remboursement allant jusqu'à 7 ans.\"} {'titre_avantage': 'Montant du crédit', 'description_avantage': '80% du coût de l’investissement pouvant atteindre 40 mD.'}"
+    },
+    {
+        "id": "e0cb7b4f-4a29-47dd-9de0-403bbf55a1ad",
+        "categorie": "Offre packagée",
+        "theme": "Pack PRO-SANTÉ",
+        "titre": "Des engagements de qualité pour une clientèle privilégiée",
+        "description": "Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels.",
+        "avantages": [
+            "{'titre_avantage': 'L’essentiel pour simplifier votre gestion de compte au quotidien', 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'}",
+            "{'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': 'Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes.'}",
+            "{'titre_avantage': 'Accès privilégié aux produits de filiales', 'description_avantage': 'Accédez aux produits des filiales Attjari Assurance, Attijari Leasing et Attijari Intermédiation avec une prise en charge dédiée et des tarifs préférentiels.'}",
+            "{'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Pack PRO-SANTÉ Titre : Des engagements de qualité pour une clientèle privilégiée Description : Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels. Avantages : {'titre_avantage': 'L’essentiel pour simplifier votre gestion de compte au quotidien', 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'} {'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': 'Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes.'} {'titre_avantage': 'Accès privilégié aux produits de filiales', 'description_avantage': 'Accédez aux produits des filiales Attjari Assurance, Attijari Leasing et Attijari Intermédiation avec une prise en charge dédiée et des tarifs préférentiels.'} {'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+    },
+    {
+        "id": "221642d0-5d77-4a73-b67b-bf5924183b18",
+        "categorie": "Offre packagée",
+        "theme": "Offre Zénith santé",
+        "titre": "Votre réussite est unique, nos services aussi !",
+        "description": "Professionnels de la santé, l’offre « Zénith santé » vous transporte dans un monde où chaque instant est une ode à l’excellence avec une panoplie de produits et services financiers et non financiers, soigneusement conçus pour répondre à vos besoins, tant personnels que professionnels.Carte haut de gamme Signature Dual,Accès à 1000 lounges d’aéroports à travers le monde,Rémunération du compte personnel,Réserve d’argent sous forme de découvert systématique,Tarifs préférentiels sur les opérations ainsi que les crédits,Services complémentaires adaptés à votre style de vie.",
+        "avantages": [
+            "{'titre_avantage': 'Une gestion de compte optimale', 'description_avantage': 'L’offre « Zénith santé » vous permet de simplifier la gestion de votre compte et optimiser la rentabilité de vos avoirs :'}",
+            "{'titre_avantage': 'Carte Haut de Gamme Visa Signature Dual', 'description_avantage': None}",
+            "{'titre_avantage': 'Une prise en charge personnalisée', 'description_avantage': 'Avec l’offre « Zénith santé », vous bénéficiez d’un conseiller de relation dédié vous garantissant une assistance et un accompagnement adaptés à vos besoins.'}",
+            "{'titre_avantage': 'Plusieurs solutions de financement à des tarifs préférentiels', 'description_avantage': 'L’offre « Zénith santé » vous permet de bénéficier de plusieurs formules de crédit à des tarifs et des plafonds avantageux notamment les crédits à la consommation et les crédits immobiliers, selon vos besoins, sans oublier le financement en leasing via notre filiale Attijari Leasing.'}",
+            "{'titre_avantage': 'Des services non financiers à la hauteur de votre statut privilégié!', 'description_avantage': 'Au-delà des produits financiers, immergez-vous dans le style de vie distinctif de « Zénith santé » avec une panoplie de services non financiers à des tarifs concurrentiels :'}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Offre Zénith santé Titre : Votre réussite est unique, nos services aussi ! Description : Professionnels de la santé, l’offre « Zénith santé » vous transporte dans un monde où chaque instant est une ode à l’excellence avec une panoplie de produits et services financiers et non financiers, soigneusement conçus pour répondre à vos besoins, tant personnels que professionnels.Carte haut de gamme Signature Dual,Accès à 1000 lounges d’aéroports à travers le monde,Rémunération du compte personnel,Réserve d’argent sous forme de découvert systématique,Tarifs préférentiels sur les opérations ainsi que les crédits,Services complémentaires adaptés à votre style de vie. Avantages : {'titre_avantage': 'Une gestion de compte optimale', 'description_avantage': 'L’offre « Zénith santé » vous permet de simplifier la gestion de votre compte et optimiser la rentabilité de vos avoirs :'} {'titre_avantage': 'Carte Haut de Gamme Visa Signature Dual', 'description_avantage': None} {'titre_avantage': 'Une prise en charge personnalisée', 'description_avantage': 'Avec l’offre « Zénith santé », vous bénéficiez d’un conseiller de relation dédié vous garantissant une assistance et un accompagnement adaptés à vos besoins.'} {'titre_avantage': 'Plusieurs solutions de financement à des tarifs préférentiels', 'description_avantage': 'L’offre « Zénith santé » vous permet de bénéficier de plusieurs formules de crédit à des tarifs et des plafonds avantageux notamment les crédits à la consommation et les crédits immobiliers, selon vos besoins, sans oublier le financement en leasing via notre filiale Attijari Leasing.'} {'titre_avantage': 'Des services non financiers à la hauteur de votre statut privilégié!', 'description_avantage': 'Au-delà des produits financiers, immergez-vous dans le style de vie distinctif de « Zénith santé » avec une panoplie de services non financiers à des tarifs concurrentiels :'}"
+    },
+    {
+        "id": "c9135082-112e-405b-b218-c30f30d06d93",
+        "categorie": "Offre packagée",
+        "theme": "Offre Zénith Expert",
+        "titre": "Des services à la hauteur de votre expertise",
+        "description": "Vous êtes Expert-comptable et vous souhaitez vivre une expérience bancaire unique, avec l’offre « Zénith expert » vous avez accès à une sélection exclusive de produits et services financiers et non financiers conçus pour répondre à vos besoins tant personnels que professionnels.Carte haut de gamme Signature Dual,Accès à 1000 lounges d’aéroports à travers le monde,Rémunération du compte personnel,Réserve d’argent sous forme de découvert systématique sur le compte professionnelTarifs préférentiels sur les opérations bancaires et sur les créditsServices complémentaires adaptés à votre style de vie.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Offre Zénith Expert Titre : Des services à la hauteur de votre expertise Description : Vous êtes Expert-comptable et vous souhaitez vivre une expérience bancaire unique, avec l’offre « Zénith expert » vous avez accès à une sélection exclusive de produits et services financiers et non financiers conçus pour répondre à vos besoins tant personnels que professionnels.Carte haut de gamme Signature Dual,Accès à 1000 lounges d’aéroports à travers le monde,Rémunération du compte personnel,Réserve d’argent sous forme de découvert systématique sur le compte professionnelTarifs préférentiels sur les opérations bancaires et sur les créditsServices complémentaires adaptés à votre style de vie."
+    },
+    {
+        "id": "f82f9f73-4b43-4f56-bbe7-d4ca6fbfc6fb",
+        "categorie": "Offre packagée",
+        "theme": "Pack EXPERT-COMPTABLE",
+        "titre": "Des engagements de qualité pour une clientèle privilégiée",
+        "description": "Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels.",
+        "avantages": [
+            "{'titre_avantage': \"L'essentiel pour simplifier votre gestion de compte au quotidien\", 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'}",
+            "{'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': \"Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes et des opétaions à l'internationale.\"}",
+            "{'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Pack EXPERT-COMPTABLE Titre : Des engagements de qualité pour une clientèle privilégiée Description : Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels. Avantages : {'titre_avantage': \"L'essentiel pour simplifier votre gestion de compte au quotidien\", 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'} {'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': \"Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes et des opétaions à l'internationale.\"} {'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+    },
+    {
+        "id": "d3f17a39-28c3-40a6-9c18-4c800ef3eebf",
+        "categorie": "Offre packagée",
+        "theme": "Pack PRO",
+        "titre": "Des engagements de qualité pour une clientèle privilégiée",
+        "description": "Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels.",
+        "avantages": [
+            "{'titre_avantage': 'L’essentiel pour simplifier votre gestion de compte au quotidien', 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'}",
+            "{'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': 'Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes.'}",
+            "{'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Pack PRO Titre : Des engagements de qualité pour une clientèle privilégiée Description : Parce vous êtes notre client PRIVILEGES, Attijari bank met à votre disposition un large éventail de produits et services pour vous accompagner aussi bien dans vos projets professionnels que personnels. Avantages : {'titre_avantage': 'L’essentiel pour simplifier votre gestion de compte au quotidien', 'description_avantage': 'Profitez d\\'une formule packagée combinant un compte personnel rémunéré et un compte professionnel , une carte Gold, pour vos retraits et paiements, un chéquier personnalisés \"Privilèges\" et des services de banque à distance pour suivre vos opérations en temps réel et en toute sécurité.'} {'titre_avantage': 'Tarification avantageuse sur les crédits de consommation et les crédits immobiliers ainsi que des réductions sur vos principales opérations', 'description_avantage': 'Obtenez des taux avantageux sur vos crédits avec un délai réduit sur le traitement de votre demande et bénéficiez des conditions préférentielles sur les commissions perçues sur vos opérations courantes.'} {'titre_avantage': \"Gagnez en sérénité à travers nos garanties d'assurance et d'assistance en cas de besoin\", 'description_avantage': \"Profitez d'une panoplie de garanties d'assurance et d'assistance lièes à votre carte Gold.\"}"
+    },
+    {
+        "id": "3c26e597-3537-42b6-b1b4-f7a11cc3c559",
+        "categorie": "Offre packagée",
+        "theme": "Pack Iddikhar",
+        "titre": "A chaque besoin, une formule packagée !",
+        "description": "Voyez plus loin que le livret d'épargne classique.",
+        "avantages": [
+            "{'titre_avantage': 'Une formule pour épargner en toute sécurité', 'description_avantage': \"Profitez d'une formule sécurisée pour vous constituer progressivement une épargne d'argent.\"}",
+            "{'titre_avantage': 'Une épargne accessible', 'description_avantage': 'Avec la carte Iddikhar, votre epargne est accecible à travers les GAB/DAB de Attijari bank 24h/24 et 7j/7.'}",
+            "{'titre_avantage': 'Tarification avantageuse', 'description_avantage': \"Une carte d'epargne à une tarification avantageuse en plus d'une rémunération trimestrielle de votre compte au Taux de Rémunération de l’Epargne (TRE).\"}"
+        ],
+        "extra": {},
+        "text_for_embedding": "Categorie : Offre packagée Theme : Pack Iddikhar Titre : A chaque besoin, une formule packagée ! Description : Voyez plus loin que le livret d'épargne classique. Avantages : {'titre_avantage': 'Une formule pour épargner en toute sécurité', 'description_avantage': \"Profitez d'une formule sécurisée pour vous constituer progressivement une épargne d'argent.\"} {'titre_avantage': 'Une épargne accessible', 'description_avantage': 'Avec la carte Iddikhar, votre epargne est accecible à travers les GAB/DAB de Attijari bank 24h/24 et 7j/7.'} {'titre_avantage': 'Tarification avantageuse', 'description_avantage': \"Une carte d'epargne à une tarification avantageuse en plus d'une rémunération trimestrielle de votre compte au Taux de Rémunération de l’Epargne (TRE).\"}"
+    },
+    {
+        "id": "ad08304a-96d5-4541-8dc6-d26f8e65f4c6",
+        "categorie": "Placement",
+        "theme": "Attijari Obligataire SICAV",
+        "titre": "Placez dans Attijari Obligataire SICAV, un placement rentable, disponible et sécurisé",
+        "description": "Le placement dans la SICAV est à risque très faible en raison de l’investissement permanent de la SICAV en bons de trésor, obligations et placements monétaires. La gestion de la SICAV est réalisée par Attijari Gestion, spécialiste de la gestion d’actifs et sous l’autorité de l’organisme de tutelle, le Conseil du Marché Financier. Les retraits s'effectuent quotidiennement sans préavis et sans frais, selon la valeur liquidative affichée quotidiennement dans les agences Attijari bank,",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Attijari Obligataire SICAV Titre : Placez dans Attijari Obligataire SICAV, un placement rentable, disponible et sécurisé Description : Le placement dans la SICAV est à risque très faible en raison de l’investissement permanent de la SICAV en bons de trésor, obligations et placements monétaires. La gestion de la SICAV est réalisée par Attijari Gestion, spécialiste de la gestion d’actifs et sous l’autorité de l’organisme de tutelle, le Conseil du Marché Financier. Les retraits s'effectuent quotidiennement sans préavis et sans frais, selon la valeur liquidative affichée quotidiennement dans les agences Attijari bank,"
+    },
+    {
+        "id": "c0577b80-41b5-47e7-9dc0-905394c62b68",
+        "categorie": "Placement",
+        "theme": "Attijari FCP Dynamique",
+        "titre": "Bénéficiez de plus-values relativement importantes avec Attijari FCP Dynamique",
+        "description": "Attijari FCP Dynamique leur permet de bénéficier de l’expertise des professionnels dans la gestion des fonds placés sur le marché financier. En tenant compte des droits de sortie, le rachat est possible à n’importe quel moment, le règlement du rachat est effectué dans un délai maximum de trois jours de bourse à partir de la date de rachat.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Attijari FCP Dynamique Titre : Bénéficiez de plus-values relativement importantes avec Attijari FCP Dynamique Description : Attijari FCP Dynamique leur permet de bénéficier de l’expertise des professionnels dans la gestion des fonds placés sur le marché financier. En tenant compte des droits de sortie, le rachat est possible à n’importe quel moment, le règlement du rachat est effectué dans un délai maximum de trois jours de bourse à partir de la date de rachat."
+    },
+    {
+        "id": "69273b45-7df2-4d78-b21b-55292c65f7e4",
+        "categorie": "Placement",
+        "theme": "Bons de caisse",
+        "titre": "Dynamisez la performance de vos excédents de trésorerie avec un placement avantageux et rémunéré",
+        "description": "Le bons de caisse est un placement sans risque avec une rémunération avantageuse pour une période allant de trois mois à cinq ans. Vous pouvez percevoir vos intérêts selon votre choix, à l'échéance ou à la souscription.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Bons de caisse Titre : Dynamisez la performance de vos excédents de trésorerie avec un placement avantageux et rémunéré Description : Le bons de caisse est un placement sans risque avec une rémunération avantageuse pour une période allant de trois mois à cinq ans. Vous pouvez percevoir vos intérêts selon votre choix, à l'échéance ou à la souscription."
+    },
+    {
+        "id": "7639d6f7-9fd9-4e5f-b3af-a2c2ad95f3c7",
+        "categorie": "Placement",
+        "theme": "Comptes à terme",
+        "titre": "Dynamisez la performance de vos excédents de trésorerie avec un placement avantageux et rémunéré à terme",
+        "description": "Le compte à terme est un placement sans risque avec une rémunération avantageuse pour une période allant de trois mois à cinq ans avec des intérêts servis à l’échéance et varient selon le montant et la durée du placement.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Comptes à terme Titre : Dynamisez la performance de vos excédents de trésorerie avec un placement avantageux et rémunéré à terme Description : Le compte à terme est un placement sans risque avec une rémunération avantageuse pour une période allant de trois mois à cinq ans avec des intérêts servis à l’échéance et varient selon le montant et la durée du placement."
+    },
+    {
+        "id": "ce2ea09d-7cad-49f1-ae0e-e094c8cdb225",
+        "categorie": "Placement",
+        "theme": "Bons de Trésor",
+        "titre": "Par l'intermédiaire de votre agence Attijari bank, vous pouvez acquérir des BTA directement sur le marché secondaire.",
+        "description": "Par l'intermédiaire de votre agence Attijari bank, vous pouvez acquérir des BTA directement sur le marché secondaire. Vous décidez vous-même de la composition de votre portefeuille obligataire ainsi que des achats, ventes et arbitrages à effectuer.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Bons de Trésor Titre : Par l'intermédiaire de votre agence Attijari bank, vous pouvez acquérir des BTA directement sur le marché secondaire. Description : Par l'intermédiaire de votre agence Attijari bank, vous pouvez acquérir des BTA directement sur le marché secondaire. Vous décidez vous-même de la composition de votre portefeuille obligataire ainsi que des achats, ventes et arbitrages à effectuer."
+    },
+    {
+        "id": "8c9bbf0d-ca94-424d-9a29-d76ca77d7b14",
+        "categorie": "Placement",
+        "theme": "Certificat de dépôt",
+        "titre": "Titres de créance nominatifs émis par les établissements de crédit",
+        "description": "Titres de créance nominatifs émis par les établissements de crédit, ils constituent les emprunts de ces derniers auprès des personnes morales ou des personnes physiques portant sur un montant multiple de 500 md et et une période allant de 10 jours à 5 an. Doivent être inscrits en comptes auprès d'un établissement de crédit.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Certificat de dépôt Titre : Titres de créance nominatifs émis par les établissements de crédit Description : Titres de créance nominatifs émis par les établissements de crédit, ils constituent les emprunts de ces derniers auprès des personnes morales ou des personnes physiques portant sur un montant multiple de 500 md et et une période allant de 10 jours à 5 an. Doivent être inscrits en comptes auprès d'un établissement de crédit."
+    },
+    {
+        "id": "61e6af08-c52c-4671-b6e9-ec2a03ccaf89",
+        "categorie": "Placement",
+        "theme": "Billets de trésorerie",
+        "titre": "Titres de créance négociables émis par les établissements de crédit",
+        "description": "Attijari bank se met en tant qu’intermédiaire incontournable entre le prêteur et l’emprunteur au moyen de titres de créances nominatifs dénommés billets de trésorerire à échéance fixe portant sur un montant multiple de 50 mD et une période allant de 3 mois à 60 mois et plus.",
+        "avantages": [],
+        "extra": {},
+        "text_for_embedding": "Categorie : Placement Theme : Billets de trésorerie Titre : Titres de créance négociables émis par les établissements de crédit Description : Attijari bank se met en tant qu’intermédiaire incontournable entre le prêteur et l’emprunteur au moyen de titres de créances nominatifs dénommés billets de trésorerire à échéance fixe portant sur un montant multiple de 50 mD et une période allant de 3 mois à 60 mois et plus."
+    }
+]

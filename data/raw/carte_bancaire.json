@@ -1,0 +1,165 @@
+[
+    {
+        "titre": "Carte Flex",
+        "categorie": "Carte bancaire",
+        "description_courte": "Simplifiez la gestion de votre budget avec la Carte Flex, votre alliée pour des paiements souples et maîtrisés.Pour vos achats en ligne ou via TPE profitez d’un paiement fractionné jusqu’à 9 fois, en toute tranquillité.Conçue pour s’adapter à vos besoins financiers, la Carte Flex est disponible avec un plafond pouvant aller jusqu’à 10 000 TND.",
+        "avantages": [
+            "Utilisez votre plafond disponible à tout moment pour réaliser vos projets ou faire face aux imprévus.",
+            "Chaque remboursement reconstitue automatiquement votre réserve, pour une disponibilité continue.",
+            "Réglez vos achats en toute sérénité avec des mensualités étalées sur 4, 6 ou 9 fois."
+        ],
+        "plafond_max": "10 000 TND",
+        "paiement_fractionne": "4, 6, 9 fois",
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-flex"
+    },
+    {
+        "titre": "Carte Platinum",
+        "categorie": "Carte bancaire",
+        "description_courte": "Offrez vous une carte haut de gamme aux privilèges exceptionnels: Accès gratuit aux salons d'aéroports-Lounges, réduction sur les voitures de location, assurance et assistance voyage à l’étranger et en Tunisie.",
+        "avantages": [
+            "Bénéficiez de deux comptes sur la même carte pour vos opérations effectuées en Tunisie et à l'étranger, avec des capacités de retrait et de paiement élevés.",
+            "Accédez à un univers d'expériences uniques associé à votre style de vie.",
+            "Disposez de plusieurs services d'assistance et d'assurance aux garanties étendues."
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-platinum"
+    },
+    {
+        "titre": "Carte Gold Nationale",
+        "categorie": "Carte bancaire",
+        "description_courte": "Bénéficiez de plafonds de retraits et paiements élevés et profitez de services d'assistance…",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement importantes",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Profitez d'une panoplie de garanties d'assurance et d'assistance en tunisie et à l'etranger."
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-gold-nationale"
+    },
+    {
+        "titre": "Carte Gold Internationale",
+        "categorie": "Carte bancaire",
+        "description_courte": "Bénéficiez de plafonds de retraits et paiements à l'etranger élevés et profitez de services d'assistance…",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement élevés",
+            "Profitez d'une panoplie de garanties d'assurance et d'assistance.",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure ( tout en respectant la reglemantation de change)"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-gold-internationale"
+    },
+    {
+        "titre": "Carte Visa Nationale",
+        "categorie": "Carte bancaire",
+        "description_courte": "La carte qu'il vous faut pour vos besoins au quotidien.",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement confortables",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Profitez des prestations d'assurance"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-visa-nationale"
+    },
+    {
+        "titre": "Carte Visa Internationale",
+        "categorie": "Carte bancaire",
+        "description_courte": "Bénéficiez d'une carte VISA de retraits et paiements à l'etranger.",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement confortables",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Profitez des prestations d'assurance"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-visa-internationale"
+    },
+    {
+        "titre": "Carte Cib",
+        "categorie": "Carte bancaire",
+        "description_courte": "Retirez et payer en toute simplicité.",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement confortables",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Bénéficiez d'une assurance vol et perte moyens de paiement"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-cib"
+    },
+    {
+        "titre": "Carte TAWA TAWA",
+        "categorie": "Carte bancaire",
+        "description_courte": "Votre porte-monnaie électronique.",
+        "avantages": [
+            "Bénéficiez d'une carte rechargeable sans compte bancaire",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Aucun risque de découvert ! Vous ne pouvez dépenser que la somme disponible sur votre carte."
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-tawa-tawa"
+    },
+    {
+        "titre": "Carte Iddikhar",
+        "categorie": "Carte bancaire",
+        "description_courte": "Remplacez votre livret classique par une carte d'épargne incluse dans le pack Iddikhar.",
+        "avantages": [
+            "Acccédez à votre épargne à tout moment uprès de toutes les GAB de Attijari bank",
+            "Bénéficiez d'une rémunération en intérêts, versée trimestriellement"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-iddikhar"
+    },
+    {
+        "titre": "Carte voyage",
+        "categorie": "Carte bancaire",
+        "description_courte": "Voyagez sereinement avec votre carte Allocation touristique \"Voyage\"…",
+        "avantages": [
+            "Reservation d'hôtel à l'étranger sur internet à partir de la Tunisie",
+            "Disposez de votre argent sur la carte pour eviter tout risque de perte ou vol",
+            "Bénéficiez, en option, d'une assistance à l'étranger avec un tarif avantageux"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-voyage"
+    },
+    {
+        "titre": "Carte Oulidha",
+        "categorie": "Carte bancaire",
+        "description_courte": "Votre carte co-brandée avec le club sportif EST \"Éspérance Sportive de Tunis\".",
+        "avantages": [
+            "Bénéficiez d'une carte rechargeable sans compte bancaire, disponible au niveau des boutiques Taraji Store ou bien dans certaines agences Attijari bank",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au système 3D Secure"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-oulidha"
+    },
+    {
+        "titre": "Carte Technologique",
+        "categorie": "Carte bancaire",
+        "description_courte": "La Carte Technologique est une carte Internationale utilisable exclusivement sur internet qui vous permet de régler vos transactions en ligne sur des sites étrangers à concurrence d’une allocation annuelle autorisée.",
+        "avantages": [],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-technologique"
+    },
+    {
+        "titre": "Carte Avenir",
+        "categorie": "Carte bancaire",
+        "description_courte": "Votre carte bancaire qui s'adapte à vos besoins.",
+        "avantages": [
+            "Bénéficiez de capacités de retrait et de paiement confortables",
+            "Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure",
+            "Profitez des prestations d'assurance"
+        ],
+        "plafond_max": null,
+        "paiement_fractionne": null,
+        "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-avenir-0"
+    }
+]

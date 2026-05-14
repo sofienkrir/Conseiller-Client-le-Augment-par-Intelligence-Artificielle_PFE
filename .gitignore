@@ -1,0 +1,53 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Node / React
+node_modules/
+dist/
+build/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Databases / vector stores
+*.sqlite3
+*.db
+chroma_db/
+chroma_shared/
+chroma_uploads/
+
+# Uploaded/generated files
+uploads_shared/
+uploads_temp/
+
+# AI models / large binaries
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Notebooks checkpoints
+.ipynb_checkpoints/

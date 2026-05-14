@@ -1,0 +1,27 @@
+{
+  "data_schema": {
+    "raw_data": {
+      "url": "string",
+      "title": "string",
+      "content": "string",
+      "scraped_at": "datetime",
+      "category": "string"
+    },
+    "cleaned_data": {
+      "url": "string",
+      "title": "string",
+      "cleaned_content": "string",
+      "tokens": ["string"],
+      "entities": ["string"],
+      "intent": "string",
+      "processed_at": "datetime"
+    }
+  },
+  "categories": [
+    "carte_bancaire",
+    "credit",
+    "epargne",
+    "assurance",
+    "banque_distance"
+  ]
+}

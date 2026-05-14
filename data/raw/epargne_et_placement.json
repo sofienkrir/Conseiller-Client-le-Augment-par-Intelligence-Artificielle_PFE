@@ -1,0 +1,162 @@
+[
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "CAPITAL PLUS",
+        "titre": "Valorisez votre capital en garantissant une optimisation fiscale",
+        "description": "Attijari bank vous propose CAPITAL PLUS, produit d'assurance vie par capitalisation qui vous permet de réaliser un placement financier sans aucun risque, garanti à une échéance déterminée lors de la souscription.",
+        "avantages": [
+            {
+                "titre_avantage": "Accessibilité",
+                "description_avantage": "Souscription à partir de 5 000DT."
+            },
+            {
+                "titre_avantage": "Rentabilité",
+                "description_avantage": "Rémunération attractive avec une réduction d'impot avantageuse."
+            },
+            {
+                "titre_avantage": "Souplesse",
+                "description_avantage": "Disposer du capital constitué en partie ou en totalité, En cas de besoin, vous pouvez effectuer une avance, un retrait partiel ou un retrait total."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "Épargne Toumouhi",
+        "titre": "Mieux épargner pour mieux vivre votre argent !",
+        "description": "Attijari bank vous propose le plan épargne TOUMOUHI, garanti par Attijari Assurance, comme solution de précaution pour constituer progressivement et au rythme qui vous convient, une épargne pour financer vos projets d'avenir, votre retraite ou vous prémunir contre les aléas de la vie.",
+        "avantages": [
+            {
+                "titre_avantage": "Rentabilité",
+                "description_avantage": "Une formule à rendement sûr et attrayant avec un taux minimum garanti auquel s'ajoute un bonus annuel qui varie selon les bénéfices réalisés."
+            },
+            {
+                "titre_avantage": "Fiscalité avantageuse",
+                "description_avantage": "Avantages fiscaux importants."
+            },
+            {
+                "titre_avantage": "Flexibilité",
+                "description_avantage": "Fixez librement le montant de l'augmentation annuelle des primes périodiques, Au terme du contrat, choisissez la modalité du versement de l'épargne constituée, selon votre convenance."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "Épargne Awledi",
+        "titre": "Épargnez progressivement et à votre rythme",
+        "description": "Attijari bank vous propose l'Epargne AWLEDI garanti par Attijari Assurance, une solution qui vous permet de constituer progressivement une épargne au profit de vos enfants et d'anticiper les imprévus.",
+        "avantages": [
+            {
+                "titre_avantage": "Une garantie de l'avenir de votre enfant",
+                "description_avantage": "Constituez un capital pour prémunir l'avenir de votre enfant dés son jeune âge. Souscrire au contrat Awledi garantit le versemnet d'une rente éducation trimestrielle , ainsi que la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident."
+            },
+            {
+                "titre_avantage": "Une solution accessible",
+                "description_avantage": "Épargnez à votre rythme à tout moment"
+            },
+            {
+                "titre_avantage": "Fiscalité avantageuse",
+                "description_avantage": "Bénéficiez de l'avantage fiscal"
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "Rahet Beli",
+        "titre": "Assurez votre tranquilité d'esprit et celle de votre famille !",
+        "description": "Attijari bank vous propose une assuarnce sur la vie \"RAHET BELI\", garanti par Attijari Assurance, qui assure la sécurité financière à vos biens aimés, en les protégeant contre les épreuves difficiles de la vie.",
+        "avantages": [
+            {
+                "titre_avantage": "Une potection appropriée de votre famille",
+                "description_avantage": "Rahet Beli garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez."
+            },
+            {
+                "titre_avantage": "Une solution souple",
+                "description_avantage": "Vous choisissez l'option de garantie et le mode de paiement qui vous conviennent."
+            },
+            {
+                "titre_avantage": "Accessibilité",
+                "description_avantage": "Des primes d’assurance adaptées à votre budget et à votre âge."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "DHAMEN Wledi",
+        "titre": "Assurez votre tranquilité d'esprit et celle de votre enfant !",
+        "description": "Attijari bank vous propose DHAMEN Wledi, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.",
+        "avantages": [
+            {
+                "titre_avantage": "Permettre à votre enfant de continuer sa scolarité ou de démarrer une activité.",
+                "description_avantage": "Déblocage immédiat du capital choisi."
+            },
+            {
+                "titre_avantage": "Possibilité de choisir le bénéficiaire",
+                "description_avantage": "Un contrat pour chaque enfant."
+            },
+            {
+                "titre_avantage": "Adaptabilité",
+                "description_avantage": "Des primes d’assurance adaptées à votre budget et à votre âge."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "DHAMEN Elweldine",
+        "titre": "Protégez votre famille contre les incertitudes de l'avenir !",
+        "description": "Attijari bank vous propose DHAMEN Elweldine, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.",
+        "avantages": [
+            {
+                "titre_avantage": "Versement rapide de la rente",
+                "description_avantage": "Versement d'une rente au profit d'un parent désigné, en cas de décès de l'assuré qui le prenait en charge."
+            },
+            {
+                "titre_avantage": "Adaptabilité",
+                "description_avantage": "Des primes d’assurance adaptées à votre budget et à votre âge."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "DHAMEN Ikram",
+        "titre": "Assurez votre tranquilité d'esprit et celle de votre famille !",
+        "description": "Attijari bank vous propose DHAMEN Ikram, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.",
+        "avantages": [
+            {
+                "titre_avantage": "Règlement immédiat",
+                "description_avantage": "Versement immédiat d'un capital pour aider la famille à faire face aux frais funéraires en cas de décès de l'assuré."
+            },
+            {
+                "titre_avantage": "Souscripton simplifiée et sans conditions",
+                "description_avantage": "Accomplissement simple des formalités."
+            },
+            {
+                "titre_avantage": "Adaptabilité",
+                "description_avantage": "Des primes d’assurance adaptées à votre budget et à votre âge."
+            }
+        ]
+    },
+    {
+        "categorie": "Épargne et Placement",
+        "theme": "SANADI",
+        "titre": "Lors des temps durs, votre revenu perdure",
+        "description": "Attijari bank vous propose l'offre d'assurance SANADI, garanti par Attijari Assurances, comme solution adéquate pour maintenir vos revenus et pallier aux frais imprévisibles en cas d'arret de travail suite à une hospitalisation.",
+        "avantages": [
+            {
+                "titre_avantage": "Formalité simple à la souscription",
+                "description_avantage": "Accomplissement simple des formalités."
+            },
+            {
+                "titre_avantage": "Accessibilité/ facilité",
+                "description_avantage": "Des primes d’assurance accessibles."
+            },
+            {
+                "titre_avantage": "Règlement rapide",
+                "description_avantage": "Règlement de votre sinistre en moins de 72houvrables après réception de votre dossier."
+            },
+            {
+                "titre_avantage": "Souplesse",
+                "description_avantage": "Modification possible des conditions de votre contrat."
+            }
+        ]
+    }
+]

@@ -1,0 +1,83 @@
+/* stylelint-disable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@theme {
+  --color-attijari-navy:  #0F2460;
+  --color-attijari-blue:  #1A3A8F;
+  --color-attijari-mid:   #2563EB;
+  --color-attijari-light: #EEF2F9;
+}
+ 
+@layer base {
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+ 
+  body {
+    background: #EEF2F9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+ 
+@layer components {
+  /* ── Message bubbles ── */
+  .message-bubble-user {
+    background: linear-gradient(135deg, #0F2460 0%, #1A3A8F 60%, #2563EB 100%);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
+    box-shadow: 0 4px 14px rgba(15, 36, 96, 0.2);
+  }
+ 
+  .message-bubble-assistant {
+    background: white;
+    color: #1f2937;
+    border-radius: 18px 18px 18px 4px;
+    border: 1px solid #DDE5F0;
+    box-shadow: 0 2px 8px rgba(15, 36, 96, 0.06);
+  }
+ 
+  /* ── Scrollbar ── */
+  .custom-scrollbar::-webkit-scrollbar        { width: 5px; }
+  .custom-scrollbar::-webkit-scrollbar-track  { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb  {
+    background: rgba(30, 58, 138, 0.18);
+    border-radius: 99px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(30, 58, 138, 0.35);
+  }
+ 
+  /* ── Input field ── */
+  .attijari-input {
+    border: 2px solid #DDE5F0;
+    border-radius: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .attijari-input:focus {
+    border-color: #1A3A8F;
+    box-shadow: 0 0 0 4px rgba(26, 58, 143, 0.08);
+    outline: none;
+  }
+ 
+  /* ── Message enter animation ── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  .message-enter { animation: slideUp 0.25s ease-out both; }
+ 
+  /* ── Typing dots ── */
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40%           { opacity: 1;   transform: scale(1);   }
+  }
+  .typing-dot { animation: blink 1.2s infinite ease-in-out; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+}

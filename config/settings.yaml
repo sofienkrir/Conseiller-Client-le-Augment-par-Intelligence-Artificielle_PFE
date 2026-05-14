@@ -1,0 +1,21 @@
+# Configuration settings for Attijari Chatbot
+
+scraping:
+  base_url: "https://www.attijariwafa.com.ma/"
+  timeout: 30
+  headers:
+    User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+nlp:
+  language: "fr"
+  intent_threshold: 0.7
+  entity_threshold: 0.8
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+logging:
+  level: "INFO"
+  file: "logs/chatbot.log"

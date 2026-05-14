@@ -1,0 +1,610 @@
+/* ============================================================
+   attijari-chat.css  –  Full chat interface styles
+   Import this in your main entry (e.g. main.jsx / index.css)
+   ============================================================ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  --brand-red:      #C8371A;
+  --brand-orange:   #E8521D;
+  --brand-dark:     #1A1A2E;
+  --brand-gray:     #4A4A5A;
+
+  --sidebar-bg:     #FFFFFF;
+  --sidebar-border: #E8E8EE;
+  --sidebar-width:  300px;
+
+  --chat-bg:        #F0F4FA;          /* warm blueish-white, matches screenshot */
+  --topbar-bg:      #FFFFFF;
+  --topbar-border:  #E0E6F0;
+
+  --bubble-user-bg: #D6DCE8;          /* soft grey-blue, like screenshot */
+  --bubble-user-text: #1A1A2E;
+  --bubble-bot-bg:  #FFFFFF;
+  --bubble-bot-text: #1A1A2E;
+  --bubble-shadow:  0 1px 4px rgba(0,0,0,0.08);
+
+  --input-bg:       #FFFFFF;
+  --input-border:   #D0D8E8;
+  --send-color:     #C8371A;
+
+  --font-main:  'Lato', sans-serif;
+  --font-ar:    'Tajawal', sans-serif;
+  --radius-bubble: 18px;
+}
+
+/* ── Reset / Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  background: var(--chat-bg);
+}
+
+/* ════════════════════════════════════════
+   ROOT LAYOUT
+   ════════════════════════════════════════ */
+.attijari-root {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: visible;  /* ← غير hidden إلى visible */
+  background: var(--chat-bg);
+}
+
+.attijari-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 20;
+}
+
+/* ════════════════════════════════════════
+   SIDEBAR
+   ════════════════════════════════════════ */
+.attijari-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 30;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.06);
+}
+.attijari-sidebar.mobile { position: fixed; height: 100%; }
+.attijari-sidebar.mobile.closed { transform: translateX(-100%); }
+/* .attijari-sidebar.closed:not(.mobile) { width: 0; overflow: hidden; }*/
+
+/* Logo area */
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+.sidebar-logo-placeholder { display: flex; align-items: center; }
+.logo-icon-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── LOGO IMAGE ──
+   Place your file at: /public/assets/attijari-logo-full.png
+   Recommended dimensions: ~200×60 px, transparent background
+*/
+.sidebar-logo-img {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Fallback if image fails */
+.logo-fallback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-wave {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--brand-red), var(--brand-orange));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  font-weight: 900;
+}
+.logo-text-group { display: flex; flex-direction: column; }
+.logo-arabic {
+  font-family: var(--font-ar);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-dark);
+  line-height: 1.2;
+}
+.logo-latin { font-size: 13px; color: var(--brand-gray); }
+.logo-latin strong { color: var(--brand-red); font-weight: 700; }
+
+/* History section */
+.sidebar-section { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+.sidebar-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--sidebar-border);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--brand-dark);
+  letter-spacing: 0.02em;
+}
+.sidebar-section-header:hover { background: #F7F8FC; }
+
+.sidebar-sessions {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #C8D4E8 transparent;
+}
+.sidebar-sessions::-webkit-scrollbar { width: 4px; }
+.sidebar-sessions::-webkit-scrollbar-thumb { background: #C8D4E8; border-radius: 99px; }
+
+.sidebar-empty {
+  padding: 20px;
+  text-align: center;
+  color: #A0A8B8;
+  font-size: 13px;
+}
+
+.sidebar-session-item {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background 0.15s;
+  border-bottom: 1px solid #F0F2F8;
+}
+.sidebar-session-item:hover    { background: #F5F7FC; }
+.sidebar-session-item.active   { background: #EEF2FA; border-right: 3px solid var(--brand-red); }
+
+.session-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.session-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--brand-dark);
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.session-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: #B0B8CC;
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+.session-delete:hover { color: var(--brand-red); background: #FEF0EE; }
+
+.session-preview {
+  font-size: 12px;
+  color: #8A94A8;
+  margin-top: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-new-chat {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid var(--brand-dark);
+  border-radius: 8px;
+  background: white;
+  color: var(--brand-dark);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-new-chat:hover { background: var(--brand-dark); color: white; }
+
+.btn-delete-all {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #A0A8B8;
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s;
+}
+.btn-delete-all:hover { color: var(--brand-red); }
+
+/* ════════════════════════════════════════
+   MAIN CHAT AREA
+   ════════════════════════════════════════ */
+.attijari-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--chat-bg);
+}
+
+/* Top bar */
+.chat-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 28px;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+.topbar-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand-gray);
+  padding: 4px;
+  border-radius: 6px;
+}
+.topbar-menu-btn:hover { background: #F0F2F8; }
+
+.topbar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--brand-dark);
+  flex: 1;
+}
+.topbar-subtitle {
+  font-size: 13px;
+  color: var(--brand-gray);
+  font-family: var(--font-ar);
+}
+
+/* Messages area */
+.chat-messages-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #C8D4E8 transparent;
+
+  /* Subtle gradient background like the screenshot */
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(200,55,26,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(37,99,235,0.04) 0%, transparent 55%),
+    var(--chat-bg);
+}
+.chat-messages-area::-webkit-scrollbar { width: 5px; }
+.chat-messages-area::-webkit-scrollbar-thumb { background: #C8D4E8; border-radius: 99px; }
+
+.chat-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--brand-gray);
+  font-size: 14px;
+}
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #E0E6F0;
+  border-top-color: var(--brand-red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Input bar */
+.chat-input-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: var(--topbar-bg);
+  border-top: 1px solid var(--topbar-border);
+}
+
+.input-icon-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8A94A8;
+  padding: 6px;
+  border-radius: 8px;
+  transition: color 0.15s, background 0.15s;
+}
+.input-icon-btn:hover { color: var(--brand-dark); background: #F0F2F8; }
+
+.chat-input-field {
+  flex: 1;
+  padding: 11px 18px;
+  border: 1.5px solid var(--input-border);
+  border-radius: 24px;
+  background: var(--input-bg);
+  font-size: 14px;
+  color: var(--brand-dark);
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.chat-input-field::placeholder { color: #A8B0C4; }
+.chat-input-field:focus {
+  border-color: #B0C0DC;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.07);
+}
+
+.input-send-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--send-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.input-send-btn:hover:not(:disabled) { transform: scale(1.12); }
+.input-send-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* ════════════════════════════════════════
+   MESSAGE LIST
+   ════════════════════════════════════════ */
+.msg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 8px;
+}
+
+/* Row layout */
+.msg-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  animation: msgIn 0.22s ease-out both;
+}
+.msg-row.bot  { justify-content: flex-start; }
+.msg-row.user { justify-content: flex-end; }
+
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Bubbles */
+.msg-bubble {
+  max-width: 68%;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  word-break: break-word;
+}
+
+.msg-bubble.user {
+  background: var(--bubble-user-bg);
+  color: var(--bubble-user-text);
+  border-radius: var(--radius-bubble) var(--radius-bubble) 4px var(--radius-bubble);
+  box-shadow: var(--bubble-shadow);
+}
+
+.msg-bubble.bot {
+  background: var(--bubble-bot-bg);
+  color: var(--bubble-bot-text);
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble) 4px;
+  border: 1px solid #E4EAF2;
+  box-shadow: var(--bubble-shadow);
+}
+
+/* Markdown inside bubble */
+.md-spacer  { height: 6px; }
+.md-heading { font-weight: 700; color: var(--brand-dark); margin: 8px 0 4px; font-size: 14px; }
+.md-para    { margin-bottom: 5px; }
+.md-para:last-child { margin-bottom: 0; }
+.md-list    { list-style: none; padding: 0; margin: 6px 0; display: flex; flex-direction: column; gap: 5px; }
+.md-list-item { display: flex; align-items: flex-start; gap: 8px; }
+.md-bullet  { flex-shrink: 0; width: 6px; height: 6px; background: var(--brand-red); border-radius: 50%; margin-top: 7px; }
+
+/* Sources */
+.msg-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #EEF2FA;
+}
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: #EEF2FA;
+  color: #2563EB;
+  border: 1px solid #D0DCEE;
+  border-radius: 99px;
+  font-size: 11.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.source-badge:hover { opacity: 0.75; }
+
+/* Bot avatar */
+.bot-avatar {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--brand-red), var(--brand-orange));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ── BOT AVATAR IMAGE ──
+   Place your file at: /public/assets/attijari-logo-icon.png
+   Should be the Attijari wave/M mark on transparent or brand-colored background
+   Recommended size: 80×80 px minimum
+*/
+.bot-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+.bot-avatar-fallback {
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  display: none;
+}
+
+/* Typing indicator */
+.typing-bubble {
+  background: var(--bubble-bot-bg);
+  border: 1px solid #E4EAF2;
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble) 4px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: var(--bubble-shadow);
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #B0BCD4;
+  border-radius: 50%;
+  animation: blink 1.1s infinite ease-in-out;
+}
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.85); }
+  40%           { opacity: 1;    transform: scale(1);    }
+}
+
+/* ════════════════════════════════════════
+   MODE SELECTOR BUTTONS
+   ════════════════════════════════════════ */
+.mode-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid #E0E6F0;
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.mode-btn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: #6B7280;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-main);
+}
+
+.mode-btn:hover {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.mode-btn.active {
+  background: var(--brand-red);
+  color: white;
+  box-shadow: 0 2px 6px rgba(200, 55, 26, 0.3);
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .topbar-subtitle { display: none; }
+  .chat-messages-area { padding: 16px; }
+  .chat-topbar { padding: 12px 16px; }
+  .chat-input-bar { padding: 10px 12px; }
+  .msg-bubble { max-width: 85%; }
+}
+
+
+/* styles/Attijarichat.css */
+
+.mode-selector {
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.mode-btn {
+  padding: 6px 16px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.mode-btn.active {
+  background: #C8371A;   /* Attijari brand red */
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(200, 55, 26, 0.35);
+}
+
+.mode-btn:hover:not(.active) {
+  background: #e0e0e0;
+  color: #333;
+}

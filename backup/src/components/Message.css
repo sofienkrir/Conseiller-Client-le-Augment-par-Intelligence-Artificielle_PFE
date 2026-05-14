@@ -1,0 +1,48 @@
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #007bff;
+  color: white;
+  margin-left: auto;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: #f1f1f1;
+  color: #333;
+  margin-right: auto;
+}
+
+.message-content {
+  margin-bottom: 5px;
+}
+
+.sources {
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.sources ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sources li {
+  margin: 5px 0;
+}
+
+.sources a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.sources a:hover {
+  text-decoration: underline;
+}
