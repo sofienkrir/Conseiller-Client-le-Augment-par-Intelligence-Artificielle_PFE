@@ -51,3 +51,18 @@ models/
 
 # Notebooks checkpoints
 .ipynb_checkpoints/
+
+
+# Fichiers locaux / sensibles
+.claude/settings.local.json
+backup_users_BEFORE_RESET.json
+backups/
+
+# Environnements et caches
+.env
+.env.local
+__pycache__/
+*.pyc
+node_modules/
+venv/
+.venv/

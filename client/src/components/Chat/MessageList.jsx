@@ -130,7 +130,14 @@ const MessageList = ({ messages, isTyping, logoIcon }) => (
             {renderMd(msg.content)}
             {msg.sources?.length > 0 && <Sources sources={msg.sources} />}
             {msg.eval_id && (
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                marginTop: '12px',
+                paddingTop: '12px',
+                borderTop: '1px solid #E5E7EB'
+              }}>
                 <ConfidenceScore evalId={msg.eval_id} initialAutoScore={msg.auto_score} />
                 <FeedbackButtons evalId={msg.eval_id} />
               </div>

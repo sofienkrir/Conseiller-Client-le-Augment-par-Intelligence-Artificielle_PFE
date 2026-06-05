@@ -1,5 +1,5 @@
 // client/src/components/FeedbackButtons.jsx
-// Composant: Boutons 👍 / 👎 avec modal de signalement
+// Version SANS Tailwind — styles inline garantis
 
 import { useState } from "react";
 import { ThumbsUp, ThumbsDown, AlertTriangle, X, Check, Loader2, Send } from "lucide-react";
@@ -7,7 +7,7 @@ import { submitFeedback } from "../api/evaluationApi";
 
 
 // ════════════════════════════════════════
-// Modal de signalement (apparaît si 👎)
+// Modal de signalement
 // ════════════════════════════════════════
 
 function FeedbackModal({ evalId, onClose, onSubmitted }) {
@@ -17,9 +17,9 @@ function FeedbackModal({ evalId, onClose, onSubmitted }) {
   const [error, setError] = useState(null);
 
   const issueTypes = [
-    { id: "incorrect",  label: "❌ Information incorrecte",      desc: "La réponse contient des erreurs factuelles" },
-    { id: "incomplete", label: "📝 Réponse incomplète",          desc: "Il manque des informations importantes" },
-    { id: "irrelevant", label: "🎯 Hors-sujet",                  desc: "La réponse ne correspond pas à ma question" },
+    { id: "incorrect",  label: "❌ Information incorrecte",      desc: "La réponse contient des erreurs" },
+    { id: "incomplete", label: "📝 Réponse incomplète",          desc: "Il manque des informations" },
+    { id: "irrelevant", label: "🎯 Hors-sujet",                  desc: "Ne correspond pas à ma question" },
     { id: "other",      label: "💬 Autre problème",              desc: "Décrivez ci-dessous" },
   ];
 
@@ -41,91 +41,155 @@ function FeedbackModal({ evalId, onClose, onSubmitted }) {
     }
   };
 
+  const overlayStyle = {
+    position: "fixed",
+    top: 0, left: 0, right: 0, bottom: 0,
+    background: "rgba(0, 0, 0, 0.5)",
+    zIndex: 9999,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "16px",
+  };
+
+  const modalStyle = {
+    background: "white",
+    borderRadius: "16px",
+    boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+    maxWidth: "440px",
+    width: "100%",
+    padding: "24px",
+    maxHeight: "90vh",
+    overflowY: "auto",
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-amber-500" />
-            <h3 className="text-lg font-bold text-gray-800">Signaler un problème</h3>
+    <div style={overlayStyle}>
+      <div style={modalStyle}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <AlertTriangle size={20} color="#F59E0B" />
+            <h3 style={{ fontSize: "18px", fontWeight: "bold", color: "#1F2937", margin: 0 }}>
+              Signaler un problème
+            </h3>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#9CA3AF" }}>
+            <X size={20} />
           </button>
         </div>
 
-        <p className="text-sm text-gray-600 mb-4">
-          Aidez-nous à améliorer le chatbot en précisant le problème:
+        <p style={{ fontSize: "14px", color: "#4B5563", marginBottom: "16px" }}>
+          Aidez-nous à améliorer le chatbot:
         </p>
 
-        {/* Types de problèmes */}
-        <div className="space-y-2 mb-4">
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
           {issueTypes.map((type) => (
             <button
               key={type.id}
               onClick={() => setIssueType(type.id)}
-              className={`
-                w-full text-left p-3 rounded-lg border-2 transition
-                ${issueType === type.id
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-200 hover:border-red-300 hover:bg-gray-50"}
-              `}
+              style={{
+                width: "100%",
+                textAlign: "left",
+                padding: "12px",
+                borderRadius: "8px",
+                border: `2px solid ${issueType === type.id ? "#EF4444" : "#E5E7EB"}`,
+                background: issueType === type.id ? "#FEF2F2" : "white",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
             >
-              <div className={`font-medium text-sm ${issueType === type.id ? "text-red-700" : "text-gray-700"}`}>
+              <div style={{ fontWeight: "500", fontSize: "14px", color: issueType === type.id ? "#B91C1C" : "#374151" }}>
                 {type.label}
               </div>
-              <div className="text-xs text-gray-500 mt-0.5">{type.desc}</div>
+              <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>{type.desc}</div>
             </button>
           ))}
         </div>
 
-        {/* Commentaire (optionnel) */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Commentaire <span className="text-xs text-gray-400">(optionnel)</span>
+        <div style={{ marginBottom: "16px" }}>
+          <label style={{ display: "block", fontSize: "14px", fontWeight: "500", color: "#374151", marginBottom: "8px" }}>
+            Commentaire <span style={{ fontSize: "12px", color: "#9CA3AF" }}>(optionnel)</span>
           </label>
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={3}
             maxLength={500}
-            placeholder="Décrivez le problème en quelques mots..."
-            className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-red-500 focus:outline-none resize-none text-sm"
+            placeholder="Décrivez le problème..."
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "2px solid #E5E7EB",
+              borderRadius: "8px",
+              fontSize: "14px",
+              resize: "none",
+              fontFamily: "inherit",
+              boxSizing: "border-box",
+            }}
           />
-          <div className="text-xs text-gray-400 text-right mt-1">
+          <div style={{ fontSize: "12px", color: "#9CA3AF", textAlign: "right", marginTop: "4px" }}>
             {comment.length}/500
           </div>
         </div>
 
-        {/* Erreur */}
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 rounded text-sm text-red-800">
+          <div style={{
+            marginBottom: "16px",
+            padding: "12px",
+            background: "#FEF2F2",
+            borderLeft: "4px solid #EF4444",
+            borderRadius: "4px",
+            fontSize: "14px",
+            color: "#991B1B",
+          }}>
             {error}
           </div>
         )}
 
-        {/* Actions */}
-        <div className="flex gap-3">
+        <div style={{ display: "flex", gap: "12px" }}>
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2.5 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm"
+            style={{
+              flex: 1,
+              padding: "10px 16px",
+              border: "2px solid #E5E7EB",
+              background: "white",
+              color: "#374151",
+              borderRadius: "8px",
+              fontWeight: "500",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
           >
             Annuler
           </button>
           <button
             onClick={handleSubmit}
             disabled={!issueType || submitting}
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{
+              flex: 1,
+              background: !issueType || submitting ? "#FCA5A5" : "#DC2626",
+              color: "white",
+              padding: "10px 16px",
+              borderRadius: "8px",
+              border: "none",
+              fontWeight: "500",
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              cursor: !issueType || submitting ? "not-allowed" : "pointer",
+            }}
           >
             {submitting ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 size={16} />
                 Envoi...
               </>
             ) : (
               <>
-                <Send className="w-4 h-4" />
+                <Send size={16} />
                 Envoyer
               </>
             )}
@@ -142,7 +206,7 @@ function FeedbackModal({ evalId, onClose, onSubmitted }) {
 // ════════════════════════════════════════
 
 export default function FeedbackButtons({ evalId }) {
-  const [feedback, setFeedback] = useState(null);  // null | "up" | "down"
+  const [feedback, setFeedback] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [flash, setFlash] = useState(null);
@@ -172,68 +236,100 @@ export default function FeedbackButtons({ evalId }) {
 
   const handleFeedbackSubmitted = () => {
     setFeedback("down");
-    setFlash({ type: "success", text: "Merci, votre signalement nous aide à nous améliorer." });
+    setFlash({ type: "success", text: "Merci, votre signalement nous aide!" });
     setTimeout(() => setFlash(null), 4000);
+  };
+
+  const containerStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flexWrap: "wrap",
+    marginTop: "8px",
+    fontSize: "13px",
+  };
+
+  const labelStyle = {
+    color: "#6B7280",
+    fontSize: "13px",
+  };
+
+  const getButtonStyle = (type) => {
+    const isThisVoted = feedback === type;
+    const isOtherVoted = feedback && feedback !== type;
+    const isUp = type === "up";
+
+    let bg = "#F9FAFB";
+    let textColor = "#4B5563";
+    let borderColor = "#E5E7EB";
+
+    if (isThisVoted) {
+      bg = isUp ? "#D1FAE5" : "#FEE2E2";
+      textColor = isUp ? "#047857" : "#B91C1C";
+      borderColor = isUp ? "#86EFAC" : "#FCA5A5";
+    } else if (isOtherVoted) {
+      bg = "#F3F4F6";
+      textColor = "#9CA3AF";
+      borderColor = "#E5E7EB";
+    }
+
+    return {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "4px",
+      padding: "6px 12px",
+      borderRadius: "8px",
+      border: `1.5px solid ${borderColor}`,
+      background: bg,
+      color: textColor,
+      fontSize: "13px",
+      fontWeight: "500",
+      cursor: feedback ? "not-allowed" : "pointer",
+      transition: "all 0.2s",
+    };
   };
 
   return (
     <>
-      <div className="flex items-center gap-2 text-xs">
-        <span className="text-gray-500">Cette réponse vous a-t-elle aidé?</span>
+      <div style={containerStyle}>
+        <span style={labelStyle}>Cette réponse vous a-t-elle aidé?</span>
 
-        {/* Bouton 👍 */}
         <button
           onClick={handleThumbsUp}
           disabled={feedback !== null || submitting}
-          className={`
-            inline-flex items-center gap-1 px-2.5 py-1 rounded-lg transition text-xs font-medium
-            ${feedback === "up"
-              ? "bg-green-100 text-green-700 cursor-default"
-              : feedback === "down"
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-gray-50 hover:bg-green-50 text-gray-600 hover:text-green-700 border border-gray-200 hover:border-green-300"}
-          `}
+          style={getButtonStyle("up")}
+          title="Oui, utile"
         >
-          <ThumbsUp className={`w-3.5 h-3.5 ${feedback === "up" ? "fill-current" : ""}`} />
+          <ThumbsUp size={14} fill={feedback === "up" ? "currentColor" : "none"} />
           <span>Oui</span>
         </button>
 
-        {/* Bouton 👎 */}
         <button
           onClick={handleThumbsDown}
           disabled={feedback !== null || submitting}
-          className={`
-            inline-flex items-center gap-1 px-2.5 py-1 rounded-lg transition text-xs font-medium
-            ${feedback === "down"
-              ? "bg-red-100 text-red-700 cursor-default"
-              : feedback === "up"
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-700 border border-gray-200 hover:border-red-300"}
-          `}
+          style={getButtonStyle("down")}
+          title="Non, à améliorer"
         >
-          <ThumbsDown className={`w-3.5 h-3.5 ${feedback === "down" ? "fill-current" : ""}`} />
+          <ThumbsDown size={14} fill={feedback === "down" ? "currentColor" : "none"} />
           <span>Non</span>
         </button>
 
-        {/* Feedback flash */}
         {flash && (
-          <span
-            className={`
-              ml-2 inline-flex items-center gap-1 text-xs font-medium
-              ${flash.type === "success" ? "text-green-600" : "text-red-600"}
-            `}
-          >
-            {flash.type === "success" ? (
-              <Check className="w-3.5 h-3.5" />
-            ) : (
-              <X className="w-3.5 h-3.5" />
-            )}
+          <span style={{
+            marginLeft: "8px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+            fontSize: "12px",
+            fontWeight: "500",
+            color: flash.type === "success" ? "#059669" : "#DC2626",
+          }}>
+            {flash.type === "success" ? <Check size={14} /> : <X size={14} />}
             <span>{flash.text}</span>
           </span>
         )}
       </div>
 
-      {/* Modal */}
       {showModal && (
         <FeedbackModal
           evalId={evalId}

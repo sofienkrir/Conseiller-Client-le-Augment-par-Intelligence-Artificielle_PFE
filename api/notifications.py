@@ -131,6 +131,39 @@ def notify_appointment_rejected(client_id: str, appointment: dict):
     )
 
 
+def notify_appointment_multiple_alternatives(client_id: str, appointment: dict):
+    slots = appointment.get("alternatives_multiple") or []
+    count = len(slots)
+    msg = appointment.get("alternatives_message", "")
+    text = f"Votre conseiller vous propose {count} créneaux pour reprogrammer votre rendez-vous. Connectez-vous pour choisir le vôtre."
+    if msg:
+        text += f" Message : {msg}"
+    create_notification(
+        user_id=client_id,
+        notif_type="appointment_alternative",
+        title=f"🔄 {count} créneaux proposés pour votre RDV",
+        message=text,
+        related_id=appointment["id"],
+        action_url="/my-appointments",
+    )
+
+
+def notify_appointment_cancelled_by_advisor(client_id: str, appointment: dict):
+    reason = appointment.get("cancellation_reason", "")
+    msg = f"Votre RDV du {appointment['date']} à {appointment['start_time']} a été annulé par votre conseiller suite à un imprévu."
+    if reason:
+        msg += f" Motif: {reason}."
+    msg += " Vous pouvez soumettre une nouvelle demande de RDV."
+    create_notification(
+        user_id=client_id,
+        notif_type="appointment_cancelled",
+        title="⚠️ RDV annulé par le conseiller",
+        message=msg,
+        related_id=appointment["id"],
+        action_url="/my-appointments",
+    )
+
+
 def notify_appointment_alternative(client_id: str, appointment: dict):
     alt = appointment.get("alternative_proposed", {})
     msg = f"Votre conseiller propose un nouveau créneau: {alt.get('date')} à {alt.get('start_time')}."

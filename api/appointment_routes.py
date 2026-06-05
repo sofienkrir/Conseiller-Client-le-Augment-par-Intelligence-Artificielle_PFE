@@ -9,10 +9,17 @@ Pour intégrer dans ton projet:
      app.include_router(appointment_router, prefix="/api")
 """
 
+import threading
 from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
+from .email_service import (
+    send_appointment_confirmed,
+    send_appointment_rejected,
+    send_appointment_cancelled_by_advisor as send_appt_cancelled_email,
+    send_appointment_multiple_alternatives as send_appt_multi_email,
+)
 
 from .appointments import (
     APPOINTMENT_MOTIFS,
@@ -29,6 +36,9 @@ from .appointments import (
     cancel_appointment,
     accept_alternative,
     get_appointments_stats,
+    advisor_cancel_appointment,
+    propose_multiple_alternatives,
+    choose_alternative_slot,
 )
 from .notifications import (
     list_notifications,
@@ -40,9 +50,12 @@ from .notifications import (
     notify_appointment_confirmed,
     notify_appointment_rejected,
     notify_appointment_alternative,
+    notify_appointment_cancelled_by_advisor,
+    notify_appointment_multiple_alternatives,
     get_all_admin_ids,
 )
 from .auth_routes import get_current_user_dependency, get_current_admin_dependency
+from .auth_db import AuthDB
 
 
 router = APIRouter()
@@ -67,6 +80,22 @@ class ProposeAlternativeRequest(BaseModel):
     new_date: str
     new_start_time: str
     message: Optional[str] = ""
+
+
+class AdvisorCancelRequest(BaseModel):
+    reason: str = Field(..., min_length=3, max_length=500)
+
+
+class SlotItem(BaseModel):
+    date: str
+    start_time: str
+
+class ProposeMultipleRequest(BaseModel):
+    slots: List[SlotItem]
+    message: Optional[str] = ""
+
+class ChooseSlotRequest(BaseModel):
+    slot_index: int = Field(..., ge=0, le=2)
 
 
 # ════════════════════════════════════════
@@ -234,6 +263,11 @@ async def admin_approve(
         raise HTTPException(status_code=400, detail=result["error"])
     
     notify_appointment_confirmed(client_id=result["client_id"], appointment=result)
+    notif_email = AuthDB.get_user_2fa_email(result["client_id"])
+    if notif_email:
+        threading.Thread(target=send_appointment_confirmed, args=(
+            notif_email, result.get("client_name", ""), result
+        ), daemon=True).start()
     return result
 
 
@@ -256,6 +290,11 @@ async def admin_reject(
         raise HTTPException(status_code=400, detail=result["error"])
     
     notify_appointment_rejected(client_id=result["client_id"], appointment=result)
+    notif_email = AuthDB.get_user_2fa_email(result["client_id"])
+    if notif_email:
+        threading.Thread(target=send_appointment_rejected, args=(
+            notif_email, result.get("client_name", ""), result
+        ), daemon=True).start()
     return result
 
 
@@ -280,6 +319,80 @@ async def admin_propose_alternative(
         raise HTTPException(status_code=400, detail=result["error"])
     
     notify_appointment_alternative(client_id=result["client_id"], appointment=result)
+    return result
+
+
+@router.post("/admin/appointments/{appointment_id}/propose-alternatives")
+async def admin_propose_multiple_alternatives(
+    appointment_id: str,
+    req: ProposeMultipleRequest,
+    current_admin: dict = Depends(get_current_admin_dependency),
+):
+    """Admin propose 2 ou 3 créneaux au client pour reprogrammer un RDV confirmé."""
+    advisor_name = f"{current_admin.get('prenom', '')} {current_admin.get('nom', '')}".strip() or "Conseiller Attijari"
+    slots = [{"date": s.date, "start_time": s.start_time} for s in req.slots]
+
+    result = propose_multiple_alternatives(
+        appointment_id=appointment_id,
+        advisor_id=current_admin["id"],
+        advisor_name=advisor_name,
+        slots=slots,
+        message=req.message or "",
+    )
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+
+    notify_appointment_multiple_alternatives(client_id=result["client_id"], appointment=result)
+    notif_email = AuthDB.get_user_2fa_email(result["client_id"])
+    if notif_email:
+        threading.Thread(target=send_appt_multi_email, args=(
+            notif_email, result.get("client_name", ""), result
+        ), daemon=True).start()
+    return result
+
+
+@router.post("/appointments/{appointment_id}/choose-slot")
+async def client_choose_slot(
+    appointment_id: str,
+    req: ChooseSlotRequest,
+    current_user: dict = Depends(get_current_user_dependency),
+):
+    """Le client choisit l'un des créneaux proposés → RDV reconfirmé."""
+    result = choose_alternative_slot(
+        appointment_id=appointment_id,
+        client_id=current_user["id"],
+        slot_index=req.slot_index,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    notify_appointment_confirmed(client_id=result["client_id"], appointment=result)
+    return result
+
+
+@router.post("/admin/appointments/{appointment_id}/cancel")
+async def admin_cancel_confirmed_appointment(
+    appointment_id: str,
+    req: AdvisorCancelRequest,
+    current_admin: dict = Depends(get_current_admin_dependency),
+):
+    """Admin annule un RDV déjà confirmé (réunion urgente, imprévu). Le créneau redevient disponible."""
+    advisor_name = f"{current_admin.get('prenom', '')} {current_admin.get('nom', '')}".strip() or "Conseiller Attijari"
+
+    result = advisor_cancel_appointment(
+        appointment_id=appointment_id,
+        advisor_id=current_admin["id"],
+        advisor_name=advisor_name,
+        reason=req.reason,
+    )
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+
+    notify_appointment_cancelled_by_advisor(client_id=result["client_id"], appointment=result)
+    notif_email = AuthDB.get_user_2fa_email(result["client_id"])
+    if notif_email:
+        threading.Thread(target=send_appt_cancelled_email, args=(
+            notif_email, result.get("client_name", ""), result
+        ), daemon=True).start()
     return result
 
 

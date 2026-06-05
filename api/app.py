@@ -9,6 +9,7 @@ from .routes import router
 from .auth_routes import router as auth_router
 from .appointment_routes import router as appointment_router
 from .evaluation_routes import router as evaluation_router
+from .admin_sessions_routes import router as sessions_router
 
 app = FastAPI(title="Attijari Chatbot API", version="1.0.0")
 
@@ -30,6 +31,7 @@ app.include_router(router)
 app.include_router(auth_router)
 app.include_router(appointment_router, prefix="/api")
 app.include_router(evaluation_router, prefix="/api")
+app.include_router(sessions_router)
 
 
 @app.get("/")

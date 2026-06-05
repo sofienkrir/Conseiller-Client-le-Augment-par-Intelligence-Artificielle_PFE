@@ -47,6 +47,23 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 _client = MongoClient(MONGO_URI)
 _db = _client["attijari_chatbot"]
 shared_pdfs_collection = _db["shared_pdfs"]
+_users_collection = _db["users"]
+
+
+def _resolve_user_names(user_ids: list) -> list[dict]:
+    """Convertit une liste d'IDs utilisateurs en liste de {id, name, email}."""
+    names = []
+    for uid in user_ids:
+        try:
+            u = _users_collection.find_one({"_id": ObjectId(uid)}, {"nom": 1, "prenom": 1, "email": 1})
+        except Exception:
+            u = None
+        if u:
+            full = f"{u.get('prenom', '')} {u.get('nom', '')}".strip() or u.get("email", "Utilisateur")
+            names.append({"id": str(uid), "name": full, "email": u.get("email", "")})
+        else:
+            names.append({"id": str(uid), "name": "Utilisateur supprimé", "email": ""})
+    return names
 
 # Cache embeddings (singleton)
 _embeddings = None
@@ -229,6 +246,8 @@ def list_all_shared_pdfs() -> list[dict]:
             "num_chunks": doc.get("num_chunks", 0),
             "shared_with_count": len(doc.get("shared_with", [])),
             "shared_with": doc.get("shared_with", []),
+            "shared_with_names": _resolve_user_names(doc.get("shared_with", [])),
+            "viewed_by": doc.get("viewed_by", []),
             "viewed_by_count": len(doc.get("viewed_by", [])),
             "status": doc.get("status", "unknown"),
         })

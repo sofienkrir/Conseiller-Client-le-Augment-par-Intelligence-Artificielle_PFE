@@ -40,7 +40,7 @@
         }
     },
     {
-        "text": "Offre: Pack Avenir\nCatégorie: Offre packagée\n\nDescription:\nAttijari bank vous facilite la gestion de vos opérations bancaires au quotidien et met à votre disposition plusieurs formules aux choix : Toute une gamme de produits et services bancaires essentiels, à souscrire en une seule fois et à un tarif avantageux.\n\nAvantages:\n\n- Bénéficiez d'une offre compléte allant du compte courant aux produits de banque à distance sans oublier votre carte Salaire+ pour effectuer vos retraits et régler vos achats.\n- Un tarif unique et avantageux",
+        "text": "Offre: Pack Avenir\nCatégorie: Offre packagée\nPublic cible: Jeunes clients, étudiants, jeunes actifs, salariés débutants\n\nDescription:\nLe Pack Avenir est l'offre bancaire complète conçue pour les jeunes clients et les étudiants qui souhaitent gérer facilement leurs opérations bancaires au quotidien. Ce pack regroupe l'essentiel des produits et services bancaires à un tarif avantageux unique.\n\nAvantages:\n\n- Pack idéal pour les étudiants, les jeunes clients et les primo-bancarisés.\n- Bénéficiez d'une offre complète allant du compte courant aux produits de banque à distance.\n- Carte bancaire incluse pour effectuer vos retraits et régler vos achats en Tunisie.\n- Un tarif unique et avantageux, accessible aux jeunes.",
         "metadata": {
             "source": "offre_packagee",
             "url": "https://www.attijaribank.com.tn/fr/particulier/offre-packagee/pack-avenir",
@@ -264,11 +264,12 @@
         }
     },
     {
-        "text": "Offre: Carte Avenir\nCatégorie: Carte bancaire\n\nDescription:\nVotre carte bancaire qui s'adapte à vos besoins.\n\nAvantages:\n\n- Effectuez vos achats en ligne l'esprit tranquille grâce au systéme 3D Secure\n- Profitez des prestations d'assurance\n- Bénéficiez de capacités de retrait et de paiement confortables",
+        "text": "Offre: Carte Avenir\nCatégorie: Carte bancaire\nPublic cible: Étudiants, jeunes clients, jeunes actifs, primo-bancarisés\n\nDescription:\nLa Carte Avenir est la carte bancaire idéale pour les étudiants et les jeunes clients qui souhaitent débuter leur vie bancaire. Conçue spécialement pour les jeunes, elle s'adapte à vos besoins quotidiens avec des conditions avantageuses et accessibles.\n\nAvantages:\n\n- Carte recommandée pour les étudiants et les jeunes clients d'Attijari Bank.\n- Effectuez vos achats en ligne l'esprit tranquille grâce au système 3D Secure.\n- Profitez des prestations d'assurance incluses.\n- Bénéficiez de capacités de retrait et de paiement confortables pour gérer votre budget quotidien.\n- Accessible aux jeunes dès l'ouverture d'un compte.",
         "metadata": {
             "source": "carte_bancaire",
             "url": "https://www.attijaribank.com.tn/fr/particulier/carte-bancaire/carte-avenir-0",
-            "titre": "Carte Avenir"
+            "titre": "Carte Avenir",
+            "public_cible": "étudiant jeune jeunes actifs primo-bancarisé"
         }
     },
     {
@@ -365,31 +366,31 @@
         }
     },
     {
-        "text": "Offre: Protégez votre famille contre les incertitudes de l'avenir !\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose une assuarnce sur la vie \"RAHET BELI\", garanti par Attijari Assurance, qui assure la sécurité financière à vos biens aimés, en les protégeant contre les épreuves difficiles de la vie.\n\nAvantages:\n\n- Une solution souple: Vous choisissez l'option de garantie et le mode de paiement qui vous conviennent.\n- Une potection appropriée de votre famille: Rahet Beli garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez.\n- Accessibilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
+        "text": "Offre: Rahet Beli (Assurance vie famille)\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose une assurance sur la vie \"RAHET BELI\", garanti par Attijari Assurance, qui assure la sécurité financière à vos bien aimés, en les protégeant contre les épreuves difficiles de la vie.\n\nAvantages:\n\n- Une solution souple: Vous choisissez l’option de garantie et le mode de paiement qui vous conviennent.\n- Une protection appropriée de votre famille: Rahet Beli garantit le versement intégral de votre capital ou sous forme d’une rente trimestrielle sur une durée que vous fixez.\n- Accessibilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
         "metadata": {
             "source": "assurance_prevoyance",
-            "titre": "Protégez votre famille contre les incertitudes de l'avenir !"
+            "titre": "Rahet Beli"
         }
     },
     {
-        "text": "Offre: Protégez votre famille contre les incertitudes de l'avenir !\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Wledi, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Permettre à votre enfant de continuer sa scolarité ou de démarrer une activité.: Déblocage immédiat du capital choisi.\n- Possibilité de choisir le bénéficiaire: Un contrat pour chaque enfant.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
+        "text": "Offre: DHAMEN Wledi (Assurance enfant)\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Wledi, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Permettre à votre enfant de continuer sa scolarité ou de démarrer une activité: Déblocage immédiat du capital choisi.\n- Possibilité de choisir le bénéficiaire: Un contrat pour chaque enfant.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
         "metadata": {
             "source": "assurance_prevoyance",
-            "titre": "Protégez votre famille contre les incertitudes de l'avenir !"
+            "titre": "DHAMEN Wledi"
         }
     },
     {
-        "text": "Offre: Protégez votre famille contre les incertitudes de l'avenir !\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Elweldine, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Versement rapide de la rente: Versement d'une rente au profit d'un parent désigné, en cas de décès de l'assuré qui le prenait en charge.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
+        "text": "Offre: DHAMEN Elweldine (Assurance parents)\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Elweldine, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Versement rapide de la rente: Versement d’une rente au profit d’un parent désigné, en cas de décès de l’assuré qui le prenait en charge.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.",
         "metadata": {
             "source": "assurance_prevoyance",
-            "titre": "Protégez votre famille contre les incertitudes de l'avenir !"
+            "titre": "DHAMEN Elweldine"
         }
     },
     {
-        "text": "Offre: Protégez votre famille contre les incertitudes de l'avenir !\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Ikram, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Règlement immédiat: Versement immédiat d'un capital pour aider la famille à faire face aux frais funéraires en cas de décès de l'assuré.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.\n- Souscripton simplifiée et sans conditions: Accomplissement simple des formalités.",
+        "text": "Offre: DHAMEN Ikram (Assurance obsèques)\nCatégorie: Assurance & Prévoyance\n\nDescription:\nAttijari bank vous propose DHAMEN Ikram, garanti par Attijari Assurances, comme solution adéquate afin de prémunir votre famille des circonstances difficiles et l’aider à affronter la survenance d’un incident malheureux.\n\nAvantages:\n\n- Règlement immédiat: Versement immédiat d’un capital pour aider la famille à faire face aux frais funéraires en cas de décès de l’assuré.\n- Adaptabilité: Des primes d’assurance adaptées à votre budget et à votre âge.\n- Souscription simplifiée et sans conditions: Accomplissement simple des formalités.",
         "metadata": {
             "source": "assurance_prevoyance",
-            "titre": "Protégez votre famille contre les incertitudes de l'avenir !"
+            "titre": "DHAMEN Ikram"
         }
     },
     {

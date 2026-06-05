@@ -1,8 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { LoginPage, RegisterPage } from "./AuthPages";
 import AdminDashboard from "./Admindashboard";
+import AdminEvaluations from "./pages/AdminEvaluations";
+import AdminSessions from "./pages/AdminSessions";
 import PrendreRDV from './pages/PrendreRDV';
 import MesRDV from './pages/MesRDV';
+import Verify2FA from './pages/Verify2FA';
+import ReportNotMe from './pages/ReportNotMe';
+import ResetPasswordRequired from './pages/ResetPasswordRequired';
 
 
 const API_URL = "";
@@ -49,18 +54,9 @@ const ClientIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="n
 const ChevronDown = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 
 const AttijariLogo = () => (
-  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <svg width="44" height="34" viewBox="0 0 48 38" fill="none">
-      <defs><linearGradient id="lg" x1="0" y1="0" x2="48" y2="38" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#F5A623" /><stop offset="40%" stopColor="#E8521A" /><stop offset="100%" stopColor="#CC0000" /></linearGradient></defs>
-      <path d="M4 6 C4 6, 8 32, 13 32 C18 32, 18 10, 24 10 C30 10, 30 32, 35 32 C40 32, 44 6, 44 6" stroke="url(#lg)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
-    <div style={{ lineHeight: 1 }}>
-      <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.85)", direction: "rtl" }}>بنك التجاري</div>
-      <div style={{ display: "flex", gap: 3, alignItems: "baseline" }}>
-        <span style={{ fontSize: 14, fontWeight: 700, color: C.white, fontFamily: "'Source Sans 3', sans-serif" }}>Attijari</span>
-        <span style={{ fontSize: 14, fontWeight: 300, color: C.white, fontFamily: "'Source Sans 3', sans-serif" }}>bank</span>
-      </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.6)", fontStyle: "italic", letterSpacing: "0.04em" }}>Croire en vous</div>
+  <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{ background: "white", borderRadius: 10, padding: "5px 12px", display: "flex", alignItems: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.18)" }}>
+      <img src="/attijari-logo.png" alt="Attijari Bank" style={{ height: 30, display: "block" }} />
     </div>
   </div>
 );
@@ -264,8 +260,140 @@ function LibraryModal({ token, onClose, onSelectPdf }) {
   );
 }
 
+// ═══ SCORE BADGE ═══
+function ScoreBadge({ evalId, autoScore }) {
+  if (!evalId || !autoScore || typeof autoScore.score_global !== "number") return null;
+  const score10 = Math.max(0, Math.min(10, autoScore.score_global));
+  const stars   = Math.round((score10 / 2) * 2) / 2; // 0-5, step 0.5
+  const filled  = Math.floor(stars);
+  const hasHalf = stars - filled >= 0.5;
+  const color   = score10 >= 7.5 ? "#16A34A" : score10 >= 5 ? "#D97706" : "#DC2626";
+  const label   = score10 >= 7.5 ? "Fiabilité élevée" : score10 >= 5 ? "Fiabilité moyenne" : "Fiabilité faible";
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 8, paddingTop: 6, borderTop: "1px solid #F0EDEA", flexWrap: "wrap" }}>
+      <span style={{ fontSize: 10, color: "#9CA3AF", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>Fiabilité</span>
+      <div style={{ display: "flex", gap: 1 }}>
+        {[1, 2, 3, 4, 5].map(i => (
+          <span key={i} style={{ fontSize: 15, lineHeight: 1, color: i <= filled || (i === filled + 1 && hasHalf) ? "#FBBF24" : "#D1D5DB" }}>
+            {i <= filled ? "★" : (i === filled + 1 && hasHalf ? "⯨" : "☆")}
+          </span>
+        ))}
+      </div>
+      <span style={{ fontSize: 11, fontWeight: 700, color }}>{stars.toFixed(1)}/5</span>
+      <span style={{ fontSize: 10, color: "#D1D5DB" }}>·</span>
+      <span style={{ fontSize: 10, color, fontWeight: 500 }}>{label}</span>
+    </div>
+  );
+}
+
+// ═══ FEEDBACK ROW ═══
+function FeedbackRow({ evalId, token }) {
+  const [voted, setVoted] = useState(null);      // null | "up" | "down"
+  const [sending, setSending] = useState(false);
+  const [flash, setFlash] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [issueType, setIssueType] = useState("");
+  const [comment, setComment] = useState("");
+  const [modalErr, setModalErr] = useState(null);
+  const [modalSending, setModalSending] = useState(false);
+
+  if (!evalId) return null;
+
+  const submitFeedback = async (rating, issue = null, cmt = null) => {
+    setSending(true);
+    try {
+      await fetch(`http://localhost:8000/api/evaluations/${evalId}/feedback`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ rating, issue_type: issue, comment: cmt }),
+      });
+      setVoted(rating);
+      setFlash(rating === "up" ? "Merci pour votre retour ! 👍" : "Merci, votre signalement nous aide !");
+      setTimeout(() => setFlash(null), 4000);
+    } catch {
+      setFlash("Erreur lors de l'envoi.");
+      setTimeout(() => setFlash(null), 4000);
+    } finally { setSending(false); }
+  };
+
+  const handleDown = () => { if (!voted && !sending) setShowModal(true); };
+
+  const handleModalSubmit = async () => {
+    if (!issueType) { setModalErr("Sélectionnez un type de problème."); return; }
+    setModalSending(true); setModalErr(null);
+    await submitFeedback("down", issueType, comment.trim() || null);
+    setShowModal(false); setIssueType(""); setComment(""); setModalSending(false);
+  };
+
+  const btnBase = { display: "inline-flex", alignItems: "center", gap: 4, padding: "5px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: voted ? "default" : "pointer", transition: "all 0.2s", border: "1.5px solid" };
+
+  return (
+    <>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 11, color: "#9CA3AF" }}>Cette réponse vous a-t-elle aidé ?</span>
+
+        <button disabled={!!voted || sending} onClick={() => !voted && !sending && submitFeedback("up")}
+          style={{ ...btnBase,
+            background: voted === "up" ? "#D1FAE5" : "#F9FAFB",
+            color:      voted === "up" ? "#047857" : voted ? "#9CA3AF" : "#4B5563",
+            borderColor: voted === "up" ? "#86EFAC" : "#E5E7EB",
+          }}>
+          👍 Oui
+        </button>
+
+        <button disabled={!!voted || sending} onClick={handleDown}
+          style={{ ...btnBase,
+            background: voted === "down" ? "#FEE2E2" : "#F9FAFB",
+            color:      voted === "down" ? "#B91C1C" : voted ? "#9CA3AF" : "#4B5563",
+            borderColor: voted === "down" ? "#FCA5A5" : "#E5E7EB",
+          }}>
+          👎 Non
+        </button>
+
+        {flash && <span style={{ fontSize: 11, color: "#059669" }}>{flash}</span>}
+      </div>
+
+      {showModal && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div style={{ background: "#fff", borderRadius: 16, padding: 24, width: "100%", maxWidth: 420, boxShadow: "0 20px 50px rgba(0,0,0,0.25)", fontFamily: "'Source Sans 3', sans-serif" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1F2937" }}>⚠️ Signaler un problème</h3>
+              <button onClick={() => setShowModal(false)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "#9CA3AF" }}>✕</button>
+            </div>
+            {[
+              { id: "incorrect",  label: "❌ Information incorrecte" },
+              { id: "incomplete", label: "📝 Réponse incomplète" },
+              { id: "irrelevant", label: "🎯 Hors-sujet" },
+              { id: "other",      label: "💬 Autre problème" },
+            ].map(t => (
+              <button key={t.id} onClick={() => setIssueType(t.id)}
+                style={{ width: "100%", textAlign: "left", padding: "10px 12px", marginBottom: 6, borderRadius: 8, border: `2px solid ${issueType === t.id ? "#EF4444" : "#E5E7EB"}`, background: issueType === t.id ? "#FEF2F2" : "#fff", cursor: "pointer", fontSize: 13, color: issueType === t.id ? "#B91C1C" : "#374151", fontWeight: issueType === t.id ? 600 : 400 }}>
+                {t.label}
+              </button>
+            ))}
+            <textarea value={comment} onChange={e => setComment(e.target.value)} rows={2} maxLength={500}
+              placeholder="Commentaire optionnel..."
+              style={{ width: "100%", marginTop: 8, padding: 10, border: "1.5px solid #E5E7EB", borderRadius: 8, fontSize: 13, fontFamily: "inherit", resize: "none", boxSizing: "border-box" }} />
+            {modalErr && <div style={{ color: "#DC2626", fontSize: 12, marginTop: 6 }}>{modalErr}</div>}
+            <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+              <button onClick={() => setShowModal(false)}
+                style={{ flex: 1, padding: "9px 0", border: "1.5px solid #E5E7EB", borderRadius: 8, background: "#fff", color: "#374151", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                Annuler
+              </button>
+              <button onClick={handleModalSubmit} disabled={modalSending}
+                style={{ flex: 1, padding: "9px 0", border: "none", borderRadius: 8, background: modalSending ? "#FCA5A5" : "#DC2626", color: "#fff", fontSize: 13, fontWeight: 600, cursor: modalSending ? "not-allowed" : "pointer" }}>
+                {modalSending ? "Envoi..." : "Envoyer"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 // ═══ MESSAGE ═══
-function Message({ msg, user }) {
+function Message({ msg, user, token = null }) {
   const isUser = msg.role === "user";
   const handleSpeak = () => {
     const clean = msg.content.replace(/\*\*(.*?)\*\*/g, "$1").replace(/#{1,6}\s/g, "").substring(0, 800);
@@ -298,10 +426,33 @@ function Message({ msg, user }) {
             </div>
           </div>
         )}
+        {!isUser && msg.model && !msg.streaming && (
+          <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 2 }}>
+            {msg.model.startsWith("gemini") ? (
+              <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 20,
+                background: "#EFF6FF", border: "1px solid #BFDBFE", color: "#1D4ED8",
+                display: "inline-flex", alignItems: "center", gap: 3 }}>
+                ✦ Gemini
+              </span>
+            ) : (
+              <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 20,
+                background: "#F0FDF4", border: "1px solid #BBF7D0", color: "#15803D",
+                display: "inline-flex", alignItems: "center", gap: 3 }}>
+                ⚡ Groq
+              </span>
+            )}
+          </div>
+        )}
         {!isUser && msg.content && !msg.streaming && (
           <button onClick={handleSpeak} style={{ alignSelf: "flex-start", background: "none", border: `1px solid ${C.borderGray}`, borderRadius: 20, padding: "2px 10px", fontSize: 11, color: C.midGray, cursor: "pointer", fontFamily: "'Source Sans 3', sans-serif" }}>
             🔊 Écouter
           </button>
+        )}
+        {!isUser && msg.eval_id && (
+          <>
+            <ScoreBadge evalId={msg.eval_id} autoScore={msg.auto_score} />
+            <FeedbackRow evalId={msg.eval_id} token={token} />
+          </>
         )}
       </div>
     </div>
@@ -419,7 +570,7 @@ function ChatBot({
   const [recording, setRecording] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentConvId, setCurrentConvId] = useState(null);
+  const [currentConvId, _setCurrentConvId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [language, setLanguage] = useState("french");
@@ -442,6 +593,13 @@ function ChatBot({
   const bottomRef = useRef(null);
   const textareaRef = useRef(null);
   const currentConvIdRef = useRef(null);
+
+  const setCurrentConvId = (id) => {
+    _setCurrentConvId(id);
+    currentConvIdRef.current = id;
+    if (id) localStorage.setItem("currentConvId", id);
+    else localStorage.removeItem("currentConvId");
+  };
 
   useEffect(() => { currentConvIdRef.current = currentConvId; }, [currentConvId]);
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading]);
@@ -527,7 +685,12 @@ function ChatBot({
   };
 
   const saveConversation = async (allMessages) => {
-    const messagesToSave = allMessages.filter(m => m.content && m.content.trim() !== "").map(m => ({ role: m.role, content: m.content, sources: m.sources || [] }));
+    const messagesToSave = allMessages.filter(m => m.content && m.content.trim() !== "").map(m => {
+      const msg = { role: m.role, content: m.content, sources: m.sources || [] };
+      if (m.eval_id)    msg.eval_id    = m.eval_id;
+      if (m.auto_score) msg.auto_score = m.auto_score;
+      return msg;
+    });
     const hasUser = messagesToSave.some(m => m.role === "user");
     const hasBot = messagesToSave.some(m => m.role === "assistant" && m.content.length > 10);
     if (!hasUser || !hasBot) return;
@@ -538,7 +701,7 @@ function ChatBot({
         await fetch(`${API_URL}/history/update/${convId}`, { method: "PUT", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ messages: messagesToSave }) });
       } else {
         const res = await fetch(`${API_URL}/history/save`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ messages: messagesToSave }) });
-        if (res.ok) { const data = await res.json(); setCurrentConvId(data.id); currentConvIdRef.current = data.id; setRefreshTrigger(t => t + 1); }
+        if (res.ok) { const data = await res.json(); setCurrentConvId(data.id); setRefreshTrigger(t => t + 1); }
       }
     } catch {} finally { setSaving(false); }
   };
@@ -546,13 +709,18 @@ function ChatBot({
   const loadConversation = async (convId) => {
     try {
       const res = await fetch(`${API_URL}/history/${convId}`, { headers: { Authorization: `Bearer ${token}` } });
-      if (res.ok) { const data = await res.json(); setMessages(data.messages); setCurrentConvId(convId); currentConvIdRef.current = convId; setPdfFile(null); setSharedPdf(null); setActiveClient(null); }
+      if (res.ok) { const data = await res.json(); setMessages(data.messages); setCurrentConvId(convId); setPdfFile(null); setSharedPdf(null); setActiveClient(null); }
     } catch { }
   };
 
+  useEffect(() => {
+    const savedId = localStorage.getItem("currentConvId");
+    if (savedId) loadConversation(savedId);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const newChat = () => {
     setMessages([{ role: "assistant", content: `Bonjour ${user.prenom} ! Je suis votre conseiller bancaire Attijari Bank.\n\nComment puis-je vous aider aujourd'hui ?`, sources: [] }]);
-    setCurrentConvId(null); currentConvIdRef.current = null; setError(null);
+    setCurrentConvId(null); setError(null);
   };
 
   const startRecording = async () => {
@@ -594,7 +762,7 @@ function ChatBot({
     const newMessages = [...messages, { role: "user", content: userMsg, sources: [] }];
     setMessages(newMessages); setLoading(true);
     const assistantIndex = newMessages.length;
-    let fullContent = ""; let finalSources = [];
+    let fullContent = ""; let finalSources = []; let finalEvalId = null; let finalAutoScore = null;
     setMessages(prev => [...prev, { role: "assistant", content: "", sources: [], streaming: true }]);
 
     try {
@@ -623,7 +791,9 @@ function ChatBot({
             const event = JSON.parse(line.replace("data: ", "").trim());
             if (event.type === "meta") {
               finalSources = event.sources || [];
-              setMessages(prev => { const u = [...prev]; u[assistantIndex] = { ...u[assistantIndex], sources: finalSources }; return u; });
+              finalEvalId = event.eval_id || null;
+              finalAutoScore = event.auto_score || null;
+              setMessages(prev => { const u = [...prev]; u[assistantIndex] = { ...u[assistantIndex], sources: finalSources, eval_id: finalEvalId, auto_score: finalAutoScore, model: event.model || null }; return u; });
             } else if (event.type === "token") {
               fullContent += event.text;
               setMessages(prev => { const u = [...prev]; u[assistantIndex] = { ...u[assistantIndex], content: u[assistantIndex].content + event.text }; return u; });
@@ -633,7 +803,7 @@ function ChatBot({
           } catch { }
         }
       }
-      await saveConversation([...newMessages, { role: "assistant", content: fullContent, sources: finalSources }]);
+      await saveConversation([...newMessages, { role: "assistant", content: fullContent, sources: finalSources, eval_id: finalEvalId, auto_score: finalAutoScore }]);
     } catch {
       setLoading(false); setError("Impossible de joindre le serveur.");
       setMessages(prev => prev.filter((_, i) => i !== assistantIndex));
@@ -728,13 +898,10 @@ function ChatBot({
               {dataset === "professionnel" ? "💼" : "👤"} {dataset === "professionnel" ? "Pro" : "Particulier"}
             </button>
 
-            <div style={{ display: "flex", background: "rgba(0,0,0,0.2)", borderRadius: 20, padding: 3, gap: 2 }}>
-              {[["french", "FR"], ["derja", "تونسي"]].map(([val, label]) => (
-                <button key={val} onClick={() => setLanguage(val)}
-                  style={{ padding: "4px 12px", borderRadius: 16, border: "none", cursor: "pointer", fontSize: 11, fontWeight: 600, background: language === val ? C.white : "transparent", color: language === val ? C.red : "rgba(255,255,255,0.75)" }}>
-                  {label}
-                </button>
-              ))}
+            <div style={{ display: "flex", alignItems: "center", gap: 4, background: "rgba(0,0,0,0.2)", borderRadius: 20, padding: "4px 12px" }}>
+              <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>FR</span>
+              <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>·</span>
+              <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>تونسي</span>
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 24, padding: "5px 12px" }}>
@@ -757,7 +924,7 @@ function ChatBot({
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
           <div style={{ flex: 1, overflowY: "auto", padding: "24px 20px 16px", display: "flex", flexDirection: "column" }}>
-            {messages.map((msg, i) => <Message key={i} msg={msg} user={user} />)}
+            {messages.map((msg, i) => <Message key={i} msg={msg} user={user} token={token} />)}
 
             {loading && (
               <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
@@ -876,7 +1043,7 @@ function ChatBot({
                 placeholder={
                   activeClient ? `Question sur ${activeClient.prenom} ${activeClient.nom}...`
                   : activeDoc ? "Question sur le document..."
-                  : language === "derja" ? "Ekteb so2elk hne..." : "Posez votre question bancaire..."
+                  : "Posez votre question en français ou en dialecte tunisien..."
                 }
                 rows={1} readOnly={transcribing}
                 style={{ flex: 1, border: "none", background: "transparent", fontSize: 14, color: transcribing ? C.midGray : C.charcoal, lineHeight: 1.6, resize: "none", fontFamily: "'Source Sans 3', sans-serif", outline: "none", maxHeight: 120, overflowY: "auto" }}
@@ -920,27 +1087,60 @@ export default function App() {
 
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [page, setPage] = useState("login");
-  const [dataset, setDataset] = useState(null);
+  const [dataset, setDataset] = useState(() => localStorage.getItem("dataset"));
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [twoFAData, setTwoFAData] = useState(null);
+  const [resetData, setResetData] = useState(null); // {resetToken, userId} après incident sécurité
 
   // Navigation interne simple sans React Router
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
 
   useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
+    const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
+    return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
+  // Intercepteur global 401 — déconnexion automatique si token expiré
+  useEffect(() => {
+    if (!token) return;
+    const origFetch = window.fetch;
+    window.fetch = async (...args) => {
+      const res = await origFetch(...args);
+      if (res.status === 401) {
+        const url = typeof args[0] === "string" ? args[0] : args[0]?.url || "";
+        const isAuthRoute = url.includes("/auth/login") || url.includes("/auth/register") ||
+                            url.includes("/auth/verify-2fa") || url.includes("/auth/resend-2fa");
+        if (!isAuthRoute) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          localStorage.removeItem("dataset");
+          localStorage.removeItem("currentConvId");
+          sessionStorage.removeItem("toast_shown_shared");
+          window.fetch = origFetch;
+          window.history.pushState({}, "", "/login");
+          window.location.reload();
+        }
+      }
+      return res;
+    };
+    return () => { window.fetch = origFetch; };
+  }, [token]);
 
   const navigateTo = (path) => {
     window.history.pushState({}, "", path);
     setCurrentPath(path);
+  };
+
+  const handleGoVerify2FA = (data) => {
+    setTwoFAData(data);
+    navigateTo("/verify-2fa");
+  };
+
+  const handleRequirePasswordReset = (data) => {
+    setResetData(data);
+    setTwoFAData(null);
+    navigateTo("/reset-password-required");
   };
 
   const handleLogin = (userData, accessToken) => {
@@ -952,23 +1152,61 @@ export default function App() {
     setToken(accessToken);
     setDataset(null);
     setShowAdminDashboard(false);
+    setTwoFAData(null);
+    setResetData(null);
 
     navigateTo("/chat");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/auth/logout", { method: "POST", credentials: "include" });
+    } catch {}
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("dataset");
+    localStorage.removeItem("currentConvId");
     sessionStorage.removeItem("toast_shown_shared");
+    sessionStorage.removeItem("twofa_session_id");
 
     setUser(null);
     setToken(null);
     setPage("login");
     setDataset(null);
     setShowAdminDashboard(false);
+    setTwoFAData(null);
+    setResetData(null);
 
     navigateTo("/login");
   };
+
+  // Polling: vérifier la validité du token toutes les 15s
+  // Déclenche un logout automatique si le serveur invalide la session (force_relogin, CRITICAL RBA)
+  useEffect(() => {
+    if (!token) return;
+    const tid = setInterval(async () => {
+      try {
+        const r = await fetch("/auth/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (r.status === 401 || r.status === 403) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          localStorage.removeItem("dataset");
+          localStorage.removeItem("currentConvId");
+          sessionStorage.removeItem("toast_shown_shared");
+          sessionStorage.removeItem("twofa_session_id");
+          setUser(null);
+          setToken(null);
+          setPage("login");
+          setDataset(null);
+          setShowAdminDashboard(false);
+          navigateTo("/login");
+        }
+      } catch {}
+    }, 15_000);
+    return () => clearInterval(tid);
+  }, [token]);
 
   const handleGoRegister = () => {
     setPage("register");
@@ -990,8 +1228,46 @@ export default function App() {
     navigateTo("/chat");
   };
 
+  // Page publique — accessible sans être connecté (lien email "Ce n'était pas moi")
+  if (currentPath === "/report-not-me") {
+    return (
+      <ReportNotMe
+        onGoLogin={() => {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          setUser(null);
+          setToken(null);
+          navigateTo("/login");
+        }}
+      />
+    );
+  }
+
   // Si l'utilisateur n'est pas connecté
   if (!user || !token) {
+    if (currentPath === "/reset-password-required" && resetData) {
+      return (
+        <ResetPasswordRequired
+          resetToken={resetData.resetToken}
+          onLogin={handleLogin}
+          onBack={() => { setResetData(null); navigateTo("/login"); }}
+        />
+      );
+    }
+
+    if (currentPath === "/verify-2fa" && twoFAData) {
+      return (
+        <Verify2FA
+          sessionId={twoFAData.sessionId}
+          emailMasked={twoFAData.emailMasked}
+          expiresIn={twoFAData.expiresIn}
+          onLogin={handleLogin}
+          onRequirePasswordReset={handleRequirePasswordReset}
+          onBack={() => { setTwoFAData(null); navigateTo("/login"); }}
+        />
+      );
+    }
+
     if (currentPath === "/register" || page === "register") {
       return (
         <RegisterPage
@@ -1005,6 +1281,7 @@ export default function App() {
       <LoginPage
         onLogin={handleLogin}
         onGoRegister={handleGoRegister}
+        onGoVerify2FA={handleGoVerify2FA}
       />
     );
   }
@@ -1019,6 +1296,28 @@ export default function App() {
     return <MesRDV />;
   }
 
+  // Page évaluations admin
+  if (currentPath === "/admin/evaluations" && user.is_admin) {
+    return (
+      <AdminEvaluations
+        user={user}
+        token={token}
+        onBack={() => { navigateTo("/admin"); setShowAdminDashboard(true); }}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
+  // Page sessions admin
+  if (currentPath === "/admin/sessions" && user.is_admin) {
+    return (
+      <AdminSessions
+        token={token}
+        onBack={() => { navigateTo("/admin"); setShowAdminDashboard(true); }}
+      />
+    );
+  }
+
   // Page admin
   if (currentPath === "/admin" && showAdminDashboard && user.is_admin) {
     return (
@@ -1027,6 +1326,8 @@ export default function App() {
         token={token}
         onLogout={handleLogout}
         onBackToChat={handleBackToChat}
+        onGoEvaluations={() => navigateTo("/admin/evaluations")}
+        onGoSessions={() => navigateTo("/admin/sessions")}
       />
     );
   }
@@ -1037,6 +1338,7 @@ export default function App() {
       <DatasetSelector
         user={user}
         onSelect={(selectedDataset) => {
+          localStorage.setItem("dataset", selectedDataset);
           setDataset(selectedDataset);
           navigateTo("/chat");
         }}
@@ -1053,7 +1355,7 @@ export default function App() {
       token={token}
       onLogout={handleLogout}
       dataset={dataset}
-      onChangeDataset={() => setDataset(null)}
+      onChangeDataset={() => { localStorage.removeItem("dataset"); setDataset(null); }}
       onGoAdmin={user.is_admin ? handleGoAdmin : null}
       onGoPrendreRDV={() => navigateTo("/prendre-rdv")}
       onGoMesRDV={() => navigateTo("/my-appointments")}

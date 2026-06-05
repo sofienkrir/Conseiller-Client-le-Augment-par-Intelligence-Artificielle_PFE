@@ -7,6 +7,7 @@ import ChatInterface from './components/Chat/ChatInterface';
 import ProtectedRoute from './components/ProtectedRoute';
 import PrendreRDV from './pages/PrendreRDV';
 import MesRDV from './pages/MesRDV';
+import AdminEvaluations from './pages/AdminEvaluations';
 
 function App() {
   return (
@@ -38,6 +39,15 @@ function App() {
           element={
             <ProtectedRoute>
               <MesRDV />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/evaluations"
+          element={
+            <ProtectedRoute>
+              <AdminEvaluations />
             </ProtectedRoute>
           }
         />

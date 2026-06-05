@@ -354,6 +354,111 @@ def propose_alternative(
     return get_appointment(appointment_id)
 
 
+def propose_multiple_alternatives(
+    appointment_id: str,
+    advisor_id: str,
+    advisor_name: str,
+    slots: list,
+    message: str = "",
+) -> dict:
+    """Propose 2 à 3 créneaux alternatifs au client pour reprogrammer un RDV confirmé."""
+    appointment = _appointments_col.find_one({"_id": ObjectId(appointment_id)})
+    if not appointment:
+        return {"error": "RDV introuvable"}
+    if appointment["status"] != "confirmed":
+        return {"error": f"Seuls les RDV confirmés peuvent être reprogrammés (statut actuel: {appointment['status']})"}
+    if not (2 <= len(slots) <= 3):
+        return {"error": "Proposez entre 2 et 3 créneaux"}
+
+    formatted = []
+    for s in slots:
+        try:
+            date_obj = datetime.strptime(s["date"], "%Y-%m-%d")
+        except (ValueError, KeyError):
+            return {"error": f"Format de date invalide : {s.get('date')}"}
+        h, m = map(int, s["start_time"].split(":"))
+        end_total = h * 60 + m + DEFAULT_DURATION_MINUTES
+        formatted.append({
+            "date":       date_obj,
+            "date_str":   s["date"],
+            "start_time": s["start_time"],
+            "end_time":   f"{end_total // 60:02d}:{end_total % 60:02d}",
+        })
+
+    _appointments_col.update_one(
+        {"_id": ObjectId(appointment_id)},
+        {"$set": {
+            "status":               "alternative_proposed",
+            "advisor_id":           ObjectId(advisor_id),
+            "advisor_name":         advisor_name,
+            "reviewed_by":          ObjectId(advisor_id),
+            "reviewed_at":          datetime.utcnow(),
+            "alternatives_multiple": formatted,
+            "alternatives_message": message.strip(),
+            "alternative_proposed": None,
+            "updated_at":           datetime.utcnow(),
+        }}
+    )
+    return get_appointment(appointment_id)
+
+
+def choose_alternative_slot(appointment_id: str, client_id: str, slot_index: int) -> dict:
+    """Le client choisit l'un des créneaux proposés → RDV reconfirmé."""
+    appointment = _appointments_col.find_one({"_id": ObjectId(appointment_id)})
+    if not appointment:
+        return {"error": "RDV introuvable"}
+    if str(appointment["client_id"]) != client_id:
+        return {"error": "Non autorisé"}
+    if appointment["status"] != "alternative_proposed":
+        return {"error": "Aucune alternative en attente"}
+
+    slots = appointment.get("alternatives_multiple") or []
+    if not slots:
+        return {"error": "Aucun créneau multiple disponible — utilisez accept-alternative"}
+    if not (0 <= slot_index < len(slots)):
+        return {"error": "Index de créneau invalide"}
+
+    chosen = slots[slot_index]
+    _appointments_col.update_one(
+        {"_id": ObjectId(appointment_id)},
+        {"$set": {
+            "status":                "confirmed",
+            "date":                  chosen["date"],
+            "start_time":            chosen["start_time"],
+            "end_time":              chosen["end_time"],
+            "alternatives_multiple": None,
+            "alternatives_message":  None,
+            "updated_at":            datetime.utcnow(),
+        }}
+    )
+    return get_appointment(appointment_id)
+
+
+def advisor_cancel_appointment(appointment_id: str, advisor_id: str, advisor_name: str, reason: str) -> dict:
+    """
+    Annulation d'un RDV confirmé par le conseiller (réunion urgente, imprévu).
+    Le créneau redevient disponible et le client reçoit une notification.
+    """
+    appointment = _appointments_col.find_one({"_id": ObjectId(appointment_id)})
+    if not appointment:
+        return {"error": "RDV introuvable"}
+    if appointment["status"] != "confirmed":
+        return {"error": f"Seuls les RDV confirmés peuvent être annulés par le conseiller (statut actuel: {appointment['status']})"}
+
+    _appointments_col.update_one(
+        {"_id": ObjectId(appointment_id)},
+        {"$set": {
+            "status": "cancelled_by_advisor",
+            "cancellation_reason": reason.strip(),
+            "cancelled_by": ObjectId(advisor_id),
+            "cancelled_by_name": advisor_name,
+            "cancelled_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow(),
+        }}
+    )
+    return get_appointment(appointment_id)
+
+
 def cancel_appointment(appointment_id: str, client_id: str) -> dict:
     """Annulation d'un RDV par le client (uniquement avant confirmation, ou >24h avant)."""
     appointment = _appointments_col.find_one({"_id": ObjectId(appointment_id)})
@@ -464,6 +569,10 @@ def _format_appointment(doc: dict) -> dict:
         "status": doc.get("status"),
         "rejection_reason": doc.get("rejection_reason"),
         "alternative_proposed": _format_alternative(doc.get("alternative_proposed")),
+        "alternatives_multiple": _format_alternatives_multiple(doc.get("alternatives_multiple")),
+        "alternatives_message": doc.get("alternatives_message", ""),
+        "cancellation_reason": doc.get("cancellation_reason"),
+        "cancelled_by_name": doc.get("cancelled_by_name"),
         
         "reviewed_by": str(doc["reviewed_by"]) if doc.get("reviewed_by") else None,
         "reviewed_at": doc["reviewed_at"].isoformat() if doc.get("reviewed_at") else None,
@@ -483,3 +592,17 @@ def _format_alternative(alt: Optional[dict]) -> Optional[dict]:
         "end_time": alt.get("end_time"),
         "message": alt.get("message", ""),
     }
+
+
+def _format_alternatives_multiple(slots) -> Optional[list]:
+    if not slots:
+        return None
+    result = []
+    for s in slots:
+        date_obj = s.get("date")
+        result.append({
+            "date_str": date_obj.strftime("%Y-%m-%d") if hasattr(date_obj, "strftime") else str(date_obj or "")[:10],
+            "start_time": s.get("start_time"),
+            "end_time": s.get("end_time"),
+        })
+    return result

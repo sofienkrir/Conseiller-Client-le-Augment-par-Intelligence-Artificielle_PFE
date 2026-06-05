@@ -60,16 +60,23 @@ def get_llm(language: str):
 # ─────────────────────────────────────────────
 # Prompts (INCHANGÉS)
 # ─────────────────────────────────────────────
-PROMPT_FRENCH = PromptTemplate.from_template("""Tu es un conseiller bancaire officiel d'Attijari Bank Tunisie.
+PROMPT_FRENCH = PromptTemplate.from_template("""Tu es un conseiller bancaire officiel d'Attijari Bank Tunisie. Tu traites à la fois les questions factuelles et les demandes de conseil personnalisé.
 
 RÈGLES ABSOLUES :
-1. Réponds à la question de façon COMPLÈTE et DÉTAILLÉE. N'omets aucune information disponible dans le contexte.
-2. Utilise EXCLUSIVEMENT les informations du contexte. N'invente rien.
-3. Si l'information est absente : "Cette information n'est pas disponible. Appelez le 71 111 345."
-4. Si plusieurs produits ou options correspondent, liste-les TOUS avec leurs détails (montants, taux, conditions, avantages…).
-5. Structure ta réponse clairement : utilise des tirets ou des points pour les listes, et des sauts de ligne entre les produits.
-6. IMPORTANT: Réponds TOUJOURS en français, peu importe la langue de la question.
-7. Termine toujours par : "Pour plus d'informations, appelez le 71 111 345."
+1. Utilise EXCLUSIVEMENT les informations du contexte fourni. N'invente rien.
+2. Si l'information demandée est absente du contexte : "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345."
+3. Réponds TOUJOURS en français, peu importe la langue de la question.
+4. Termine toujours par : "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345."
+
+TYPE DE RÉPONSE SELON LA QUESTION :
+
+▶ Question FACTUELLE (conditions d'un produit précis, taux, montant, délai...) :
+   → Fournis tous les détails pertinents du produit demandé, structurés par tirets.
+
+▶ Question de CONSEIL ou avec un PROFIL (étudiant, jeune, je cherche, que me conseillez-vous...) :
+   → 1. RECOMMANDATION PRINCIPALE : Identifie le produit le plus adapté au profil mentionné et explique POURQUOI (quels critères correspondent).
+   → 2. ALTERNATIVES : Mentionne brièvement 1 ou 2 autres options selon les besoins (usage à l'étranger, plafonds, etc.).
+   → 3. PRUDENCE : Précise que l'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence.
 
 CONTEXTE :
 {context}
@@ -79,35 +86,37 @@ QUESTION : {question}
 RÉPONSE EN FRANÇAIS :""")
 
 
-PROMPT_DERJA = PromptTemplate.from_template("""Enta moustachaar bancaire mou7tarif mte3 Attijari Bank Tounès. Mehmtek: t3awen el client b ma3louma sahiha w mfhouma, b style rasmi w mou7taram, kima moustachaar fi agence haqiqiyya.
+PROMPT_DERJA = PromptTemplate.from_template("""Enta moustachaar bancaire mou7tarif mte3 Attijari Bank Tounès. Mehmtek: t3awen el client b ma3louma sahiha w mfhouma, b style rasmi w naturel, kima moustachaar fi agence haqiqiyya.
 
-STYLE mte3ek:
-- Ta7ki tounsi franco (darija khafifa + les termes bancaires bel français)
-- El banking terms (virement, crédit, RIB, solde, plafond, taux, compte, carte, agence) khallihom bel français
-- Uslob mou7taram w rasmi, mais wadheh w mfhoum — kima conseiller fi banque mch kima sa7eb
-- Évite el klem el familier: "enti", "enta", "sa7bi", "ya khou", "t7eb", "ta7ki" — yetbe3doum 3al style mte3 conseiller bancaire
+STYLE LINGUISTIQUE — IMPORTANT:
+- Ta7ki tounsi franco naturel: el termes bancaires (crédit, carte, virement, RIB, solde, plafond, taux, compte, agence) dir7om bel français directement
+- ÉVITE les constructions non naturelles kima "bil sakine 3ala X" walla "b sécurité 3ala" — qoul simplement "ma3 sécurité renforcée" walla "b protection 3D Secure"
+- Uslob mou7taram w rasmi, wadheh w naturel — mch roboti
+- JAMAIS tibda b "Enti..." walla "Enta..." — ibda b el information directement walla b "Attijari Bank twafer..."
+- Ki tkhatib el client: ist3mel "votre" / "vos" bel français walla "mte3ek/mte3kom"
 
-QWA3ED LINGUISTIQUES IMPORTANT:
-1. Ibda el réponse direct b el ma3louma walla b "Attijari Bank twafer..." — mat9oulch "Enti..." walla "Enta..."
-2. Ist3mel el style impersonnel walla 3ème personne ki tnajjem
-3. Ki lazem tkhatib el client direct, ist3mel "votre" / "vos" bel français walla formule mou7taramah
-4. Évite el verbes el familiers
+NOU3 EL JAWEB SELON EL SO2EL:
 
-QWA3ED FONCTIONNELLES:
-1. Jaweb direct 3al so2el. Matzidch ma3loumet zeyda manhoumch mat9oulou.
-2. Istefed BAS mel contexte (bel français). Traducih bel tounsi franco rasmi.
-3. Ken el ma3louma manhouch fil contexte: "Asef, hadhi el ma3louma matahtech fi base mte3i. Nansa7kom tatasslou b moustachaar Attijari 3al 71 111 345 walla trou7ou l agence el 9rib."
-4. Jaweb structuré b bullets w **gras** 3al asma' el produits.
-5. Khtim DIMA b: "Ken bich tafsil akther, el équipe Attijari fi khidmetkom 3al 71 111 345."
+▶ So2el FACTUEL (conditions produit précis, taux, montant...) :
+   → A3ti kol et-tafasil el mouhimma mte3 el produit, structurés b tirets.
+
+▶ So2el CONSEIL walla fih PROFIL (étudiant, nheb naaml, shnw tansa7ni, ana chercheur...) :
+   → 1. RECOMMANDATION PRINCIPALE: Qoul el produit el ansab lel profil w POURQUOI (chkon el critères eli تتوافق).
+   → 2. ALTERNATIVES: Dhkour bi ikhtissar 1 walla 2 options okhra selon el i7tiyajat (voyage, plafonds, etc.).
+   → 3. PRUDENCE: Fakkar el client belli el eligibilité el niha2iyya ta7taj confirmation fi agence walla 3al 71 111 345.
+
+RÈGLES ABSOLUES:
+- Istefed BAS mel contexte. Ken ma3louma manhouch: "Asef, hadhi el ma3louma matahtech fi base mte3i. Itassel b Attijari 3al 71 111 345 walla rou7 lagence el 9rib."
+- Khtim DIMA b: "Ken bich tafsil akther walla ta2kid mte3 el éligibilité, el équipe Attijari fi khidmetkom 3al 71 111 345."
 
 ---
 
-Contexte (bel français — traducih bel tounsi franco rasmi):
+Contexte (bel français):
 {context}
 
 So2el: {question}
 
-Jaweb bel tounsi franco professionnel, structuré w mou7taram (mat9oulch "Enti" walla "Enta" fil bidaya):""")
+Jaweb bel tounsi franco naturel w professionnel:""")
 
 
 # ─────────────────────────────────────────────
@@ -210,6 +219,23 @@ def format_docs(docs, max_docs: int = 6, max_chars: int = 1500) -> str:
 
 
 # ─────────────────────────────────────────────
+# Derja auto-detection (content-based, not toggle-based)
+# ─────────────────────────────────────────────
+_DERJA_MARKERS = [
+    '3al', '3la', '3and', 'nheb', 'naaml', 'bech', 'tansa7ni', 'kifech',
+    'chni', 'wesh', 'mta3', 'walla', 'barcha', '9al', 'ma3', 'naamel',
+    'na3mel', 'tawfer', 'ana ', 'inti ', 'enta ', 'nansa7', 'ki nheb',
+    'shnw', 'shniya', 'ya3ni', 'tnajem', 'lazem', 'bich', 'famma',
+]
+
+def is_derja(text: str) -> bool:
+    if any('؀' <= c <= 'ۿ' for c in text):
+        return True
+    t = text.lower()
+    return sum(1 for m in _DERJA_MARKERS if m in t) >= 1
+
+
+# ─────────────────────────────────────────────
 # Broad question detection
 # ─────────────────────────────────────────────
 BROAD_KEYWORDS = [
@@ -229,12 +255,18 @@ def is_broad_question(query: str) -> bool:
 # ─────────────────────────────────────────────
 # Hybrid search (INCHANGÉ)
 # ─────────────────────────────────────────────
-def hybrid_search(vectorstore, question: str, category: str = None, k: int = 5, dataset: str = None):
+def hybrid_search(vectorstore, question: str, category: str = None, k: int = 5, dataset: str = None, semantic_query: str = None):
+    """
+    semantic_query: optional French-rewritten version of the question used for vector
+    similarity search only. The original `question` is always used for keyword matching
+    so that specific product names in any language are preserved.
+    """
     question_lower = question.lower()
+    search_query = semantic_query or question  # use French rewrite for embedding if available
 
     if is_broad_question(question):
-        k = 10
-        print("[DEBUG] Broad question detected — expanded k to 10")
+        k = 8
+        print("[DEBUG] Broad question detected — expanded k to 8")
 
     if dataset == "professionnel":
         db_category = "professionnel"
@@ -246,23 +278,23 @@ def hybrid_search(vectorstore, question: str, category: str = None, k: int = 5, 
             retriever = vectorstore.as_retriever(
                 search_kwargs={"k": k, "filter": {"source": {"$eq": db_category}}}
             )
-            semantic_docs = retriever.invoke(question)
+            semantic_docs = retriever.invoke(search_query)
             print(f"[DEBUG] Filtered semantic search: {len(semantic_docs)} docs for source={db_category}")
         except Exception as e:
             print(f"[WARNING] Filtered retrieval failed: {e} — falling back to unfiltered")
-            semantic_docs = vectorstore.similarity_search(question, k=k)
+            semantic_docs = vectorstore.similarity_search(search_query, k=k)
     elif dataset == "particulier":
         try:
             retriever = vectorstore.as_retriever(
                 search_kwargs={"k": k, "filter": {"source": {"$ne": "professionnel"}}}
             )
-            semantic_docs = retriever.invoke(question)
+            semantic_docs = retriever.invoke(search_query)
             print(f"[DEBUG] Particulier unfiltered semantic: {len(semantic_docs)} docs")
         except Exception as e:
             print(f"[WARNING] Particulier filter failed: {e} — falling back to unfiltered")
-            semantic_docs = vectorstore.similarity_search(question, k=k)
+            semantic_docs = vectorstore.similarity_search(search_query, k=k)
     else:
-        semantic_docs = vectorstore.similarity_search(question, k=k)
+        semantic_docs = vectorstore.similarity_search(search_query, k=k)
 
     all_docs = vectorstore.get()
     keyword_docs = []
@@ -433,24 +465,27 @@ def answer_question(
         - auto_score: dict avec score_global, sub_scores, level (ou None)
     """
     french_llm = get_llm("french")
-    active_llm = get_llm(language)
+    active_llm = french_llm  # always respond in French regardless of input language
 
     print(f"[DEBUG] active LLM type = {type(active_llm).__name__}")
 
     if dataset == "professionnel":
         category, q2 = "professionnel", query
-        docs = hybrid_search(vectorstore, query, category=category, k=8, dataset=dataset)
+        docs = hybrid_search(vectorstore, query, category=category, k=5, dataset=dataset)
     else:
+        # Auto-detect Derja regardless of the language parameter (toggle removed from UI).
+        # Rewrite to French for semantic search to improve retrieval quality.
+        if is_derja(query):
+            _, q_fr = detect_category_and_rewrite(french_llm, query, valid_categories, vectorstore)
+            print(f"[DEBUG] Derja detected → French rewrite for semantic search: '{q_fr}'")
+        else:
+            q_fr = None
         category, q2 = None, query
-        docs = hybrid_search(vectorstore, query, category=None, k=8, dataset=dataset)
+        docs = hybrid_search(vectorstore, query, category=None, k=5, dataset=dataset, semantic_query=q_fr)
 
     if len(docs) < 2:
-        print("[DEBUG] Few results — trying rewritten query")
-        docs = hybrid_search(vectorstore, q2, category=category, k=8, dataset=dataset)
-
-    if len(docs) < 2:
-        print("[DEBUG] Still few results — removing category filter")
-        docs = hybrid_search(vectorstore, query, category=None, k=8, dataset=dataset)
+        print("[DEBUG] Few results — retrying with broader search")
+        docs = hybrid_search(vectorstore, query, category=None, k=5, dataset=dataset)
 
     print(f"[DEBUG] language          = {language}")
     print(f"[DEBUG] dataset           = {dataset}")
@@ -468,7 +503,7 @@ def answer_question(
         )
         return no_info, [], category, q2, 0, None, None
 
-    active_prompt = PROMPT_DERJA if language == "derja" else PROMPT_FRENCH
+    active_prompt = PROMPT_FRENCH  # always respond in French; Derja is handled at retrieval level
 
     chain = (
         {

@@ -100,7 +100,21 @@ class ChatHistory:
     def get_session_messages(session_id: str):
         """جلب رسائل محادثة محددة"""
         session = conversations_collection.find_one({"session_id": session_id})
-        return session["messages"] if session else []
+        if not session:
+            return []
+        messages = []
+        for m in session["messages"]:
+            msg = {
+                "role": m.get("role", "user"),
+                "content": m.get("content", ""),
+                "sources": m.get("sources", []),
+            }
+            if m.get("eval_id"):
+                msg["eval_id"] = m["eval_id"]
+            if m.get("auto_score"):
+                msg["auto_score"] = m["auto_score"]
+            messages.append(msg)
+        return messages
     
     @staticmethod
     def delete_session(session_id: str):
@@ -110,15 +124,19 @@ class ChatHistory:
     @staticmethod
     def replace_messages(session_id: str, messages: list):
         """Replace all messages in a session (used by new frontend)"""
-        normalized = [
-            {
+        normalized = []
+        for m in messages:
+            msg = {
                 "role": m.get("role", "user"),
                 "content": m.get("content", ""),
                 "sources": m.get("sources", []),
                 "timestamp": datetime.utcnow(),
             }
-            for m in messages
-        ]
+            if m.get("eval_id"):
+                msg["eval_id"] = m["eval_id"]
+            if m.get("auto_score"):
+                msg["auto_score"] = m["auto_score"]
+            normalized.append(msg)
         conversations_collection.update_one(
             {"session_id": session_id},
             {

@@ -15,6 +15,7 @@ google-generativeai
 pymongo
 python-dotenv
 python-jose[cryptography]
+cryptography
 passlib[bcrypt]
 groq
 chromadb
@@ -25,3 +26,4 @@ sentence-transformers
 torch
 pypdf
 python-multipart
+user-agents

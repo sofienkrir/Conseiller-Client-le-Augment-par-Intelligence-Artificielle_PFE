@@ -33,12 +33,13 @@ function navigateTo(path) {
 function getStatusLabel(status) {
   const normalized = String(status || "").toLowerCase();
 
-  if (normalized === "pending") return "En attente";
-  if (normalized === "confirmed") return "Confirmé";
-  if (normalized === "approved") return "Validé";
-  if (normalized === "rejected") return "Refusé";
-  if (normalized === "cancelled") return "Annulé";
-  if (normalized === "completed") return "Terminé";
+  if (normalized === "pending")              return "En attente";
+  if (normalized === "confirmed")            return "Confirmé";
+  if (normalized === "approved")             return "Validé";
+  if (normalized === "rejected")             return "Refusé";
+  if (normalized === "cancelled")            return "Annulé";
+  if (normalized === "cancelled_by_advisor") return "Annulé par le conseiller";
+  if (normalized === "completed")            return "Terminé";
 
   return status || "Non défini";
 }
@@ -70,6 +71,14 @@ function getStatusStyle(status) {
     };
   }
 
+  if (normalized === "cancelled_by_advisor") {
+    return {
+      background: "#FEF3C7",
+      color: "#92400E",
+      border: "1px solid #FDE68A",
+    };
+  }
+
   return {
     background: "#F1F5F9",
     color: "#475569",
@@ -81,6 +90,20 @@ export default function MesRDV() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [choosingSlot, setChoosingSlot] = useState(null); // appointmentId en cours
+
+  async function handleChooseSlot(appointmentId, slotIndex) {
+    setChoosingSlot(appointmentId + "_" + slotIndex);
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/appointments/${appointmentId}/choose-slot`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${getToken()}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ slot_index: slotIndex }),
+      });
+      if (res.ok) await loadAppointments();
+    } catch {}
+    finally { setChoosingSlot(null); }
+  }
 
   async function loadAppointments() {
     try {
@@ -239,6 +262,59 @@ export default function MesRDV() {
                     <div style={styles.noteBox}>
                       <span style={styles.infoLabel}>Note client</span>
                       <p style={styles.noteText}>{rdv.notes_client}</p>
+                    </div>
+                  )}
+
+                  {rdv.status === "alternative_proposed" && rdv.alternatives_multiple?.length > 0 && (
+                    <div style={{ marginTop: 14 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: C.charcoal, marginBottom: 10 }}>
+                        🔄 Votre conseiller vous propose {rdv.alternatives_multiple.length} créneaux — choisissez-en un :
+                      </div>
+                      {rdv.alternatives_message && (
+                        <p style={{ fontSize: 12, color: C.midGray, fontStyle: "italic", marginBottom: 10 }}>
+                          "{rdv.alternatives_message}"
+                        </p>
+                      )}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {rdv.alternatives_multiple.map((slot, idx) => {
+                          const labels = ["Option A", "Option B", "Option C"];
+                          const dateStr = slot.date_str || String(slot.date || "").slice(0, 10);
+                          const isLoading = choosingSlot === `${rdv.id}_${idx}`;
+                          return (
+                            <button key={idx} onClick={() => handleChooseSlot(rdv.id, idx)} disabled={!!choosingSlot}
+                              style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "#F0F7FF", border: "1.5px solid #BFDBFE", borderRadius: 12, cursor: choosingSlot ? "not-allowed" : "pointer", textAlign: "left", transition: "all 0.2s" }}
+                              onMouseEnter={e => { if (!choosingSlot) e.currentTarget.style.background = "#DBEAFE"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = "#F0F7FF"; }}>
+                              <div>
+                                <span style={{ fontSize: 12, fontWeight: 800, color: "#1D4ED8", marginRight: 10 }}>{labels[idx]}</span>
+                                <span style={{ fontSize: 13, fontWeight: 700, color: C.charcoal }}>
+                                  {new Date(dateStr + "T00:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}
+                                </span>
+                                <span style={{ fontSize: 13, color: C.midGray, marginLeft: 8 }}>{slot.start_time} – {slot.end_time}</span>
+                              </div>
+                              <span style={{ fontSize: 13, fontWeight: 700, color: "#1D4ED8" }}>
+                                {isLoading ? "..." : "Choisir →"}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {rdv.status === "rejected" && rdv.rejection_reason && (
+                    <div style={{ background: "#FEE2E2", border: "1px solid #FECACA", borderRadius: 12, padding: 14, marginTop: 10 }}>
+                      <span style={{ ...styles.infoLabel, color: "#991B1B" }}>Motif du refus</span>
+                      <p style={{ ...styles.noteText, color: "#7F1D1D" }}>{rdv.rejection_reason}</p>
+                    </div>
+                  )}
+
+                  {rdv.status === "cancelled_by_advisor" && (
+                    <div style={{ background: "#FEF3C7", border: "1px solid #FDE68A", borderRadius: 12, padding: 14, marginTop: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ fontSize: 18 }}>📧</span>
+                      <p style={{ margin: 0, fontSize: 13, color: "#92400E", fontWeight: 600 }}>
+                        Un e-mail vous a été envoyé avec les détails de l'annulation.
+                      </p>
                     </div>
                   )}
                 </article>

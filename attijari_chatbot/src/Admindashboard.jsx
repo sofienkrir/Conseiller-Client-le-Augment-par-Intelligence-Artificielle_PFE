@@ -34,17 +34,12 @@ const IcoCheck = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="non
 // Logo
 const Logo = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <svg width="40" height="30" viewBox="0 0 48 38" fill="none">
-      <defs><linearGradient id="lg2" x1="0" y1="0" x2="48" y2="38" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#F5A623"/><stop offset="40%" stopColor="#E8521A"/><stop offset="100%" stopColor="#CC0000"/></linearGradient></defs>
-      <path d="M4 6 C4 6, 8 32, 13 32 C18 32, 18 10, 24 10 C30 10, 30 32, 35 32 C40 32, 44 6, 44 6" stroke="url(#lg2)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    </svg>
-    <div>
-      <div style={{ display: "flex", gap: 3 }}>
-        <span style={{ fontSize: 15, fontWeight: 700, color: C.white, fontFamily: "'Source Sans 3', sans-serif" }}>Attijari</span>
-        <span style={{ fontSize: 15, fontWeight: 300, color: C.white, fontFamily: "'Source Sans 3', sans-serif" }}>bank</span>
-      </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>Admin Dashboard</div>
+    <div style={{ background: "white", borderRadius: 8, padding: "4px 10px", display: "flex", alignItems: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
+      <img src="/attijari-logo.png" alt="Attijari Bank" style={{ height: 26, display: "block" }} />
     </div>
+    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", fontStyle: "italic", fontFamily: "'Source Sans 3', sans-serif" }}>
+      Admin Dashboard
+    </span>
   </div>
 );
 
@@ -673,8 +668,22 @@ function SharedPdfsTable({ token, apiUrl }) {
                   </td>
                   <td style={{ padding: "13px 18px", fontSize: 12, color: C.textSecondary, maxWidth: 200, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.description || "—"}</td>
                   <td style={{ padding: "13px 18px", fontSize: 12, color: C.textSecondary }}>{p.uploaded_by}</td>
-                  <td style={{ padding: "13px 18px" }}>
-                    <span style={{ background: `${C.accent}20`, color: C.accent, padding: "3px 10px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>{p.shared_with_count} user{p.shared_with_count > 1 ? "s" : ""}</span>
+                  <td style={{ padding: "13px 18px", maxWidth: 260 }}>
+                    {(!p.shared_with_names || p.shared_with_names.length === 0) ? (
+                      <span style={{ fontSize: 11, color: C.textMuted }}>—</span>
+                    ) : (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                        {p.shared_with_names.map(u => {
+                          const seen = (p.viewed_by || []).includes(u.id);
+                          return (
+                            <span key={u.id} title={`${u.email}${seen ? " · a consulté" : " · pas encore lu"}`}
+                              style={{ background: seen ? `${C.green}20` : `${C.accent}18`, color: seen ? C.green : C.accent, padding: "3px 9px", borderRadius: 20, fontSize: 11, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>
+                              {seen ? "✓" : "•"} {u.name}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    )}
                   </td>
                   <td style={{ padding: "13px 18px" }}>
                     <span style={{ background: p.viewed_by_count > 0 ? `${C.green}20` : `${C.textMuted}20`, color: p.viewed_by_count > 0 ? C.green : C.textMuted, padding: "3px 10px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>{p.viewed_by_count} / {p.shared_with_count}</span>
@@ -701,6 +710,149 @@ function SharedPdfsTable({ token, apiUrl }) {
     </>
   );
 }
+
+// ═══════════════════════════════════════════════════════
+// 2FA EMAIL MODAL
+// ═══════════════════════════════════════════════════════
+function TwoFAEmailModal({ user, token, apiUrl, onClose, onSaved }) {
+  const [email, setEmail]           = useState(user.two_fa_email || "");
+  const [loading, setLoading]       = useState(false);
+  const [testing, setTesting]       = useState(false);
+  const [error, setError]           = useState("");
+  const [testMsg, setTestMsg]       = useState("");
+  const [testOk, setTestOk]         = useState(null);
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValid  = EMAIL_RE.test(email.trim());
+
+  const handleSave = async () => {
+    if (!isValid) { setError("Format email invalide"); return; }
+    setLoading(true); setError("");
+    try {
+      const res = await fetch(`${apiUrl}/admin/users/${user.id}/2fa-email`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ two_fa_email: email.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setError(data.detail || "Erreur"); return; }
+      onSaved({ ...user, two_fa_email: email.trim(), two_fa_email_status: "custom" });
+      onClose();
+    } catch { setError("Erreur réseau"); }
+    finally { setLoading(false); }
+  };
+
+  const handleReset = async () => {
+    if (!confirm("Réinitialiser l'email 2FA ? Le code sera envoyé à l'email de login.")) return;
+    setLoading(true); setError("");
+    try {
+      const res = await fetch(`${apiUrl}/admin/users/${user.id}/2fa-email`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) { setError(data.detail || "Erreur"); return; }
+      setEmail("");
+      onSaved({ ...user, two_fa_email: "", two_fa_email_status: "fallback" });
+      onClose();
+    } catch { setError("Erreur réseau"); }
+    finally { setLoading(false); }
+  };
+
+  const handleTest = async () => {
+    setTesting(true); setTestMsg(""); setTestOk(null);
+    try {
+      const res = await fetch(`${apiUrl}/admin/users/${user.id}/2fa-email/test`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (res.ok) { setTestMsg(`Email de test envoyé à ${data.sent_to}`); setTestOk(true); }
+      else { setTestMsg(data.detail || "Echec envoi"); setTestOk(false); }
+    } catch { setTestMsg("Erreur réseau"); setTestOk(false); }
+    finally { setTesting(false); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 460, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+          <div>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: C.white, marginBottom: 3 }}>Email de réception 2FA</h3>
+            <p style={{ fontSize: 12, color: C.textMuted }}>{user.prenom} {user.nom} · {user.email}</p>
+          </div>
+          <button onClick={onClose} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4, display: "flex" }}><IcoX/></button>
+        </div>
+
+        {/* Info banner */}
+        <div style={{ background: `${C.accent}12`, border: `1px solid ${C.accent}30`, borderRadius: 10, padding: "10px 14px", marginBottom: 18, fontSize: 12, color: C.textSecondary, lineHeight: 1.5 }}>
+          🔐 Le code de vérification sera envoyé à cette adresse lors de chaque connexion.<br/>
+          Si vide, le code est envoyé à l'email de login (<strong style={{ color: C.white }}>{user.email}</strong>).
+        </div>
+
+        {/* Email input */}
+        <div style={{ marginBottom: 14 }}>
+          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: C.textMuted, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            Email 2FA dédié
+          </label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input
+              type="email"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setError(""); setTestMsg(""); setTestOk(null); }}
+              placeholder={`${user.email} (par défaut)`}
+              style={{ flex: 1, padding: "10px 14px", background: C.bg, border: `1.5px solid ${error ? C.red : email && isValid ? C.green : C.border}`, borderRadius: 9, fontSize: 13, color: C.white, outline: "none", fontFamily: "inherit" }}
+            />
+            <button onClick={handleTest} disabled={testing || !isValid}
+              style={{ padding: "10px 14px", background: testing ? C.bgHover : `${C.blue}22`, border: `1px solid ${C.blue}40`, borderRadius: 9, color: C.blue, cursor: testing || !isValid ? "not-allowed" : "pointer", fontSize: 12, fontWeight: 600, whiteSpace: "nowrap", opacity: !isValid ? 0.4 : 1 }}>
+              {testing ? "..." : "Tester"}
+            </button>
+          </div>
+          {error && <p style={{ fontSize: 12, color: "#ff8080", marginTop: 5 }}>⚠️ {error}</p>}
+        </div>
+
+        {/* Test feedback */}
+        {testMsg && (
+          <div style={{ background: testOk ? `${C.green}12` : `${C.red}12`, border: `1px solid ${testOk ? C.green : C.red}30`, borderRadius: 8, padding: "9px 14px", fontSize: 12, color: testOk ? C.green : "#ff8080", marginBottom: 14 }}>
+            {testOk ? "✓ " : "✗ "}{testMsg}
+          </div>
+        )}
+
+        {/* Current status */}
+        <div style={{ background: C.bg, borderRadius: 9, padding: "10px 14px", marginBottom: 20, fontSize: 12, color: C.textMuted }}>
+          Statut actuel :&nbsp;
+          {user.two_fa_email_status === "custom"
+            ? <><span style={{ background: `${C.accent}20`, color: C.accent, padding: "1px 8px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>Custom</span> &nbsp;<span style={{ color: C.white }}>{user.two_fa_email}</span></>
+            : <><span style={{ background: `${C.textMuted}20`, color: C.textMuted, padding: "1px 8px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>Fallback</span> &nbsp;<span style={{ color: C.textSecondary }}>{user.email}</span></>
+          }
+          {user.two_fa_email_updated_at && (
+            <span style={{ marginLeft: 8, fontSize: 10, color: C.textMuted }}>
+              · modifié le {new Date(user.two_fa_email_updated_at).toLocaleDateString("fr-FR")}
+            </span>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={onClose} style={{ flex: 1, padding: "11px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, color: C.textMuted, cursor: "pointer", fontSize: 13 }}>
+            Annuler
+          </button>
+          {user.two_fa_email_status === "custom" && (
+            <button onClick={handleReset} disabled={loading} style={{ padding: "11px 16px", background: `${C.red}12`, border: `1px solid ${C.red}30`, borderRadius: 10, color: "#ff8080", cursor: loading ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 600 }}>
+              Réinitialiser
+            </button>
+          )}
+          <button onClick={handleSave} disabled={loading || !isValid} style={{ flex: 2, padding: "11px", background: loading || !isValid ? C.bgHover : `linear-gradient(135deg, ${C.accent}, ${C.red})`, border: "none", borderRadius: 10, color: C.white, cursor: loading || !isValid ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 600 }}>
+            {loading ? "Enregistrement..." : "Enregistrer"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 // ═══════════════════════════════════════════════════════
 // USER MODAL
@@ -748,10 +900,18 @@ function UserModal({ user, token, apiUrl, onClose, onDelete }) {
 // ═══════════════════════════════════════════════════════
 function AppointmentsTab({ token, apiUrl }) {
   const [appointments, setAppointments] = useState([]);
+  const [confirmedAppointments, setConfirmedAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
   const [rejectModal, setRejectModal] = useState(null); // { id, clientName }
   const [rejectReason, setRejectReason] = useState("");
+  const [cancelModal, setCancelModal]   = useState(null);
+  const [cancelReason, setCancelReason] = useState("");
+  const [reproModal, setReproModal]     = useState(null); // { id, clientName }
+  const [reproSlots, setReproSlots]     = useState([]);   // [{date, start_time, end_time}] selected by admin
+  const [reproMessage, setReproMessage] = useState("");
+  const [availableSlots, setAvailableSlots] = useState([]); // slots to pick from
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const [actionLoading, setActionLoading] = useState(null);
   const [toast, setToast] = useState(null);
   const [fetchError, setFetchError] = useState(null);
@@ -762,9 +922,12 @@ function AppointmentsTab({ token, apiUrl }) {
     setLoading(true);
     setFetchError(null);
     try {
-      const [pendingRes, statsRes] = await Promise.all([
+      const today = new Date().toISOString().slice(0, 10);
+      const inTwoWeeks = new Date(Date.now() + 60 * 86400000).toISOString().slice(0, 10);
+      const [pendingRes, statsRes, calendarRes] = await Promise.all([
         fetch(`${apiUrl}/api/admin/appointments/pending`, { headers }),
         fetch(`${apiUrl}/api/admin/appointments/stats`, { headers }),
+        fetch(`${apiUrl}/api/admin/appointments/calendar?start_date=${today}&end_date=${inTwoWeeks}`, { headers }),
       ]);
       if (pendingRes.ok) {
         setAppointments((await pendingRes.json()).appointments || []);
@@ -773,6 +936,10 @@ function AppointmentsTab({ token, apiUrl }) {
         setFetchError(`Erreur ${pendingRes.status}: ${err.detail || pendingRes.statusText}`);
       }
       if (statsRes.ok) setStats(await statsRes.json());
+      if (calendarRes.ok) {
+        const cal = await calendarRes.json();
+        setConfirmedAppointments((cal.appointments || []).filter(a => a.status === "confirmed"));
+      }
     } catch (e) {
       setFetchError(`Erreur réseau: ${e.message}`);
     } finally { setLoading(false); }
@@ -818,6 +985,86 @@ function AppointmentsTab({ token, apiUrl }) {
       } else {
         const err = await res.json().catch(() => ({}));
         showToast(err.detail || "Erreur lors du refus", "error");
+      }
+    } catch { showToast("Erreur réseau", "error"); }
+    finally { setActionLoading(null); }
+  };
+
+  const openReproModal = async (appt) => {
+    setReproModal({ id: appt.id, clientName: appt.client_name });
+    setReproSlots([]);
+    setReproMessage("");
+    setLoadingSlots(true);
+    try {
+      const days = [];
+      for (let i = 1; i <= 30; i++) {
+        const d = new Date(Date.now() + i * 86400000).toISOString().slice(0, 10);
+        days.push(d);
+      }
+      const results = await Promise.all(
+        days.map(d => fetch(`${apiUrl}/api/appointments/availability/day?date=${d}`, { headers })
+          .then(r => r.ok ? r.json() : { slots: [] })
+          .then(data => ({ date: d, slots: (data.slots || []).filter(s => s.available) }))
+        )
+      );
+      const all = [];
+      results.forEach(({ date, slots }) =>
+        slots.forEach(s => all.push({ date, start_time: s.start, end_time: s.end }))
+      );
+      setAvailableSlots(all);
+    } catch { setAvailableSlots([]); }
+    finally { setLoadingSlots(false); }
+  };
+
+  const toggleSlot = (slot) => {
+    const key = `${slot.date}_${slot.start_time}`;
+    setReproSlots(prev => {
+      const exists = prev.find(s => `${s.date}_${s.start_time}` === key);
+      if (exists) return prev.filter(s => `${s.date}_${s.start_time}` !== key);
+      if (prev.length >= 3) return prev;
+      return [...prev, slot];
+    });
+  };
+
+  const handleAdvisorRepro = async () => {
+    if (reproSlots.length < 2) return;
+    setActionLoading(reproModal.id + "_repro");
+    try {
+      const res = await fetch(`${apiUrl}/api/admin/appointments/${reproModal.id}/propose-alternatives`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ slots: reproSlots.map(s => ({ date: s.date, start_time: s.start_time })), message: reproMessage.trim() }),
+      });
+      if (res.ok) {
+        showToast(`🔄 ${reproSlots.length} créneaux proposés à ${reproModal.clientName}`);
+        setReproModal(null);
+        fetchData();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        showToast(err.detail || "Erreur", "error");
+      }
+    } catch { showToast("Erreur réseau", "error"); }
+    finally { setActionLoading(null); }
+  };
+
+  const handleAdvisorCancel = async () => {
+    if (!cancelReason.trim()) return;
+    const { id, clientName } = cancelModal;
+    setActionLoading(id + "_cancel");
+    try {
+      const res = await fetch(`${apiUrl}/api/admin/appointments/${id}/cancel`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ reason: cancelReason.trim() }),
+      });
+      if (res.ok) {
+        showToast(`⚠️ RDV de ${clientName} annulé — le client est notifié`);
+        setCancelModal(null);
+        setCancelReason("");
+        fetchData();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        showToast(err.detail || "Erreur lors de l'annulation", "error");
       }
     } catch { showToast("Erreur réseau", "error"); }
     finally { setActionLoading(null); }
@@ -977,6 +1224,80 @@ function AppointmentsTab({ token, apiUrl }) {
         )}
       </div>
 
+      {/* Section RDV Confirmés (14 prochains jours) */}
+      {confirmedAppointments.length > 0 && (
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", marginTop: 20, animation: "fadeIn 0.4s ease" }}>
+          <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div>
+              <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white, display: "flex", alignItems: "center", gap: 10 }}>
+                ✅ RDV confirmés — 60 prochains jours
+                <span style={{ background: `${C.green}25`, color: C.green, fontSize: 11, fontWeight: 800, padding: "2px 9px", borderRadius: 20 }}>
+                  {confirmedAppointments.length}
+                </span>
+              </h2>
+              <p style={{ fontSize: 11, color: C.textMuted, marginTop: 3 }}>
+                En cas d'imprévu, annulez le RDV — le client sera notifié et pourra re-réserver
+              </p>
+            </div>
+          </div>
+          <div style={{ padding: "16px", display: "flex", flexDirection: "column", gap: 10 }}>
+            {confirmedAppointments.map(appt => (
+              <div key={appt.id}
+                style={{ background: C.bg, border: `1px solid ${C.green}30`, borderRadius: 14, padding: "16px 20px", display: "flex", alignItems: "center", gap: 18 }}>
+                {/* Avatar */}
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: `linear-gradient(135deg, ${C.green}60, ${C.green}30)`, display: "flex", alignItems: "center", justifyContent: "center", color: C.white, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>
+                  {(appt.client_name || "?").split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+                </div>
+                {/* Infos */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: C.white }}>{appt.client_name}</span>
+                    <span style={{ fontSize: 11, color: C.textMuted }}>{appt.client_email}</span>
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    <span style={{ background: `${C.green}20`, color: C.green, fontSize: 11, fontWeight: 600, padding: "3px 11px", borderRadius: 20 }}>
+                      📅 {fmtDate(appt.date)}
+                    </span>
+                    <span style={{ background: `${C.blue}20`, color: C.blue, fontSize: 11, fontWeight: 600, padding: "3px 11px", borderRadius: 20 }}>
+                      🕐 {appt.start_time} – {appt.end_time}
+                    </span>
+                    <span style={{ background: `${C.gold}18`, color: C.gold, fontSize: 11, fontWeight: 600, padding: "3px 11px", borderRadius: 20 }}>
+                      {appt.motif_icon} {appt.motif_label}
+                    </span>
+                    {appt.advisor_name && (
+                      <span style={{ background: `${C.accent}18`, color: C.accent, fontSize: 11, fontWeight: 600, padding: "3px 11px", borderRadius: 20 }}>
+                        👤 {appt.advisor_name}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                {/* Boutons action */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, flexShrink: 0 }}>
+                  <button
+                    onClick={() => openReproModal(appt)}
+                    disabled={!!actionLoading}
+                    style={{ padding: "9px 16px", background: `${C.blue}18`, border: `1px solid ${C.blue}50`, borderRadius: 9, color: C.blue, cursor: actionLoading ? "not-allowed" : "pointer", fontSize: 12, fontWeight: 700, display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap", transition: "all 0.2s" }}
+                    onMouseEnter={e => { if (!actionLoading) e.currentTarget.style.background = `${C.blue}35`; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = `${C.blue}18`; }}>
+                    🔄 Reprogrammer
+                  </button>
+                  <button
+                    onClick={() => { setCancelModal({ id: appt.id, clientName: appt.client_name, date: appt.date, startTime: appt.start_time }); setCancelReason(""); }}
+                    disabled={!!actionLoading}
+                    style={{ padding: "9px 16px", background: `${C.orange}18`, border: `1px solid ${C.orange}50`, borderRadius: 9, color: C.orange, cursor: actionLoading ? "not-allowed" : "pointer", fontSize: 12, fontWeight: 700, display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap", transition: "all 0.2s" }}
+                    onMouseEnter={e => { if (!actionLoading) e.currentTarget.style.background = `${C.orange}35`; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = `${C.orange}18`; }}>
+                    {actionLoading === appt.id + "_cancel"
+                      ? <><div style={{ width: 12, height: 12, border: "2px solid currentColor", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}/> Traitement...</>
+                      : <>⚠️ Annuler</>}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Modal de refus */}
       {rejectModal && (
         <div
@@ -1033,6 +1354,149 @@ function AppointmentsTab({ token, apiUrl }) {
           </div>
         </div>
       )}
+      {/* Modal reprogrammation — sélection de 2 à 3 créneaux */}
+      {reproModal && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.82)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
+          onClick={() => setReproModal(null)}>
+          <div style={{ background: C.bgCard, border: `1px solid ${C.blue}50`, borderRadius: 20, padding: 28, width: 560, maxHeight: "80vh", display: "flex", flexDirection: "column", boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }}
+            onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+              <div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: C.white, marginBottom: 4 }}>🔄 Reprogrammer le rendez-vous</h3>
+                <p style={{ fontSize: 12, color: C.textMuted }}>Client : <strong style={{ color: C.white }}>{reproModal.clientName}</strong> — Sélectionnez 2 ou 3 créneaux</p>
+              </div>
+              <button onClick={() => setReproModal(null)} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer" }}><IcoX/></button>
+            </div>
+
+            {/* Créneaux sélectionnés */}
+            <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+              {reproSlots.map((s, i) => (
+                <div key={i} style={{ background: `${C.blue}30`, border: `1px solid ${C.blue}60`, borderRadius: 8, padding: "4px 10px", fontSize: 11, color: C.blue, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 }}>
+                  {["A","B","C"][i]} — {s.date} {s.start_time}
+                  <button onClick={() => toggleSlot(s)} style={{ background: "none", border: "none", color: C.blue, cursor: "pointer", fontSize: 14, lineHeight: 1 }}>×</button>
+                </div>
+              ))}
+              {reproSlots.length === 0 && <span style={{ fontSize: 11, color: C.textMuted }}>Aucun créneau sélectionné</span>}
+            </div>
+
+            {/* Liste des créneaux disponibles */}
+            <div style={{ flex: 1, overflowY: "auto", marginBottom: 14, border: `1px solid ${C.border}`, borderRadius: 10 }}>
+              {loadingSlots ? (
+                <div style={{ padding: 24, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Chargement des créneaux...</div>
+              ) : availableSlots.length === 0 ? (
+                <div style={{ padding: 24, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Aucun créneau disponible dans les 14 prochains jours</div>
+              ) : (
+                (() => {
+                  const byDate = availableSlots.reduce((acc, s) => { (acc[s.date] = acc[s.date] || []).push(s); return acc; }, {});
+                  return Object.entries(byDate).map(([date, slots]) => (
+                    <div key={date}>
+                      <div style={{ padding: "8px 14px", background: C.bg, fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                        {new Date(date + "T00:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "8px 12px" }}>
+                        {slots.map((s, i) => {
+                          const key = `${s.date}_${s.start_time}`;
+                          const selected = reproSlots.find(r => `${r.date}_${r.start_time}` === key);
+                          const disabled = !selected && reproSlots.length >= 3;
+                          return (
+                            <button key={i} onClick={() => !disabled && toggleSlot(s)}
+                              style={{ padding: "5px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: disabled ? "not-allowed" : "pointer", border: `1px solid ${selected ? C.blue : C.border}`, background: selected ? `${C.blue}30` : C.bgCard, color: selected ? C.blue : disabled ? C.textMuted : C.white, transition: "all 0.15s" }}>
+                              {s.start_time}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ));
+                })()
+              )}
+            </div>
+
+            {/* Message optionnel */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: C.textMuted, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Message (optionnel)</label>
+              <input value={reproMessage} onChange={e => setReproMessage(e.target.value)}
+                placeholder="Ex: Choisissez le créneau qui vous convient le mieux..."
+                style={{ width: "100%", padding: "10px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, color: C.white, outline: "none", fontFamily: "'Source Sans 3', sans-serif" }}/>
+            </div>
+
+            <div style={{ display: "flex", gap: 10 }}>
+              <button onClick={() => setReproModal(null)}
+                style={{ flex: 1, padding: "11px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, color: C.textSecondary, cursor: "pointer", fontSize: 13, fontWeight: 600 }}>
+                Annuler
+              </button>
+              <button onClick={handleAdvisorRepro} disabled={reproSlots.length < 2 || !!actionLoading}
+                style={{ flex: 2, padding: "11px", background: reproSlots.length < 2 || !!actionLoading ? C.bgHover : `${C.blue}CC`, border: `1px solid ${C.blue}60`, borderRadius: 10, color: C.white, cursor: reproSlots.length < 2 || !!actionLoading ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 700, transition: "all 0.2s" }}>
+                {actionLoading ? "Envoi..." : `Proposer ${reproSlots.length} créneau${reproSlots.length > 1 ? "x" : ""}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal annulation conseiller */}
+      {cancelModal && (
+        <div
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.80)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
+          onClick={() => { setCancelModal(null); setCancelReason(""); }}>
+          <div
+            style={{ background: C.bgCard, border: `1px solid ${C.orange}50`, borderRadius: 20, padding: 30, width: 480, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }}
+            onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
+              <div>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.white, marginBottom: 4 }}>⚠️ Annuler le rendez-vous</h3>
+                <p style={{ fontSize: 12, color: C.textMuted }}>
+                  Client : <strong style={{ color: C.white }}>{cancelModal.clientName}</strong>
+                  {" — "}{fmtDate(cancelModal.date)} à {cancelModal.startTime}
+                </p>
+              </div>
+              <button onClick={() => { setCancelModal(null); setCancelReason(""); }}
+                style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4, display: "flex" }}>
+                <IcoX/>
+              </button>
+            </div>
+
+            <div style={{ background: `${C.orange}12`, border: `1px solid ${C.orange}30`, borderRadius: 10, padding: "10px 14px", marginBottom: 18, fontSize: 12, color: C.orange, lineHeight: 1.6 }}>
+              Le client sera notifié immédiatement et pourra soumettre une nouvelle demande de RDV.
+            </div>
+
+            <div style={{ marginBottom: 22 }}>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: C.textMuted, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                Motif de l'annulation *
+              </label>
+              <textarea
+                value={cancelReason}
+                onChange={e => setCancelReason(e.target.value)}
+                placeholder="Ex: Réunion urgente imprévue. Nous vous contacterons pour fixer un nouveau créneau..."
+                rows={4}
+                autoFocus
+                style={{ width: "100%", padding: "12px 14px", background: C.bg, border: `1.5px solid ${cancelReason.trim() ? C.border : C.orange + "60"}`, borderRadius: 10, fontSize: 13, color: C.white, outline: "none", resize: "vertical", fontFamily: "'Source Sans 3', sans-serif", lineHeight: 1.5 }}
+              />
+              <div style={{ fontSize: 11, color: cancelReason.trim() ? C.textMuted : C.orange, marginTop: 5 }}>
+                {cancelReason.trim() ? `${cancelReason.length} caractères` : "Ce champ est requis — le client recevra ce motif"}
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: 10 }}>
+              <button onClick={() => { setCancelModal(null); setCancelReason(""); }}
+                style={{ flex: 1, padding: "12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, color: C.textSecondary, cursor: "pointer", fontSize: 13, fontWeight: 600 }}>
+                Retour
+              </button>
+              <button
+                onClick={handleAdvisorCancel}
+                disabled={!cancelReason.trim() || !!actionLoading}
+                style={{ flex: 2, padding: "12px", background: (!cancelReason.trim() || !!actionLoading) ? C.bgHover : `${C.orange}CC`, border: `1px solid ${C.orange}60`, borderRadius: 10, color: C.white, cursor: (!cancelReason.trim() || !!actionLoading) ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 700, transition: "all 0.2s" }}>
+                {actionLoading ? (
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                    <div style={{ width: 14, height: 14, border: "2px solid white", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}/>
+                    Traitement...
+                  </span>
+                ) : "Confirmer l'annulation"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -1040,7 +1504,7 @@ function AppointmentsTab({ token, apiUrl }) {
 // ═══════════════════════════════════════════════════════
 // DASHBOARD PRINCIPAL
 // ═══════════════════════════════════════════════════════
-function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
+function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onGoSessions }) {
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
   const [loadingStats, setLS] = useState(true);
@@ -1048,6 +1512,7 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [selectedUser, setSelected] = useState(null);
+  const [editingUser, setEditingUser] = useState(null);
   const [activeTab, setActiveTab] = useState("clients");
   const PER_PAGE = 10;
 
@@ -1123,6 +1588,16 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
             <span style={{ color: C.gold }}><IcoShield/></span>
             <span style={{ fontSize: 12, color: C.gold, fontWeight: 600 }}>Administrateur</span>
           </div>
+          {onGoEvaluations && (
+            <button onClick={onGoEvaluations} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.35)", borderRadius: 9, padding: "7px 13px", color: "#A78BFA", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+              🛡️ Évaluations
+            </button>
+          )}
+          {onGoSessions && (
+            <button onClick={onGoSessions} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.35)", borderRadius: 9, padding: "7px 13px", color: "#60A5FA", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+              🌐 Sessions
+            </button>
+          )}
           <button onClick={onLogout} style={{ display: "flex", alignItems: "center", gap: 6, background: `${C.red}15`, border: `1px solid ${C.red}30`, borderRadius: 9, padding: "7px 13px", color: "#ff8080", cursor: "pointer", fontSize: 12 }}>
             <IcoLogout/> Déconnexion
           </button>
@@ -1182,16 +1657,16 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                    {["Utilisateur", "Email", "Téléphone", "Inscrit le", "Actions"].map(h => (
+                    {["Utilisateur", "Email", "Email 2FA", "Statut 2FA", "Téléphone", "Inscrit le", "Actions"].map(h => (
                       <th key={h} style={{ padding: "11px 18px", textAlign: "left", fontSize: 10, fontWeight: 600, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.1em", whiteSpace: "nowrap" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {loadingUsers ? (
-                    <tr><td colSpan={5} style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Chargement...</td></tr>
+                    <tr><td colSpan={7} style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Chargement...</td></tr>
                   ) : paginated.length === 0 ? (
-                    <tr><td colSpan={5} style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Aucun utilisateur</td></tr>
+                    <tr><td colSpan={7} style={{ padding: 40, textAlign: "center", color: C.textMuted, fontSize: 13 }}>Aucun utilisateur</td></tr>
                   ) : paginated.map(u => (
                     <tr key={u.id} style={{ borderBottom: `1px solid ${C.border}20` }}
                       onMouseEnter={e => e.currentTarget.style.background = C.bgHover}
@@ -1203,11 +1678,26 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
                         </div>
                       </td>
                       <td style={{ padding: "13px 18px", fontSize: 13, color: C.textSecondary }}>{u.email}</td>
+                      <td style={{ padding: "13px 18px", fontSize: 12, color: u.two_fa_email ? C.white : C.textMuted, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {u.two_fa_email || <span style={{ fontStyle: "italic" }}>—</span>}
+                      </td>
+                      <td style={{ padding: "13px 18px" }}>
+                        {u.two_fa_email_status === "custom"
+                          ? <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: `${C.orange}22`, color: C.orange, border: `1px solid ${C.orange}50` }}>Custom</span>
+                          : <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: `${C.textMuted}18`, color: C.textMuted, border: `1px solid ${C.border}` }}>Fallback</span>
+                        }
+                      </td>
                       <td style={{ padding: "13px 18px", fontSize: 13, color: C.textMuted }}>{u.telephone || "—"}</td>
                       <td style={{ padding: "13px 18px", fontSize: 12, color: C.textMuted }}>{fmtDate(u.created_at)}</td>
                       <td style={{ padding: "13px 18px" }}>
                         <div style={{ display: "flex", gap: 6 }}>
                           <button onClick={() => setSelected(u)} style={{ padding: "5px 10px", background: `${C.red}12`, border: `1px solid ${C.red}25`, borderRadius: 7, color: "#ff8080", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, fontSize: 12 }}><IcoEye/> Voir</button>
+                          <button
+                            onClick={() => setEditingUser(u)}
+                            title="Gérer l'email 2FA"
+                            style={{ padding: "5px 8px", background: `${C.accent}12`, border: `1px solid ${C.accent}30`, borderRadius: 7, color: C.accent, cursor: "pointer", display: "flex", alignItems: "center", fontSize: 13 }}>
+                            ✏️
+                          </button>
                           <button onClick={() => deleteUser(u.id)} style={{ padding: "5px 8px", background: "transparent", border: `1px solid ${C.border}`, borderRadius: 7, color: C.textMuted, cursor: "pointer", display: "flex" }}><IcoTrash/></button>
                         </div>
                       </td>
@@ -1223,10 +1713,22 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat }) {
       </div>
 
       {selectedUser && <UserModal user={selectedUser} token={token} apiUrl={apiUrl} onClose={() => setSelected(null)} onDelete={deleteUser}/>}
+      {editingUser && (
+        <TwoFAEmailModal
+          user={editingUser}
+          token={token}
+          apiUrl={apiUrl}
+          onClose={() => setEditingUser(null)}
+          onSaved={(updated) => {
+            setUsers(prev => prev.map(u => u.id === updated.id ? { ...u, ...updated } : u));
+            setEditingUser(null);
+          }}
+        />
+      )}
     </div>
   );
 }
 
-export default function AdminDashboard({ user, token, onLogout, onBackToChat }) {
-  return <Dashboard token={token} apiUrl="" onLogout={onLogout} onBackToChat={onBackToChat}/>;
+export default function AdminDashboard({ user, token, onLogout, onBackToChat, onGoEvaluations, onGoSessions }) {
+  return <Dashboard token={token} apiUrl="" onLogout={onLogout} onBackToChat={onBackToChat} onGoEvaluations={onGoEvaluations} onGoSessions={onGoSessions}/>;
 }

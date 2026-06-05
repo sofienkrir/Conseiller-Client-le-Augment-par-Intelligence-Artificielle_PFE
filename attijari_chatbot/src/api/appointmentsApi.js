@@ -97,6 +97,24 @@ export const proposeAlternative = (appointmentId, newDate, newStartTime, message
 export const fetchAppointmentDetail = (appointmentId) =>
   request(`/admin/appointments/${appointmentId}`);
 
+export const cancelConfirmedAppointment = (appointmentId, reason) =>
+  request(`/admin/appointments/${appointmentId}/cancel`, {
+    method: "POST",
+    body: JSON.stringify({ reason }),
+  });
+
+export const proposeMultipleAlternatives = (appointmentId, slots, message = "") =>
+  request(`/admin/appointments/${appointmentId}/propose-alternatives`, {
+    method: "POST",
+    body: JSON.stringify({ slots, message }),
+  });
+
+export const chooseAlternativeSlot = (appointmentId, slotIndex) =>
+  request(`/appointments/${appointmentId}/choose-slot`, {
+    method: "POST",
+    body: JSON.stringify({ slot_index: slotIndex }),
+  });
+
 // ════════════════════════════════════════
 // Notifications
 // ════════════════════════════════════════
@@ -119,12 +137,13 @@ export const deleteNotification = (notificationId) =>
 // Helpers d'affichage
 // ════════════════════════════════════════
 export const STATUS_LABELS = {
-  pending: { label: "En attente", color: "amber", icon: "⏳" },
-  confirmed: { label: "Confirmé", color: "green", icon: "✅" },
-  rejected: { label: "Refusé", color: "red", icon: "❌" },
-  cancelled: { label: "Annulé", color: "gray", icon: "🚫" },
-  completed: { label: "Terminé", color: "blue", icon: "✓" },
-  alternative_proposed: { label: "Nouveau créneau proposé", color: "orange", icon: "🔄" },
+  pending:              { label: "En attente",               color: "amber",  icon: "⏳" },
+  confirmed:            { label: "Confirmé",                  color: "green",  icon: "✅" },
+  rejected:             { label: "Refusé",                    color: "red",    icon: "❌" },
+  cancelled:            { label: "Annulé",                    color: "gray",   icon: "🚫" },
+  cancelled_by_advisor: { label: "Annulé par le conseiller",  color: "orange", icon: "⚠️" },
+  completed:            { label: "Terminé",                   color: "blue",   icon: "✓"  },
+  alternative_proposed: { label: "Nouveau créneau proposé",   color: "orange", icon: "🔄" },
 };
 
 export const formatDateFR = (dateStr) => {

@@ -1,21 +1,14 @@
 // client/src/components/Chat/ChatInterface.jsx
 import React, { useState, useEffect, useRef } from 'react';
-// في ChatInterface.jsx
-import MessageList from './MessageList';      // نفس المجلد
-import MessageInput from './MessageInput';    // نفس المجلد
-import TypingIndicator from './TypingIndicator'; // نفس المجلد
+import { useNavigate } from 'react-router-dom';
+import MessageList from './MessageList';
 import { getUserSessions, getSessionMessages } from '../../services/chatHistory';
-import { getToken } from '../../services/auth';
+import { getToken, getCurrentUser } from '../../services/auth';
 import '../../styles/Attijarichat.css'
-import ConfidenceScore from "../ConfidenceScore";
-import FeedbackButtons from "../FeedbackButtons";
-/* ─────────────────────────────────────────────
-   IMAGE PLACEHOLDERS
-   Replace the src values below with your actual
-   image paths once you add them to /public or /assets
-   ───────────────────────────────────────────── */
-const LOGO_FULL   = '/src/assets/attijari-logo-full.png';   // Full logo with text (sidebar header)
-const LOGO_ICON   = '/src/assets/attijari-logo-icon.png';   // Square icon only (message avatars)
+
+const LOGO_FULL = '/src/assets/attijari-logo-full.png';
+const LOGO_ICON = '/src/assets/attijari-logo-icon.png';
+const API_URL   = 'http://localhost:8000';
 
 /* ── Icons ── */
 const ChevronIcon = ({ open }) => (
@@ -45,24 +38,6 @@ const SettingsIcon = () => (
   </svg>
 );
 
-/* ── Attijari brand avatar (fallback if image missing) ── */
-const BrandAvatar = ({ size = 40 }) => (
-  <div
-    className="flex-shrink-0 rounded-lg overflow-hidden flex items-center justify-center"
-    style={{ width: size, height: size, background: 'linear-gradient(135deg, #C8371A, #E8521D)' }}
-  >
-    {/* Replace with: <img src={LOGO_ICON} alt="Attijari" className="w-full h-full object-cover" /> */}
-    <img
-      src={LOGO_ICON}
-      alt="Attijari"
-      className="w-full h-full object-cover"
-      onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
-    />
-    <span style={{ display:'none', color:'white', fontWeight:'bold', fontSize: size * 0.35 }}>A</span>
-  </div>
-);
-
-/* ── Format date for sidebar sessions ── */
 const formatSessionDate = (dateStr) => {
   if (!dateStr) return '';
   const d = new Date(dateStr);
@@ -73,20 +48,22 @@ const formatSessionDate = (dateStr) => {
    MAIN COMPONENT
    ══════════════════════════════════════════════ */
 const ChatInterface = () => {
-  const [messages, setMessages]               = useState([]);
-  const [sessions, setSessions]               = useState([]);
+  const navigate = useNavigate();
+  const currentUser = getCurrentUser();
+
+  const [messages, setMessages]                 = useState([]);
+  const [sessions, setSessions]                 = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
-  const [isTyping, setIsTyping]               = useState(false);
-  const [loading, setLoading]                 = useState(false);
-  const [historyOpen, setHistoryOpen]         = useState(true);
-  const [inputValue, setInputValue]           = useState('');
-  const [isMobile, setIsMobile]               = useState(false);
-  const [sidebarOpen, setSidebarOpen]         = useState(true);
-  const [chatMode, setChatMode]               = useState('french'); // 'french' or 'derja'
+  const [isTyping, setIsTyping]                 = useState(false);
+  const [loading, setLoading]                   = useState(false);
+  const [historyOpen, setHistoryOpen]           = useState(true);
+  const [inputValue, setInputValue]             = useState('');
+  const [isMobile, setIsMobile]                 = useState(false);
+  const [sidebarOpen, setSidebarOpen]           = useState(true);
+  const [chatMode, setChatMode]                 = useState('french');
 
   const messagesEndRef = useRef(null);
 
-  /* responsive */
   useEffect(() => {
     const check = () => {
       const m = window.innerWidth < 768;
@@ -105,9 +82,6 @@ const ChatInterface = () => {
     try {
       const data = await getUserSessions();
       setSessions(data.sessions || []);
-      if (data.sessions?.length > 0 && !currentSessionId) {
-        loadSession(data.sessions[0].session_id);
-      }
     } catch (e) { console.error(e); }
   };
 
@@ -128,65 +102,126 @@ const ChatInterface = () => {
     if (isMobile) setSidebarOpen(false);
   };
 
- 
-const handleDeleteSession = async (e, sessionId) => {
-  e.stopPropagation();
-  try {
-    // هذا يحتاج endpoint في الـ backend
-    // await deleteSession(sessionId);
-    setSessions(s => s.filter(s => s.session_id !== sessionId));
+  const handleDeleteSession = async (e, sessionId) => {
+    e.stopPropagation();
+    setSessions(s => s.filter(x => x.session_id !== sessionId));
     if (currentSessionId === sessionId) startNewChat();
-  } catch (e) { console.error(e); }
-};
+  };
 
-const handleDeleteAll = async () => {
-  if (!window.confirm('Supprimer tout l\'historique ?')) return;
-  try {
-    // هذا يحتاج endpoint في الـ backend
-    // await deleteAllSessions();
+  const handleDeleteAll = async () => {
+    if (!window.confirm("Supprimer tout l'historique ?")) return;
     setSessions([]);
     startNewChat();
-  } catch (e) { console.error(e); }
-};
- 
+  };
 
+  /* ── SSE streaming send ── */
   const handleSend = async (text) => {
-    const msg = text || inputValue;
-    if (!msg.trim()) return;
+    const msg = (text || inputValue).trim();
+    if (!msg) return;
     setInputValue('');
 
-    console.log("CHAT RESPONSE:", res);
-
-setMessages(prev => [...prev, {
-  role: 'assistant',
-  content: res.answer,
-  sources: res.sources || [],
-  eval_id: res.eval_id || null,
-  auto_score: res.auto_score || null,
-  timestamp: new Date().toISOString(),
-}]);
+    // 1. Ajoute le message user
+    setMessages(prev => [...prev, {
+      role: 'user',
+      content: msg,
+      timestamp: new Date().toISOString(),
+    }]);
     setIsTyping(true);
 
     try {
-      const res = await sendMessage(msg, currentSessionId, chatMode); // Pass chatMode
+      const token = getToken();
+      const response = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          message: msg,
+          language: chatMode,
+          conversation_id: currentSessionId || undefined,
+          dataset: 'particulier',
+        }),
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      // 2. Première réponse reçue : ouvre la bulle de streaming
       setIsTyping(false);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: res.answer,
-        sources: res.sources,
+        content: '',
         timestamp: new Date().toISOString(),
       }]);
-      if (!currentSessionId && res.session_id) {
-        setCurrentSessionId(res.session_id);
-        loadSessions();
+
+      const reader  = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer    = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // garde la ligne incomplète
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const raw = line.slice(6).trim();
+          if (!raw) continue;
+
+          try {
+            const evt = JSON.parse(raw);
+
+            // Tokens → append dans la bulle
+            if (evt.type === 'token') {
+              setMessages(prev => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last?.role === 'assistant') {
+                  updated[updated.length - 1] = { ...last, content: last.content + evt.text };
+                }
+                return updated;
+              });
+
+            // Meta → injecte sources + eval_id + auto_score
+            } else if (evt.type === 'meta') {
+              setMessages(prev => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last?.role === 'assistant') {
+                  updated[updated.length - 1] = {
+                    ...last,
+                    sources:    evt.sources    || [],
+                    eval_id:    evt.eval_id    || null,
+                    auto_score: evt.auto_score || null,
+                  };
+                }
+                return updated;
+              });
+
+            } else if (evt.type === 'done') {
+              loadSessions();
+            }
+          } catch (_) { /* event malformé, on ignore */ }
+        }
       }
-    } catch {
+
+    } catch (err) {
+      console.error('[handleSend]', err);
       setIsTyping(false);
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'Une erreur est survenue. Veuillez réessayer.',
-        timestamp: new Date().toISOString(),
-      }]);
+      setMessages(prev => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        // Si la bulle est vide, on y met le message d'erreur
+        if (last?.role === 'assistant' && !last.content) {
+          updated[updated.length - 1] = { ...last, content: 'Une erreur est survenue. Veuillez réessayer.' };
+        } else {
+          updated.push({ role: 'assistant', content: 'Une erreur est survenue. Veuillez réessayer.', timestamp: new Date().toISOString() });
+        }
+        return updated;
+      });
     }
   };
 
@@ -194,7 +229,6 @@ setMessages(prev => [...prev, {
   return (
     <div className="attijari-root">
 
-      {/* Mobile overlay */}
       {isMobile && sidebarOpen && (
         <div className="attijari-overlay" onClick={() => setSidebarOpen(false)} />
       )}
@@ -202,12 +236,7 @@ setMessages(prev => [...prev, {
       {/* ══ SIDEBAR ══ */}
       <aside className={`attijari-sidebar ${sidebarOpen ? 'open' : 'closed'} ${isMobile ? 'mobile' : ''}`}>
 
-        {/* Logo */}
         <div className="sidebar-logo">
-          {/* ── LOGO PLACEHOLDER ──
-              Replace the <div> below with:
-              <img src={LOGO_FULL} alt="Attijari Bank" className="sidebar-logo-img" />
-          ── */}
           <div className="sidebar-logo-placeholder">
             <div className="logo-icon-box">
               <img
@@ -218,7 +247,6 @@ setMessages(prev => [...prev, {
               />
               <div className="logo-fallback" style={{ display:'none' }}>
                 <div className="logo-wave">≋</div>
-                
                 <div className="logo-text-group">
                   <span className="logo-arabic">التجاري بنك</span>
                   <span className="logo-latin"><strong>Attijari</strong> bank</span>
@@ -228,7 +256,6 @@ setMessages(prev => [...prev, {
           </div>
         </div>
 
-        {/* History section */}
         <div className="sidebar-section">
           <button className="sidebar-section-header" onClick={() => setHistoryOpen(o => !o)}>
             <span>Conversation History</span>
@@ -260,17 +287,24 @@ setMessages(prev => [...prev, {
           )}
         </div>
 
-        {/* Sidebar footer */}
         <div className="sidebar-footer">
           <button className="btn-new-chat" onClick={startNewChat}>New Chat</button>
           <button className="btn-delete-all" onClick={handleDeleteAll}>Delete All History</button>
+          {currentUser?.is_admin && (
+            <button
+              className="btn-delete-all"
+              style={{ background: '#4F46E5', marginTop: 6 }}
+              onClick={() => navigate('/admin/evaluations')}
+            >
+              🛡️ Évaluations Admin
+            </button>
+          )}
         </div>
       </aside>
 
       {/* ══ MAIN CHAT ══ */}
       <main className="attijari-main">
 
-        {/* Top bar */}
         <header className="chat-topbar">
           {isMobile && (
             <button className="topbar-menu-btn" onClick={() => setSidebarOpen(o => !o)}>
@@ -279,28 +313,20 @@ setMessages(prev => [...prev, {
               </svg>
             </button>
           )}
-          
-          {/* Mode selector buttons */}
+
           <div className="mode-selector">
-            <button 
-              className={`mode-btn ${chatMode === 'french' ? 'active' : ''}`}
-              onClick={() => setChatMode('french')}
-            >
+            <button className={`mode-btn ${chatMode === 'french' ? 'active' : ''}`} onClick={() => setChatMode('french')}>
               Français
             </button>
-            <button 
-              className={`mode-btn ${chatMode === 'derja' ? 'active' : ''}`}
-              onClick={() => setChatMode('derja')}
-            >
+            <button className={`mode-btn ${chatMode === 'derja' ? 'active' : ''}`} onClick={() => setChatMode('derja')}>
               الدارجة
             </button>
           </div>
-          
+
           <h1 className="topbar-title">Attijari Chatbot</h1>
           <span className="topbar-subtitle">Attijari Bank Assistant | التجاري بنك</span>
         </header>
 
-        {/* Messages */}
         <div className="chat-messages-area">
           {loading ? (
             <div className="chat-loading">
@@ -309,17 +335,12 @@ setMessages(prev => [...prev, {
             </div>
           ) : (
             <>
-              <MessageList
-                messages={messages}
-                isTyping={isTyping}
-                logoIcon={LOGO_ICON}
-              />
+              <MessageList messages={messages} isTyping={isTyping} logoIcon={LOGO_ICON} />
               <div ref={messagesEndRef} />
             </>
           )}
         </div>
 
-        {/* Input bar */}
         <div className="chat-input-bar">
           <button className="input-icon-btn" title="Microphone">
             <MicIcon />

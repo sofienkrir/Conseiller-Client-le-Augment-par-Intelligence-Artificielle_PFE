@@ -18,6 +18,7 @@ from typing import Optional
 from bson import ObjectId
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from .crypto_utils import decrypt_client_doc
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -54,6 +55,7 @@ def list_clients(search: str = "", segment: str = None, limit: int = 100) -> lis
     
     clients = []
     for c in clients_collection.find(query).limit(limit):
+        c = decrypt_client_doc(c)
         clients.append({
             "id": str(c["_id"]),
             "prenom": c.get("prenom", ""),
@@ -74,23 +76,25 @@ def list_clients(search: str = "", segment: str = None, limit: int = 100) -> lis
 
 
 def get_client_details(client_id: str) -> Optional[dict]:
-    """Récupère les détails complets d'un client."""
+    """Récupère les détails complets d'un client (déchiffrés)."""
     try:
         c = clients_collection.find_one({"_id": ObjectId(client_id)})
         if not c:
             return None
-        
+
+        c = decrypt_client_doc(c)
+
         c["id"] = str(c["_id"])
         del c["_id"]
-        
+
         # Convertir les datetime en strings pour JSON
         for key in ["created_at", "updated_at", "date_ouverture", "date_naissance"]:
             if key in c and isinstance(c[key], datetime):
                 c[key] = c[key].isoformat()
-        
+
         return c
     except Exception as e:
-        print(f"[CLIENTS] ❌ get_client_details error: {e}")
+        print(f"[CLIENTS] get_client_details error: {e}")
         return None
 
 
@@ -204,7 +208,7 @@ def format_client_for_llm(client: dict) -> str:
         except:
             date = t.get("date", "")
         sens = "+" if t.get("sens") == "credit" else "-"
-        lines.append(f"• {date} | {t.get('type', '')} | {sens}{t.get('montant', 0)} DT | {t.get('description', '')}")
+        lines.append(f"• {date} | {t.get('type', '')} | {sens}{t.get('montant', 0):g} DT | {t.get('description', '')}")
     lines.append("")
     
     # Analyse rapide

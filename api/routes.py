@@ -24,9 +24,10 @@ load_dotenv()
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from chatbot import answer_question, setup_rag, detect_category_and_rewrite, \
-                    retrieve_docs, dedupe_docs, get_llm
+                    retrieve_docs, dedupe_docs, get_llm, format_docs
 from .gemini_model import get_gemini_response, gemini_model as gemini_available
-from .auth_routes import get_current_user_dependency
+from .auth_routes import get_current_user_dependency, get_current_admin_dependency
+from .auth_db import AuthDB
 from .chat_history import ChatHistory
 
 from .pdf_upload import (
@@ -62,10 +63,14 @@ print("🚀 Loading RAG pipeline...")
 vectorstore, valid_categories = setup_rag()
 print("✅ RAG pipeline loaded!")
 
-if gemini_available is not None:
-    print("✅ Gemini model loaded successfully!")
+USE_GEMINI = os.getenv("USE_GEMINI", "true").lower() == "true"
+
+if gemini_available is not None and USE_GEMINI:
+    print("✅ Gemini model loaded and enabled (USE_GEMINI=true)")
+elif gemini_available is not None and not USE_GEMINI:
+    print("⚠️ Gemini available but disabled (USE_GEMINI=false) — using Groq only")
 else:
-    print("⚠️ Gemini model not available, will use Groq only")
+    print("⚠️ Gemini not available, using Groq only")
 
 
 # ── Models ──
@@ -88,16 +93,48 @@ class HistoryUpdateRequest(BaseModel):
     messages: list
 
 
-def build_sources(docs: list) -> list[dict]:
-    """Build deduplicated sources list from docs."""
-    sources = []
-    seen_urls = set()
+def build_sources(docs: list, answer: str = "", max_sources: int = 5) -> list[dict]:
+    """Return only sources whose title keywords actually appear in the answer."""
+    import re
+    NOISE = {
+        'crédit', 'carte', 'offre', 'plan', 'compte', 'attijari', 'bank',
+        'pour', 'votre', 'avec', 'dans', 'vous', 'sont', 'les', 'des',
+        'une', 'tunisie', 'banque', 'taux', 'durée', 'montant',
+    }
+    answer_lower = answer.lower()
+
+    scored = []
+    seen_titles = set()
     for d in docs:
         title = d.metadata.get("title") or d.metadata.get("titre", "Unknown")
         url = d.metadata.get("url", "#")
-        if url not in seen_urls:
-            seen_urls.add(url)
+        if title in seen_titles:
+            continue
+        seen_titles.add(title)
+
+        title_words = [w.lower() for w in re.findall(r'\w{3,}', title)
+                       if w.lower() not in NOISE]
+        if title_words and answer_lower:
+            matched = sum(1 for w in title_words if w in answer_lower)
+            fraction = matched / len(title_words)
+        else:
+            matched, fraction = 0, 0.0
+
+        scored.append((fraction, matched, title, url))
+
+    scored.sort(key=lambda x: (-x[0], -x[1]))
+
+    sources = []
+    for fraction, _, title, url in scored:
+        if fraction > 0:
             sources.append({"title": title, "url": url})
+        if len(sources) >= max_sources:
+            break
+
+    # Fallback: if nothing matched, show the top retrieved doc
+    if not sources and scored:
+        sources.append({"title": scored[0][2], "url": scored[0][3]})
+
     return sources
 
 
@@ -156,7 +193,7 @@ async def chat(
 
         # ━━━ Si le user a uploadé un PDF, on utilise UNIQUEMENT le PDF ━━━
         if pdf_docs:
-            from chatbot import format_docs, PROMPT_DERJA, PROMPT_FRENCH
+            from chatbot import PROMPT_DERJA, PROMPT_FRENCH
             from langchain_core.output_parsers import StrOutputParser
             from langchain_core.runnables import RunnablePassthrough
 
@@ -188,20 +225,12 @@ async def chat(
 
         # ━━━ Sinon, flow normal (Gemini ou Groq RAG) ━━━
         else:
-            if gemini_available is not None and lang == "french":
-                print("🤖 Trying Gemini model...")
-                french_llm = get_llm("french")
+            if gemini_available is not None and USE_GEMINI and lang == "french" and not client_context:
+                print("🤖 Using Gemini (direct retrieval, no pre-categorization)...")
                 ds = request.dataset
-                if ds == "professionnel":
-                    category, q2 = "professionnel", request.message
-                else:
-                    cats = [c for c in valid_categories if c != "professionnel"]
-                    category, q2 = detect_category_and_rewrite(
-                        french_llm, request.message, cats, vectorstore
-                    )
-                docs1 = retrieve_docs(vectorstore, request.message, category, k=5, dataset=ds)
-                docs2 = retrieve_docs(vectorstore, q2, category, k=5, dataset=ds)
-                gemini_docs = dedupe_docs(docs1 + docs2)[:6]
+                # Retrieval direct — pas d'appel Groq pour la catégorisation
+                category = "professionnel" if ds == "professionnel" else None
+                gemini_docs = retrieve_docs(vectorstore, request.message, category, k=5, dataset=ds)
 
                 context = ""
                 for d in gemini_docs:
@@ -213,10 +242,10 @@ async def chat(
                     print("✅ Gemini response generated")
                     answer = gemini_answer
                     model_used = "gemini"
-                    sources = build_sources(gemini_docs)
+                    sources = build_sources(gemini_docs, answer=gemini_answer)
                     raw_docs = gemini_docs
                 else:
-                    print("⚠️ Gemini failed, falling back to RAG")
+                    print("⚠️ Gemini failed, falling back to Groq")
 
             if answer is None:
                 model_used = "groq_derja" if lang == "derja" else "groq"
@@ -248,7 +277,7 @@ async def chat(
                         "products_catalog": rag_context,
                         "question": request.message,
                     })
-                    sources = build_sources(docs) if docs else []
+                    sources = build_sources(docs, answer=answer) if docs else []
                     raw_docs = docs or []
                     model_used = f"groq_client_{lang}"
                 else:
@@ -257,7 +286,7 @@ async def chat(
                         vectorstore, valid_categories, request.message, lang,
                         dataset=request.dataset
                     )
-                    sources = build_sources(rag_docs)
+                    sources = build_sources(rag_docs, answer=answer)
                     raw_docs = rag_docs or []
 
             print(f"✅ Answer ready ({model_used})")
@@ -299,7 +328,7 @@ async def chat(
 
     # SSE streaming
     async def event_stream():
-        yield f"data: {json.dumps({'type': 'meta', 'sources': sources, 'eval_id': eval_id, 'auto_score': auto_score})}\n\n"
+        yield f"data: {json.dumps({'type': 'meta', 'sources': sources, 'eval_id': eval_id, 'auto_score': auto_score, 'model': model_used})}\n\n"
         words = answer.split(" ")
         for i, word in enumerate(words):
             text = word if i == 0 else " " + word
@@ -411,6 +440,8 @@ async def history_get(conv_id: str, current_user: dict = Depends(get_current_use
                 "role": m["role"],
                 "content": m["content"],
                 "sources": m.get("sources", []),
+                "eval_id": m.get("eval_id"),
+                "auto_score": m.get("auto_score"),
             }
             for m in raw
         ]
@@ -707,23 +738,126 @@ async def admin_stats(current_user: dict = Depends(get_current_user_dependency))
 
 
 @router.get("/admin/users")
-async def admin_users(current_user: dict = Depends(get_current_user_dependency)):
+async def admin_users(current_user: dict = Depends(get_current_admin_dependency)):
     try:
         users = []
         for u in _users_col.find({}).sort("created_at", DESCENDING):
             uid = str(u["_id"])
+            two_fa_email = u.get("two_fa_email", "")
+            login_email  = u.get("email", "")
+            has_custom   = bool(two_fa_email and two_fa_email.strip() and two_fa_email.strip() != login_email)
+            updated_at   = u.get("two_fa_email_updated_at")
             users.append({
-                "id": uid,
-                "nom": u.get("nom", ""),
-                "prenom": u.get("prenom", ""),
-                "email": u.get("email", ""),
-                "telephone": u.get("telephone"),
-                "segment": u.get("segment"),
-                "created_at": u.get("created_at").isoformat() if isinstance(u.get("created_at"), datetime) else None,
+                "id":          uid,
+                "nom":         u.get("nom", ""),
+                "prenom":      u.get("prenom", ""),
+                "email":       login_email,
+                "telephone":   u.get("telephone"),
+                "segment":     u.get("segment"),
+                "is_admin":    u.get("is_admin", False),
+                "client_code": u.get("client_code"),
+                "created_at":  u.get("created_at").isoformat() if isinstance(u.get("created_at"), datetime) else None,
+                "two_fa_email":         two_fa_email.strip() if two_fa_email else "",
+                "two_fa_email_status":  "custom" if has_custom else "fallback",
+                "two_fa_email_updated_at": updated_at.isoformat() if isinstance(updated_at, datetime) else None,
             })
         return {"users": users}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class TwoFAEmailBody(BaseModel):
+    two_fa_email: str
+
+
+@router.put("/admin/users/{user_id}/2fa-email")
+async def admin_set_2fa_email(
+    user_id: str,
+    body: TwoFAEmailBody,
+    current_user: dict = Depends(get_current_admin_dependency),
+):
+    if current_user["id"] == user_id:
+        raise HTTPException(status_code=400, detail="Vous ne pouvez pas modifier votre propre email 2FA via ce flow.")
+    result = AuthDB.update_user_2fa_email(user_id, body.two_fa_email, current_user["id"])
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return {
+        "success":      True,
+        "user_id":      user_id,
+        "two_fa_email": body.two_fa_email.strip(),
+        "updated_by":   current_user["email"],
+    }
+
+
+@router.delete("/admin/users/{user_id}/2fa-email")
+async def admin_clear_2fa_email(
+    user_id: str,
+    current_user: dict = Depends(get_current_admin_dependency),
+):
+    result = AuthDB.clear_user_2fa_email(user_id, current_user["id"])
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return {
+        "success":        True,
+        "user_id":        user_id,
+        "fallback_email": result.get("fallback_email", ""),
+    }
+
+
+@router.post("/admin/users/{user_id}/2fa-email/test")
+async def admin_test_2fa_email(
+    user_id: str,
+    current_user: dict = Depends(get_current_admin_dependency),
+):
+    from .auth_routes import _mask_email
+    from .email_service import send_email
+    recipient = AuthDB.get_user_2fa_email(user_id)
+    if not recipient:
+        raise HTTPException(status_code=404, detail="Utilisateur introuvable")
+    u = _users_col.find_one({"_id": ObjectId(user_id)}, {"nom": 1, "prenom": 1})
+    name = f"{u.get('prenom','') if u else ''} {u.get('nom','') if u else ''}".strip() or recipient
+    html = f"""<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#F1F5F9;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F1F5F9;padding:40px 0;">
+    <tr><td align="center">
+      <table width="480" cellpadding="0" cellspacing="0" style="max-width:480px;width:100%;">
+        <tr>
+          <td style="background:linear-gradient(135deg,#F5A623 0%,#E8521A 45%,#CC0000 100%);border-radius:16px 16px 0 0;padding:28px 36px;text-align:center;">
+            <div style="font-size:20px;font-weight:700;color:white;">Attijari<span style="font-weight:300;">bank</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#FFFFFF;padding:36px;border-left:1px solid #E2E8F0;border-right:1px solid #E2E8F0;">
+            <p style="font-size:16px;color:#1A1A1A;margin:0 0 12px;font-weight:600;">Bonjour {name},</p>
+            <p style="font-size:14px;color:#475569;margin:0 0 24px;line-height:1.6;">
+              Ceci est un <strong>email de test</strong> envoy&eacute; par votre conseiller Attijari Bank.<br>
+              Si vous recevez cet email, votre adresse de r&eacute;ception 2FA est correctement configur&eacute;e.
+            </p>
+            <div style="background:#F0FDF4;border-left:4px solid #16A34A;border-radius:0 8px 8px 0;padding:14px 16px;">
+              <p style="font-size:13px;color:#15803D;margin:0;font-weight:600;">Verification reussie</p>
+              <p style="font-size:12px;color:#166534;margin:6px 0 0;">Vous recevrez vos codes de securite 2FA a cette adresse.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;border-radius:0 0 16px 16px;padding:16px 36px;text-align:center;">
+            <p style="font-size:11px;color:#94A3B8;margin:0;">Attijari Bank &mdash; Email automatique. Ne pas r&eacute;pondre.</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>"""
+    sent = send_email(recipient, "[Attijari Bank] Test de reception 2FA", html)
+    if not sent:
+        raise HTTPException(status_code=500, detail="Echec d'envoi. Verifiez la configuration SMTP.")
+    print(f"[2FA-EMAIL] Email de test envoye a {_mask_email(recipient)} par admin {current_user['email']}")
+    return {
+        "success":  True,
+        "sent_to":  _mask_email(recipient),
+        "message":  "Email de test envoye",
+    }
 
 
 @router.delete("/admin/users/{user_id}")
