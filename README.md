@@ -1,167 +1,183 @@
-# Conseiller Client Augmenté par Intelligence Artificielle
+<h1 align="center">AI-Augmented Banking Customer Advisor</h1>
+<h3 align="center">RAG Multi-Source System · Attijari Bank Tunisia · Engineering Final-Year Project (PFE)</h3>
 
-> Projet de Fin d'Études — Assistant conversationnel RAG pour Attijari Bank Tunisie
-
-Application web complète qui augmente le conseiller client bancaire : un chatbot RAG
-répond aux questions sur les produits de la banque (crédits, cartes, offres) en
-**français** et en **dialecte tunisien (derja)**, en s'appuyant exclusivement sur la
-documentation interne vectorisée — pas sur les connaissances générales du modèle.
-
-Le projet couvre la chaîne complète : ingestion documentaire, recherche hybride,
-génération de réponses, authentification forte (2FA + scoring de risque), prise de
-rendez-vous, et évaluation automatisée de la qualité du RAG.
-
----
-
-## Sommaire
-
-- [Fonctionnalités](#fonctionnalités)
-- [Architecture](#architecture)
-- [Stack technique](#stack-technique)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Variables d'environnement](#variables-denvironnement)
-- [Lancement](#lancement)
-- [Structure du projet](#structure-du-projet)
-- [API](#api)
-- [Évaluation et tests de charge](#évaluation-et-tests-de-charge)
-- [Limites connues](#limites-connues)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white" alt="LangChain">
+  <img src="https://img.shields.io/badge/ChromaDB-vector_store-FF6F00?style=flat-square" alt="ChromaDB">
+  <img src="https://img.shields.io/badge/Llama_3.3_70B-Groq-F55036?style=flat-square" alt="Llama 3.3 70B on Groq">
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB">
+  <img src="https://img.shields.io/badge/React_19-Vite-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React + Vite">
+</p>
 
 ---
 
-## Fonctionnalités
+## 🎯 Overview
 
-### Assistant conversationnel
+**The problem.** Bank advisors spend time answering repetitive product questions (cards, loans, savings, insurance), and many Tunisian customers write in **Derja** (Tunisian Arabic, often in Latin script), which general-purpose embedding models handle poorly.
 
-- **RAG bilingue** — détection automatique de la langue (français / derja) avec des
-  prompts et des températures distincts (`0.1` en français pour la précision factuelle,
-  `0.3` en derja pour le naturel de la langue).
-- **Recherche hybride** — combinaison de la similarité vectorielle dense et d'un
-  filtrage par catégorie de produit détectée dans la question.
-- **Réécriture de requête** — la question est reformulée et classée par catégorie avant
-  la recherche, pour améliorer le rappel.
-- **Upload de PDF** — un utilisateur peut téléverser un document et interroger son
-  contenu dans une collection vectorielle isolée.
-- **Documents partagés** — l'administrateur diffuse des PDF aux conseillers, avec suivi
-  des lectures.
+**The solution.** A web platform built during my final-year engineering internship at **Attijari Bank Tunisia**. It combines:
 
-### Sécurité et authentification
+- a **RAG chatbot** that answers questions **only from the bank's product documentation**, indexed in a vector store;
+- **Derja-aware retrieval**: Derja questions are detected and rewritten into French search queries, and documents are embedded with a fine-tuned multilingual model;
+- **advisor tools**: appointment management, AI-generated client briefs and document sharing;
+- **strong authentication**: email 2FA and risk-based authentication;
+- **built-in quality monitoring**: heuristic confidence score, LLM-as-a-judge and retrieval metrics.
 
-- **JWT** pour l'authentification des sessions.
-- **2FA par e-mail** — code à usage unique envoyé par SMTP Gmail, avec expiration et
-  limitation du nombre de tentatives.
-- **RBA (Risk-Based Authentication)** — scoring de risque à la connexion inspiré de
-  l'article 18 de la DSP2 (analyse du risque de transaction). Sept facteurs pondérés
-  (nouvel appareil, nouvelle ville, nouveau pays, horaire inhabituel, saut
-  géographique, appareil partagé, user-agent suspect) produisent un score de 0 à 100 et
-  une décision : `ALLOW`, `WARN`, `ALERT` ou `BLOCK`.
-- **Appareils de confiance** — un appareil validé est mémorisé 30 jours et dispense de 2FA.
-- **Chiffrement Fernet** des données client sensibles au repos (téléphone, date de
-  naissance, revenus mensuels).
-- **Journal d'audit** des actions de sécurité et signalement « ce n'était pas moi ».
-
-### Métier
-
-- **Prise de rendez-vous** — demande côté client, validation / refus / proposition de
-  créneaux alternatifs côté conseiller, calendrier de disponibilités.
-- **Notifications** in-app.
-- **Synthèse client générée par IA** à partir du dossier d'un client.
-
-### Qualité et supervision
-
-- **Juge LLM** (`api/llm_judge.py`) — notation automatique des réponses du chatbot.
-- **Tableau de bord administrateur** — statistiques d'usage, sessions actives,
-  évaluations quotidiennes, détection des conversations problématiques.
+> **Status:** academic prototype, run locally. It is not deployed and not production-ready. All client data in this repository is **synthetic**.
 
 ---
 
-## Architecture
+## ✨ Features
+
+| Area | What is implemented |
+| --- | --- |
+| 💬 **RAG chatbot** | Hybrid retrieval (dense + keyword), *Particulier* / *Professionnel* segments, source citations, answers in French |
+| 🇹🇳 **Derja support** | Rule-based Derja / Arabic-script detection, then LLM rewriting into a short French query for semantic search |
+| 📄 **Multi-source context** | Product corpus, user-uploaded PDFs (isolated per session, banking-domain filter) and admin-shared PDFs with read tracking |
+| 👤 **Advisor copilot** | Client-aware answers that combine a synthetic client file with the product catalog, plus AI-generated meeting briefs |
+| 📅 **Appointments** | Customer requests; advisor approve / reject / propose alternative slots; availability calendar; in-app notifications |
+| 🔐 **Security** | JWT, bcrypt, email 2FA, risk-based authentication, trusted devices, Fernet field encryption, “This wasn't me” incident flow, session revocation |
+| 📊 **Quality & monitoring** | Per-answer auto-score, background LLM-as-a-judge, user feedback, admin dashboard with daily scores and flagged answers |
+| 🧪 **Evaluation** | Gold-set retrieval metrics (Recall@k, Precision@k, MRR) and Locust load tests |
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
-    U["Client / Conseiller"] --> F["Frontend React 19 + Vite<br/>localhost:5173"]
-    F -->|"HTTP / proxy Vite"| A["API FastAPI<br/>localhost:8000"]
+    U["Customer / Advisor"] --> F["React 19 + Vite<br/>attijari_chatbot/"]
+    F -->|"REST + SSE"| A["FastAPI<br/>api/app.py"]
 
-    A --> AUTH["Authentification<br/>JWT · 2FA e-mail · RBA"]
-    A --> RAG["Moteur RAG<br/>chatbot.py"]
-    A --> BIZ["Rendez-vous · Notifications<br/>Évaluations · PDF"]
+    A --> SEC["Auth & security<br/>JWT · 2FA · RBA"]
+    A --> CHAT["POST /chat"]
+    A --> BIZ["Appointments · Notifications<br/>Clients · Shared PDFs"]
 
-    RAG -->|"recherche hybride"| C[("ChromaDB<br/>collection attijari")]
-    RAG -->|"génération"| G["Groq — llama-3.3-70b-versatile"]
-    RAG -.->|"fallback optionnel"| GM["Google Gemini flash"]
+    CHAT -->|"uploaded or shared PDF"| PDFV[("Per-PDF Chroma<br/>collections")]
+    CHAT -->|"product questions"| RAG["RAG engine<br/>chatbot.py"]
+    RAG --> VS[("ChromaDB<br/>collection 'attijari'")]
+    CHAT --> GEM["Gemini Flash<br/>(optional, tried first)"]
+    RAG --> GROQ["Llama 3.3 70B<br/>via Groq"]
 
-    AUTH --> M[("MongoDB<br/>attijari_chatbot")]
-    BIZ --> M
-    RAG --> M
+    CHAT --> EVAL["Auto-score +<br/>LLM-as-a-judge"]
+    SEC --> DB[("MongoDB<br/>attijari_chatbot")]
+    BIZ --> DB
+    EVAL --> DB
 
-    subgraph ING["Ingestion hors ligne"]
-        D["data/raw · data/pdfs"] --> L["load_documents.py<br/>pdf_ingest.py"]
-        L --> BV["build_vector_store.py"]
-        BV --> C
+    subgraph OFF["Offline ingestion"]
+        S["scraper/<br/>public product pages"] --> J["data/processed/*.json"]
+        J --> B["build_vector_store.py"]
     end
+    B --> VS
 ```
 
-**Flux d'une question.** Le frontend envoie la question à `POST /chat`. L'API valide le
-JWT, puis `chatbot.py` détecte la langue, réécrit la requête et en déduit la catégorie
-de produit, interroge ChromaDB en recherche hybride, assemble le contexte et appelle
-Groq pour générer la réponse. La conversation est persistée dans MongoDB, puis évaluée
-en arrière-plan par le juge LLM.
+**How `/chat` routes a question** (`api/routes.py`):
+
+1. **PDF mode**: if a PDF session or shared PDF is selected, retrieval runs only on that document's collection, then Groq generates the answer.
+2. **Gemini path**: when `GEMINI_API_KEY` is set and `USE_GEMINI=true`, French questions are answered by Gemini Flash using dense retrieval (top 5).
+3. **Groq RAG pipeline**: used when Gemini is disabled or fails, or in client mode. This path runs the full hybrid pipeline described below.
+4. Every answer is scored, saved to MongoDB and streamed to the UI over Server-Sent Events.
 
 ---
 
-## Stack technique
+## 🔎 RAG Pipeline
 
-| Couche | Technologie |
-|---|---|
-| Frontend | React 19, Vite 7, Recharts, Lucide React |
-| Backend | FastAPI 0.104, Uvicorn, Pydantic |
-| Orchestration LLM | LangChain (`langchain-core`, `langchain-chroma`, `langchain-huggingface`) |
-| LLM principal | Groq — `llama-3.3-70b-versatile` (endpoint compatible OpenAI) |
-| LLM de secours | Google Gemini — `gemini-flash-latest` |
-| Embeddings | Modèle fine-tuné `models/attijari-model-v2` (dérivé de BAAI/bge-m3) |
-| Base vectorielle | ChromaDB (persistance locale dans `chroma_db/`) |
-| Base de données | MongoDB — base `attijari_chatbot` |
-| Sécurité | python-jose (JWT), passlib/bcrypt, cryptography (Fernet) |
-| Tests de charge | Locust |
+| Step | Implementation | Code |
+| --- | --- | --- |
+| **1. Collection** | Scrapers for public product pages of attijaribank.com.tn (cards, credit, savings, insurance, bundled offers, remote banking), plus a *professionnel* dataset | `scraper/`, `clean_data.py` |
+| **2. Loading** | JSON corpus → LangChain `Document`s with normalized metadata (`title`, `category`, `source`, stable `doc_id`); optional PDFs via PyMuPDF (text) and pdfplumber (tables) | `load_documents.py`, `pdf_ingest.py` |
+| **3. Chunking** | `RecursiveCharacterTextSplitter`, 800 characters with 100 overlap; PDF tables kept whole | `load_documents.py` |
+| **4. Embeddings** | Fine-tuned Sentence-Transformers model `models/attijari-model-v2` (via `HuggingFaceEmbeddings`) | `build_vector_store.py` |
+| **5. Indexing** | Persistent ChromaDB collection `attijari` in `chroma_db/` | `build_vector_store.py` |
+| **6. Query handling** | Derja detection; Derja questions rewritten into a 5–10-word French query by the LLM; broad questions (“list”, “compare”…) expand *k* from 5 to 8 | `chatbot.py` |
+| **7. Hybrid retrieval** | Dense similarity search (filtered by segment) + keyword scoring on title / theme / content, then merged and deduplicated | `hybrid_search()` |
+| **8. Context building** | Up to 6 passages, each prefixed by its title, key factual lines prioritized (amounts, rates, fees, conditions), 1,500 characters max | `format_docs()` |
+| **9. Generation** | Llama 3.3 70B through Groq's OpenAI-compatible API (temperature 0.1) with a strict “context-only” banking prompt and a fallback message when information is missing | `answer_question()` |
+| **10. Evaluation** | Weighted auto-score (groundedness, citation, coverage, length) + Gemini 2.5 Flash judge (accuracy, relevance, clarity, language; hallucination flags) | `api/evaluation.py`, `api/llm_judge.py` |
 
----
-
-## Prérequis
-
-| Outil | Version | Rôle |
-|---|---|---|
-| Python | 3.11+ | Backend et pipeline RAG |
-| Node.js | 18+ | Frontend React |
-| MongoDB | 5.0+ | Base de données (locale ou Atlas) |
-| Clé API Groq | — | Génération des réponses ([console.groq.com](https://console.groq.com)) |
-| Clé API Gemini | optionnelle | Modèle de secours ([aistudio.google.com](https://aistudio.google.com)) |
-| Compte Gmail | — | Envoi des codes 2FA (mot de passe d'application) |
+> **About the embedding model.** According to [`RAPPORT_TECHNIQUE.md`](RAPPORT_TECHNIQUE.md), `attijari-model-v2` was fine-tuned from `paraphrase-multilingual-MiniLM-L12-v2` on a French / Derja parallel corpus with `MultipleNegativesRankingLoss`. The model weights and training script are **not** included in this repository.
 
 ---
 
-## Installation
+## 🧰 Tech Stack
 
-### 1. Cloner le dépôt
+| Layer | Technologies |
+| --- | --- |
+| **LLMs** | Llama 3.3 70B (`llama-3.3-70b-versatile`) on Groq · Google Gemini Flash (optional answers + judge) |
+| **RAG / NLP** | LangChain (`langchain-core`, `-chroma`, `-huggingface`, `-openai`, `-text-splitters`) · Sentence-Transformers · ChromaDB |
+| **Document processing** | PyMuPDF · pdfplumber · BeautifulSoup (scraping) |
+| **Backend** | FastAPI · Uvicorn · Pydantic · Server-Sent Events |
+| **Data** | MongoDB (`pymongo`) · Pandas · NumPy |
+| **Security** | python-jose (JWT) · passlib / bcrypt · cryptography (Fernet) · user-agents |
+| **Frontend** | React 19 · Vite 7 · Recharts · Lucide React |
+| **Testing & evaluation** | Locust · custom RAG metrics scripts |
+
+---
+
+## 📁 Project Structure
+
+```text
+.
+├── api/                     # FastAPI backend
+│   ├── app.py               # App entry point, CORS, routers
+│   ├── routes.py            # /chat, history, PDFs, admin endpoints
+│   ├── auth_routes.py       # Register, login, 2FA, "not me" flow
+│   ├── risk_scoring.py      # Risk-based authentication
+│   ├── device_tracking.py   # Device fingerprint & IP geolocation
+│   ├── crypto_utils.py      # Fernet encryption of sensitive fields
+│   ├── appointment_routes.py
+│   ├── clients.py           # Synthetic client files & AI briefs
+│   ├── pdf_upload.py        # Per-session PDF RAG
+│   ├── pdf_shared.py        # Admin-shared PDFs
+│   ├── evaluation.py        # Auto-score & stats
+│   └── llm_judge.py         # LLM-as-a-judge
+├── attijari_chatbot/        # Main React + Vite frontend
+├── client/                  # Alternative React frontend (Tailwind)
+├── chatbot.py               # RAG engine
+├── build_vector_store.py    # Builds the ChromaDB index
+├── load_documents.py        # Corpus loading & chunking
+├── pdf_ingest.py            # PDF text & table extraction
+├── scraper/                 # Product page scrapers
+├── data/                    # raw/ and processed/ corpus
+├── scripts/                 # Seeding, migrations, maintenance
+├── rag_*.py                 # Gold set & retrieval metrics
+├── locustfile.py            # Load-test scenarios
+├── RAPPORT_TECHNIQUE.md     # Technical report (French)
+└── PROJECT_SUMMARY.md       # Earlier architecture notes
+```
+
+---
+
+## 🚀 Installation & Running
+
+### Prerequisites
+
+| Tool | Notes |
+| --- | --- |
+| Python 3.11+ | Backend and RAG pipeline |
+| Node.js 20.19+ | Required by Vite 7 |
+| MongoDB | Local instance (`mongodb://localhost:27017`) or Atlas |
+| Groq API key | Required, see [console.groq.com](https://console.groq.com) |
+| Gemini API key | Optional (Gemini answers and LLM judge) |
+| Gmail app password | For sending 2FA codes |
+| Embedding model | `models/attijari-model-v2` (not versioned, see step 4) |
+
+### 1. Clone and install the backend
 
 ```bash
 git clone https://github.com/sofienkrir/Conseiller-Client-le-Augment-par-Intelligence-Artificielle_PFE.git
 cd Conseiller-Client-le-Augment-par-Intelligence-Artificielle_PFE
-```
 
-### 2. Backend — environnement virtuel et dépendances
-
-```bash
 python -m venv venv
-
-# Windows
-venv\Scripts\activate
-# macOS / Linux
-source venv/bin/activate
-
+source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+pip install pymupdf pdfplumber    # imported by pdf_ingest.py, not listed in requirements.txt
+pip install google-genai          # optional: Gemini answer path (api/gemini_model.py)
 ```
 
-### 3. Frontend
+### 2. Install the frontend
 
 ```bash
 cd attijari_chatbot
@@ -169,262 +185,126 @@ npm install
 cd ..
 ```
 
-### 4. Configurer les variables d'environnement
-
-Copier le modèle fourni, puis renseigner les valeurs réelles :
+### 3. Configure environment variables
 
 ```bash
-# Windows
-copy .env.example .env
-# macOS / Linux
-cp .env.example .env
+cp .env.example .env              # Windows: copy .env.example .env
+
+# Generate the two required secrets
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"   # ENCRYPTION_KEY
+python -c "import secrets; print(secrets.token_urlsafe(48))"                                # JWT_SECRET_KEY
 ```
 
-Générer les deux secrets cryptographiques requis :
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `GROQ_API_KEY` | ✅ | Answer generation (Llama 3.3 70B) |
+| `JWT_SECRET_KEY` | ✅ | JWT signing |
+| `ENCRYPTION_KEY` | ✅ | Fernet key for sensitive client fields |
+| `MONGO_URI` | ✅ | MongoDB connection string |
+| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | ✅ for 2FA | SMTP sender for 2FA and alert emails |
+| `GEMINI_API_KEY`, `USE_GEMINI` | optional | Gemini answers and LLM judge; set `USE_GEMINI=false` to use the Groq hybrid pipeline for every question |
+| `TWO_FA_*`, `TRUSTED_DEVICE_DAYS`, `RISK_*` | optional | 2FA and risk-scoring tuning (defaults in `.env.example`) |
+
+### 4. Build the vector store
+
+`models/attijari-model-v2` is not in the repository. Place it in `models/`, or set `EMBEDDING_MODEL_PATH` to a public Sentence-Transformers model in `chatbot.py`, `build_vector_store.py`, `api/pdf_upload.py` and `api/pdf_shared.py`.
 
 ```bash
-# Clé de chiffrement Fernet (ENCRYPTION_KEY)
-python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-
-# Secret de signature JWT (JWT_SECRET_KEY)
-python -c "import secrets; print(secrets.token_urlsafe(48))"
+python build_vector_store.py      # reads data/processed/*.json (+ data/pdfs/ if present) → chroma_db/
 ```
 
-Le détail de chaque variable figure dans la [section suivante](#variables-denvironnement).
-
-### 5. Construire la base vectorielle
-
-> **Note** — le modèle d'embeddings fine-tuné (`models/attijari-model-v2`, ~450 Mo)
-> n'est pas versionné dans ce dépôt. Pour reproduire l'indexation, placez-le dans
-> `models/`, ou remplacez `EMBEDDING_MODEL_PATH` dans `build_vector_store.py` et
-> `chatbot.py` par le modèle public `"BAAI/bge-m3"`, qui sera téléchargé
-> automatiquement depuis Hugging Face.
+### 5. Seed synthetic demo data (optional)
 
 ```bash
-python build_vector_store.py
+python generate_fake_clients.py                     # 30 synthetic client files
+python scripts/migrate_client_codes.py              # assigns ATB-2026-NNNN client codes
+python scripts/encrypt_existing_clients.py --apply  # encrypts sensitive fields (default is --dry-run)
+python scripts/seed_demo_users.py                   # demo accounts linked to two client files
+python make_admin.py <email>                        # promote an account to advisor/admin
 ```
 
-Cette étape lit `data/processed/*.json` et `data/pdfs/`, découpe les documents en
-chunks, calcule les embeddings et persiste la collection `attijari` dans `chroma_db/`.
-
-### 6. Créer les comptes de démonstration
+### 6. Run
 
 ```bash
-python scripts/seed_demo_users.py   # comptes de démo
-python make_admin.py                # promouvoir un compte en administrateur
+# Terminal 1: API
+uvicorn api.app:app --reload --port 8000     # Swagger UI: http://127.0.0.1:8000/docs
+
+# Terminal 2: frontend
+cd attijari_chatbot && npm run dev           # http://localhost:5173
+```
+
+The Vite dev server proxies `/chat`, `/auth`, `/api`, `/admin`, `/history`, `/upload_pdf`, `/shared_pdfs`, `/health` and `/transcribe` to the API on port 8000.
+
+### Evaluation & load testing
+
+```bash
+python rag_build_gold.py && python rag_preannotate.py   # build and pre-annotate the gold set
+python rag_metrics.py                                   # Recall@k, Precision@k, MRR (+ LaTeX table)
+python get_test_token.py                                # JWT for load testing → export CHAT_JWT=...
+locust -f locustfile.py --host http://127.0.0.1:8000    # UI on http://localhost:8089
 ```
 
 ---
 
-## Variables d'environnement
+## 🔐 Security & Privacy
 
-Toutes les variables se déclarent dans le fichier `.env` à la racine. Ce fichier est
-exclu du versionnement — **ne jamais le commiter**.
+**What the code implements**
 
-### Requis
+- **Passwords** hashed with bcrypt; sessions use **HS256 JWTs**.
+- **Email 2FA**: 6-digit codes from `secrets`, stored as SHA-256 hashes, with expiry (10 min by default), attempt limits and MongoDB TTL cleanup.
+- **Risk-based authentication**, inspired by PSD2 transaction risk analysis. Seven configurable factors (new device, city or country, unusual hour, impossible geo-jump, shared device, automated user agent) produce a 0–100 score mapped to `ALLOW` / `WARN` / `ALERT` / `BLOCK`.
+- **Trusted devices** (30 days by default), admin session revocation, and a **“This wasn't me”** incident flow.
+- **Fernet encryption at rest** for sensitive client fields (phone, birth date, family status, income, balances, transaction amounts).
+- **Domain filter on uploads**: only banking-related PDFs are accepted. Uploaded collections are isolated per user session and expire after 24 h.
+- Secrets live in `.env`, which is git-ignored. Only `.env.example` with placeholders is versioned.
 
-| Variable | Description |
-|---|---|
-| `GROQ_API_KEY` | Clé API Groq — génération des réponses du chatbot |
-| `JWT_SECRET_KEY` | Secret de signature des jetons d'authentification |
-| `ENCRYPTION_KEY` | Clé Fernet de chiffrement des données client sensibles |
-| `MONGO_URI` | Chaîne de connexion MongoDB — défaut `mongodb://localhost:27017` |
+**Limitations and disclaimer**
 
-### 2FA par e-mail
-
-| Variable | Défaut | Description |
-|---|---|---|
-| `GMAIL_USER` | — | Compte Gmail expéditeur des codes |
-| `GMAIL_APP_PASSWORD` | — | Mot de passe d'application Google (pas le mot de passe du compte) |
-| `TWO_FA_ENABLED` | `true` | Active la double authentification |
-| `TWO_FA_CODE_EXPIRY_MINUTES` | `10` | Durée de validité du code |
-| `TWO_FA_MAX_ATTEMPTS` | `5` | Tentatives avant blocage |
-| `TRUSTED_DEVICE_DAYS` | `30` | Durée de mémorisation d'un appareil de confiance |
-
-### Optionnel
-
-| Variable | Défaut | Description |
-|---|---|---|
-| `GEMINI_API_KEY` | — | Clé API Google Gemini (modèle de secours) |
-| `USE_GEMINI` | `true` | Active le recours à Gemini |
-| `FRONTEND_URL` | `http://localhost:5173` | URL utilisée dans les liens des e-mails |
-
-### Pondérations du scoring de risque (RBA)
-
-Chaque facteur contribue au score de risque de connexion. Les valeurs par défaut
-conviennent à une démonstration ; les ajuster permet de durcir ou d'assouplir la
-politique de sécurité.
-
-| Variable | Défaut | Facteur déclencheur |
-|---|---|---|
-| `RISK_GEO_JUMP` | `50` | Déplacement géographique impossible entre deux connexions |
-| `RISK_NEW_COUNTRY` | `35` | Connexion depuis un nouveau pays |
-| `RISK_SUSPICIOUS_UA` | `35` | User-agent suspect (outil automatisé) |
-| `RISK_NEW_DEVICE` | `25` | Appareil inconnu |
-| `RISK_SHARED_DEVICE` | `25` | Appareil déjà utilisé par un autre compte |
-| `RISK_NEW_CITY` | `15` | Nouvelle ville |
-| `RISK_UNUSUAL_HOUR` | `10` | Connexion à une heure inhabituelle pour l'utilisateur |
+- This is an **academic prototype**. It is **not certified**, has not been security-audited and is **not production-ready**.
+- Some `/admin/*` endpoints check authentication but not the admin role server-side. This must be enforced everywhere before any real use.
+- Login geolocation calls the external `ip-api.com` service over HTTP.
+- Questions and retrieved context are sent to third-party LLM APIs (Groq, Google).
+- All client files are **synthetic** (`generate_fake_clients.py`). The product corpus comes from public product pages.
 
 ---
 
-## Lancement
+## 🖼️ Screenshots
 
-Deux terminaux, l'environnement virtuel activé dans le premier.
+No screenshots are included yet. A security architecture diagram is available in [`figures/architecture_securite.svg`](figures/architecture_securite.svg).
 
-**Terminal 1 — API FastAPI**
+Suggested captures to add to `docs/screenshots/`:
 
-```bash
-uvicorn api.app:app --reload --port 8000
-```
-
-- API : http://127.0.0.1:8000
-- Documentation interactive (Swagger) : http://127.0.0.1:8000/docs
-
-**Terminal 2 — Frontend React**
-
-```bash
-cd attijari_chatbot
-npm run dev
-```
-
-- Application : http://localhost:5173
-
-Le serveur de développement Vite proxifie `/chat`, `/auth`, `/admin`, `/api`,
-`/history`, `/upload_pdf`, `/shared_pdfs` et `/transcribe` vers le backend sur le port
-8000 — aucune configuration CORS supplémentaire n'est nécessaire en développement.
+- [ ] Chat interface: a French question and a Derja question, with cited sources and the confidence score
+- [ ] PDF upload and question answering on the uploaded document
+- [ ] 2FA verification screen and the risk-based alert email
+- [ ] Appointment booking (customer) and the approval calendar (advisor)
+- [ ] Advisor view: client file and AI-generated meeting brief
+- [ ] Admin dashboard: evaluation statistics and flagged answers
 
 ---
 
-## Structure du projet
+## 🧭 Roadmap
 
-```
-.
-├── api/                          # Backend FastAPI
-│   ├── app.py                    # Point d'entrée, CORS, enregistrement des routeurs
-│   ├── routes.py                 # Chat, historique, endpoints d'administration
-│   ├── auth_routes.py            # Inscription, connexion, 2FA
-│   ├── auth_db.py                # Utilisateurs, hachage, émission des JWT
-│   ├── two_factor.py             # Codes à usage unique par e-mail
-│   ├── risk_scoring.py           # Scoring de risque RBA (DSP2)
-│   ├── device_tracking.py        # Empreinte et suivi des appareils
-│   ├── trusted_devices.py        # Appareils de confiance
-│   ├── crypto_utils.py           # Chiffrement Fernet des données sensibles
-│   ├── appointment_routes.py     # Rendez-vous
-│   ├── evaluation_routes.py      # Évaluation des réponses
-│   ├── llm_judge.py              # Notation automatique par LLM
-│   ├── pdf_upload.py             # Upload et interrogation de PDF
-│   └── gemini_model.py           # Client Gemini (fallback)
-│
-├── attijari_chatbot/             # Frontend React + Vite
-│   ├── src/
-│   │   ├── App.jsx               # Interface de chat
-│   │   ├── AuthPages.jsx         # Connexion, inscription, 2FA
-│   │   ├── Admindashboard.jsx    # Tableau de bord administrateur
-│   │   └── pages/                # Sessions, évaluations, rendez-vous
-│   └── vite.config.js            # Proxy de développement vers le backend
-│
-├── chatbot.py                    # Moteur RAG : recherche hybride, prompts, génération
-├── build_vector_store.py         # Construction de l'index ChromaDB
-├── load_documents.py             # Chargement et découpage du corpus JSON
-├── pdf_ingest.py                 # Extraction de texte des PDF
-├── scraper/                      # Collecte des données produits
-├── data/                         # Corpus : raw, processed, pdfs
-├── scripts/                      # Utilitaires (seed, migrations, maintenance)
-│
-├── rag_metrics.py                # Métriques de qualité du RAG
-├── rag_build_gold.py             # Construction du jeu de référence
-├── rag_preannotate.py            # Pré-annotation assistée par LLM
-├── run_evaluation.py             # Exécution du protocole d'évaluation
-├── locustfile.py                 # Scénarios de test de charge
-├── get_test_token.py             # Génération d'un JWT pour Locust
-├── monitor_resources.py          # Mesure CPU / mémoire sous charge
-│
-├── requirements.txt
-├── .env.example
-├── PROJECT_SUMMARY.md            # Documentation d'architecture détaillée
-└── RAPPORT_TECHNIQUE.md          # Rapport technique du PFE
-```
+These are **future improvements**, not current features:
+
+- **True token streaming**: answers are currently generated in full, then streamed word by word over SSE.
+- **Derja answers**: a Derja prompt exists in `chatbot.py`, but the main pipeline currently always answers in French.
+- **Voice input**: the `/transcribe` endpoint is a stub that returns `501` until a speech-to-text model is configured.
+- **Scalability**: `hybrid_search()` loads the whole collection for keyword scoring on every query; this should move to a proper BM25 or sparse index.
+- **Authorization**: enforce the admin role on every `/admin/*` route.
+- **Reproducibility**: publish the embedding fine-tuning script and corpus format, and complete `requirements.txt` (PyMuPDF, pdfplumber, google-genai).
+- **Engineering**: Dockerize the stack, add automated tests and CI, and consolidate the two frontends and legacy backup folders.
 
 ---
 
-## API
+## 👤 Author
 
-Documentation interactive complète sur http://127.0.0.1:8000/docs une fois l'API lancée.
+**Sofien Krir**, Data Science & AI Engineer (TEK-UP University, 2026)
+Final-year project carried out at the **Digital Center of Attijari Bank Tunisia**.
 
-### Principaux endpoints
+[![GitHub](https://img.shields.io/badge/GitHub-sofienkrir-181717?style=flat-square&logo=github)](https://github.com/sofienkrir)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sofien_Krir-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/sofien-krir-28b34b34b)
+[![Portfolio](https://img.shields.io/badge/Portfolio-visit-0F172A?style=flat-square&logo=vercel&logoColor=white)](https://portfolio-data-science-ia-sof.vercel.app)
+[![Email](https://img.shields.io/badge/Email-sofienkrir11%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:sofienkrir11@gmail.com)
 
-| Méthode | Route | Rôle |
-|---|---|---|
-| `POST` | `/chat` | Poser une question au chatbot |
-| `POST` | `/auth/register` · `/auth/login` | Création de compte, connexion |
-| `POST` | `/auth/verify-2fa` · `/auth/resend-2fa` | Validation du code 2FA |
-| `GET` | `/history/list` · `/history/{conv_id}` | Historique des conversations |
-| `POST` | `/upload_pdf` | Téléverser un PDF et l'interroger |
-| `POST` | `/appointments/request` | Demander un rendez-vous |
-| `GET` | `/admin/stats` | Statistiques d'usage |
-| `GET` | `/admin/evaluations/stats` | Qualité des réponses |
-| `GET` | `/admin/clients` | Dossiers clients |
-| `GET` | `/health` | Sonde de santé |
-
----
-
-## Évaluation et tests de charge
-
-### Qualité du RAG
-
-Le protocole repose sur un jeu de référence annoté (`rag_gold_*.json`) construit en deux
-temps : pré-annotation assistée par LLM, puis validation manuelle.
-
-```bash
-python rag_build_gold.py     # construire le jeu de référence
-python rag_preannotate.py    # pré-annoter avec un LLM
-python rag_metrics.py        # calculer les métriques
-python run_evaluation.py     # exécuter le protocole complet
-```
-
-Les résultats sont exportés en LaTeX (`rag_metrics_success_only_table.tex`) pour
-intégration directe dans le rapport.
-
-### Tests de charge
-
-```bash
-# 1. Générer un JWT valide (contourne la 2FA sans la désactiver)
-python get_test_token.py
-
-# 2. Le placer dans l'environnement
-export CHAT_JWT="<token>"        # macOS / Linux
-$env:CHAT_JWT = "<token>"        # Windows PowerShell
-
-# 3. Lancer Locust
-locust -f locustfile.py --host http://127.0.0.1:8000
-```
-
-Interface Locust sur http://localhost:8089. `monitor_resources.py` enregistre en
-parallèle la consommation CPU et mémoire du serveur.
-
----
-
-## Limites connues
-
-Points identifiés et documentés — choix assumés de prototype, et non des oublis :
-
-- **Streaming simulé** — la réponse est générée intégralement avant d'être restituée mot
-  à mot côté client. L'effet visuel est celui d'un streaming, mais la latence perçue
-  correspond à la génération complète.
-- **Contrôle de rôle à renforcer** — les endpoints `/admin/*` vérifient
-  l'authentification ; le contrôle du rôle administrateur doit être systématisé côté
-  serveur avant tout usage réel.
-- **Chargement de la collection** — `hybrid_search()` recharge l'ensemble des documents
-  à chaque requête. Acceptable au volume actuel, à optimiser avant une mise à l'échelle.
-- **Modèle d'embeddings non versionné** — le modèle fine-tuné (~450 Mo) est exclu du
-  dépôt ; voir l'[étape 5 de l'installation](#5-construire-la-base-vectorielle).
-
----
-
-## Auteur
-
-**Sofien Krir** — Projet de Fin d'Études, Attijari Bank Tunisie.
-
-Ce dépôt est publié à des fins académiques et de démonstration. Les données clients
-présentes dans le corpus de test sont entièrement fictives et générées
-(`generate_fake_clients.py`).
+<sub>Published for academic and demonstration purposes. Attijari Bank names and logos belong to their respective owners.</sub>
