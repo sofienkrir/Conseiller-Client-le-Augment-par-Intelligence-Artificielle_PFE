@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
 const C = {
-  red: "#CC0000", redDark: "#A00000",
-  white: "#FFFFFF",
-  bg: "#0F0F1A", bgCard: "#16162A", bgHover: "#1E1E35",
-  border: "#2A2A45", accent: "#E8521A", gold: "#B8964A",
-  textPrimary: "#FFFFFF", textSecondary: "#AAAAAA", textMuted: "#555577",
-  green: "#4ADE80", blue: "#3B82F6", orange: "#F59E0B",
+  red: "#D92D20", redDark: "#B42318",
+  white: "#FFFFFF",                         // texte blanc sur fonds colorés (boutons, avatars)
+  bg: "#F4F6FB", bgCard: "#FFFFFF", bgHover: "#F0F3F9",
+  border: "#E4E8F0", accent: "#E8521A", gold: "#B7791F",
+  ink: "#1B2538",                           // texte principal foncé (anciennement "white")
+  textPrimary: "#1B2538", textSecondary: "#5A6478", textMuted: "#98A0B0",
+  green: "#16A34A", blue: "#2563EB", orange: "#EA8204",
 };
 
 const FONT = `@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');`;
@@ -34,10 +35,10 @@ const IcoCheck = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="non
 // Logo
 const Logo = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <div style={{ background: "white", borderRadius: 8, padding: "4px 10px", display: "flex", alignItems: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
+    <div style={{ background: "white", borderRadius: 8, padding: "4px 10px", display: "flex", alignItems: "center", border: `1px solid ${C.border}`, boxShadow: "0 1px 3px rgba(27,37,56,0.08)" }}>
       <img src="/attijari-logo.png" alt="Attijari Bank" style={{ height: 26, display: "block" }} />
     </div>
-    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", fontStyle: "italic", fontFamily: "'Source Sans 3', sans-serif" }}>
+    <span style={{ fontSize: 10, color: C.textMuted, fontStyle: "italic", fontFamily: "'Source Sans 3', sans-serif" }}>
       Admin Dashboard
     </span>
   </div>
@@ -54,7 +55,7 @@ function StatCard({ icon, label, value, sub, color = C.red }) {
         {icon}
       </div>
       <div>
-        <div style={{ fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1 }}>{value ?? "—"}</div>
+        <div style={{ fontSize: 26, fontWeight: 700, color: C.ink, lineHeight: 1 }}>{value ?? "—"}</div>
         <div style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>{label}</div>
         {sub && <div style={{ fontSize: 10, color, marginTop: 2 }}>{sub}</div>}
       </div>
@@ -120,7 +121,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
         return (
           <div key={i} style={{ fontSize: 13, color: C.textSecondary, marginBottom: 5, paddingLeft: 14, position: "relative" }}>
             <span style={{ position: "absolute", left: 0, color: C.accent }}>•</span>
-            <span dangerouslySetInnerHTML={{ __html: content.replace(/\*\*(.*?)\*\*/g, `<strong style="color:${C.white}">$1</strong>`) }} />
+            <span dangerouslySetInnerHTML={{ __html: content.replace(/\*\*(.*?)\*\*/g, `<strong style="color:${C.ink}">$1</strong>`) }} />
           </div>
         );
       }
@@ -138,8 +139,8 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
   if (!clientId) return null;
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.82)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(6px)" }} onClick={onClose}>
-      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 760, maxHeight: "90vh", overflow: "auto", boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(6px)" }} onClick={onClose}>
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 760, maxHeight: "90vh", overflow: "auto", boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
 
         {loading ? (
           <div style={{ padding: 60, textAlign: "center", color: C.textMuted }}>Chargement...</div>
@@ -154,7 +155,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
                   {`${client.prenom?.[0]||""}${client.nom?.[0]||""}`.toUpperCase()}
                 </div>
                 <div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: C.white }}>{client.civilite} {client.prenom} {client.nom}</div>
+                  <div style={{ fontSize: 20, fontWeight: 700, color: C.ink }}>{client.civilite} {client.prenom} {client.nom}</div>
                   <div style={{ fontSize: 13, color: C.textMuted, marginTop: 2 }}>{client.profession} · {client.ville} · {client.age} ans</div>
                   <div style={{ marginTop: 6, display: "flex", gap: 6 }}>
                     <span style={{ background: `${C.accent}20`, color: C.accent, fontSize: 10, fontWeight: 600, padding: "2px 10px", borderRadius: 20, textTransform: "uppercase" }}>{client.segment}</span>
@@ -173,7 +174,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
                     <IcoSparkle/>
                   </div>
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: C.white, marginBottom: 2 }}>🤖 Préparation RDV automatique</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: C.ink, marginBottom: 2 }}>🤖 Préparation RDV automatique</div>
                     <div style={{ fontSize: 12, color: C.textSecondary, lineHeight: 1.4 }}>
                       Laissez l'IA analyser les données et générer une fiche de préparation personnalisée pour votre rendez-vous.
                     </div>
@@ -202,7 +203,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
                       <IcoSparkle/>
                     </div>
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: C.white }}>Synthèse IA générée</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: C.ink }}>Synthèse IA générée</div>
                       <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>Modèle: {synthesis.metadata?.model} · {new Date(synthesis.metadata?.generated_at).toLocaleString("fr-FR")}</div>
                     </div>
                   </div>
@@ -235,9 +236,9 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
               <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 12, padding: "14px 18px" }}>
                 <div style={{ fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10, fontWeight: 600 }}>Finance</div>
                 <div style={{ fontSize: 12, color: C.textSecondary, lineHeight: 2 }}>
-                  <div>💰 Revenus: <strong style={{ color: C.white }}>{fmtMoney(client.revenus_mensuels)}/mois</strong></div>
-                  <div>🏦 Produits actifs: <strong style={{ color: C.white }}>{client.produits?.length || 0}</strong></div>
-                  <div>📊 Transactions récentes: <strong style={{ color: C.white }}>{client.transactions_recentes?.length || 0}</strong></div>
+                  <div>💰 Revenus: <strong style={{ color: C.ink }}>{fmtMoney(client.revenus_mensuels)}/mois</strong></div>
+                  <div>🏦 Produits actifs: <strong style={{ color: C.ink }}>{client.produits?.length || 0}</strong></div>
+                  <div>📊 Transactions récentes: <strong style={{ color: C.ink }}>{client.transactions_recentes?.length || 0}</strong></div>
                   <div>⚠️ Alertes: <strong style={{ color: client.alertes?.length > 0 ? C.orange : C.green }}>{client.alertes?.length || 0}</strong></div>
                 </div>
               </div>
@@ -261,7 +262,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 {(client.produits || []).map((p, i) => (
                   <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: "10px 14px" }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: C.white, marginBottom: 4 }}>{p.nom}</div>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: C.ink, marginBottom: 4 }}>{p.nom}</div>
                     <div style={{ fontSize: 11, color: C.textMuted, lineHeight: 1.6 }}>
                       {p.solde != null && <div>Solde: {fmtMoney(p.solde)}</div>}
                       {p.capital_restant != null && <div>Capital restant: {fmtMoney(p.capital_restant)}</div>}
@@ -285,7 +286,7 @@ function ClientDetailModal({ clientId, token, apiUrl, onClose }) {
                       {t.sens === "credit" ? "+" : "−"}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 12, color: C.white, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.description}</div>
+                      <div style={{ fontSize: 12, color: C.ink, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.description}</div>
                       <div style={{ fontSize: 10, color: C.textMuted }}>{fmtDate(t.date)} · {t.type}</div>
                     </div>
                     <div style={{ fontSize: 12, fontWeight: 600, color: t.sens === "credit" ? C.green : C.textSecondary, whiteSpace: "nowrap" }}>
@@ -343,7 +344,7 @@ function ClientsTable({ token, apiUrl }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 16 }}>
           <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 14px" }}>
             <div style={{ fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em" }}>Total clients</div>
-            <div style={{ fontSize: 20, fontWeight: 700, color: C.white, marginTop: 2 }}>{stats.total}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: C.ink, marginTop: 2 }}>{stats.total}</div>
           </div>
           <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 14px" }}>
             <div style={{ fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em" }}>Particuliers</div>
@@ -363,12 +364,12 @@ function ClientsTable({ token, apiUrl }) {
       <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", animation: "fadeIn 0.4s ease" }}>
         <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
           <div>
-            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white }}>👥 Base clients</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.ink }}>👥 Base clients</h2>
             <p style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{clients.length} résultat{clients.length !== 1 ? "s" : ""}</p>
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <select value={segment} onChange={e => setSegment(e.target.value)}
-              style={{ padding: "7px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, color: C.white, fontSize: 12, fontFamily: "'Source Sans 3', sans-serif", cursor: "pointer" }}>
+              style={{ padding: "7px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, color: C.ink, fontSize: 12, fontFamily: "'Source Sans 3', sans-serif", cursor: "pointer" }}>
               <option value="all">Tous segments</option>
               <option value="particulier">Particuliers</option>
               <option value="professionnel">Professionnels</option>
@@ -378,7 +379,7 @@ function ClientsTable({ token, apiUrl }) {
               <span style={{ color: C.textMuted }}><IcoSearch/></span>
               <input value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Rechercher par nom, ville, profession..."
-                style={{ background: "none", border: "none", outline: "none", fontSize: 13, color: C.white, fontFamily: "'Source Sans 3', sans-serif", width: "100%" }}/>
+                style={{ background: "none", border: "none", outline: "none", fontSize: 13, color: C.ink, fontFamily: "'Source Sans 3', sans-serif", width: "100%" }}/>
             </div>
           </div>
         </div>
@@ -408,7 +409,7 @@ function ClientsTable({ token, apiUrl }) {
                         {`${c.prenom?.[0]||""}${c.nom?.[0]||""}`.toUpperCase()}
                       </div>
                       <div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: C.white }}>{c.prenom} {c.nom}</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink }}>{c.prenom} {c.nom}</div>
                         <div style={{ fontSize: 10, color: C.textMuted }}>{c.age} ans · {c.ville}</div>
                       </div>
                     </div>
@@ -417,7 +418,7 @@ function ClientsTable({ token, apiUrl }) {
                   <td style={{ padding: "11px 16px" }}>
                     <span style={{ background: c.segment === "professionnel" ? `${C.blue}20` : `${C.accent}20`, color: c.segment === "professionnel" ? C.blue : C.accent, fontSize: 10, fontWeight: 600, padding: "2px 10px", borderRadius: 20, textTransform: "capitalize" }}>{c.segment}</span>
                   </td>
-                  <td style={{ padding: "11px 16px", fontSize: 13, color: C.white, fontWeight: 600, whiteSpace: "nowrap" }}>{c.revenus_mensuels} DT</td>
+                  <td style={{ padding: "11px 16px", fontSize: 13, color: C.ink, fontWeight: 600, whiteSpace: "nowrap" }}>{c.revenus_mensuels} DT</td>
                   <td style={{ padding: "11px 16px", fontSize: 12, color: C.textMuted }}>{c.anciennete_annees} ans</td>
                   <td style={{ padding: "11px 16px", textAlign: "center" }}>
                     <span style={{ background: `${C.green}18`, color: C.green, fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 20 }}>{c.num_produits}</span>
@@ -506,11 +507,11 @@ function SharePdfModal({ token, apiUrl, onClose, onSuccess }) {
   };
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
-      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 560, maxHeight: "85vh", overflow: "auto", boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 560, maxHeight: "85vh", overflow: "auto", boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
           <div>
-            <h2 style={{ fontSize: 18, fontWeight: 700, color: C.white, marginBottom: 3 }}>📤 Partager un document PDF</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 700, color: C.ink, marginBottom: 3 }}>📤 Partager un document PDF</h2>
             <p style={{ fontSize: 12, color: C.textMuted }}>Sélectionnez le PDF et les destinataires</p>
           </div>
           <button onClick={onClose} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4, display: "flex" }}><IcoX/></button>
@@ -523,7 +524,7 @@ function SharePdfModal({ token, apiUrl, onClose, onSuccess }) {
             <div style={{ flex: 1 }}>
               {pdfFile ? (
                 <>
-                  <div style={{ fontSize: 13, color: C.white, fontWeight: 500 }}>{pdfFile.name}</div>
+                  <div style={{ fontSize: 13, color: C.ink, fontWeight: 500 }}>{pdfFile.name}</div>
                   <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{(pdfFile.size / 1024 / 1024).toFixed(2)} MB</div>
                 </>
               ) : (
@@ -541,7 +542,7 @@ function SharePdfModal({ token, apiUrl, onClose, onSuccess }) {
           <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: C.textMuted, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Description</label>
           <input type="text" value={description} onChange={e => setDescription(e.target.value)}
             placeholder="Ex: Nouvelle circulaire BCT janvier 2026"
-            style={{ width: "100%", padding: "11px 14px", background: C.bg, border: `1.5px solid ${C.border}`, borderRadius: 10, fontSize: 13, color: C.white, outline: "none" }}/>
+            style={{ width: "100%", padding: "11px 14px", background: C.bg, border: `1.5px solid ${C.border}`, borderRadius: 10, fontSize: 13, color: C.ink, outline: "none" }}/>
         </div>
 
         <div style={{ marginBottom: 18 }}>
@@ -555,7 +556,7 @@ function SharePdfModal({ token, apiUrl, onClose, onSuccess }) {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, background: C.bg, border: `1px solid ${C.border}`, borderRadius: 9, padding: "7px 13px", marginBottom: 8 }}>
             <span style={{ color: C.textMuted }}><IcoSearch/></span>
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher..." style={{ background: "none", border: "none", outline: "none", fontSize: 12, color: C.white, width: "100%" }}/>
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher..." style={{ background: "none", border: "none", outline: "none", fontSize: 12, color: C.ink, width: "100%" }}/>
           </div>
           <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, maxHeight: 220, overflowY: "auto" }}>
             {loading ? (
@@ -574,7 +575,7 @@ function SharePdfModal({ token, apiUrl, onClose, onSuccess }) {
                     {`${u.prenom?.[0] || ""}${u.nom?.[0] || ""}`.toUpperCase() || "?"}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, color: C.white, fontWeight: 500 }}>{u.prenom} {u.nom}</div>
+                    <div style={{ fontSize: 13, color: C.ink, fontWeight: 500 }}>{u.prenom} {u.nom}</div>
                     <div style={{ fontSize: 11, color: C.textMuted }}>{u.email}</div>
                   </div>
                 </div>
@@ -628,7 +629,7 @@ function SharedPdfsTable({ token, apiUrl }) {
       <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", animation: "fadeIn 0.4s ease" }}>
         <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
           <div>
-            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white }}>📚 PDFs partagés</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.ink }}>📚 PDFs partagés</h2>
             <p style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{pdfs.length} document{pdfs.length !== 1 ? "s" : ""}</p>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
@@ -661,7 +662,7 @@ function SharedPdfsTable({ token, apiUrl }) {
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       <div style={{ width: 32, height: 32, borderRadius: 8, background: `${C.gold}25`, display: "flex", alignItems: "center", justifyContent: "center", color: C.gold, flexShrink: 0 }}><IcoPdf/></div>
                       <div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: C.white }}>{p.file_name}</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink }}>{p.file_name}</div>
                         <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>{p.num_pages} page{p.num_pages > 1 ? "s" : ""}</div>
                       </div>
                     </div>
@@ -774,13 +775,13 @@ function TwoFAEmailModal({ user, token, apiUrl, onClose, onSaved }) {
   };
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
-      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 460, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 460, boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
 
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: C.white, marginBottom: 3 }}>Email de réception 2FA</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: C.ink, marginBottom: 3 }}>Email de réception 2FA</h3>
             <p style={{ fontSize: 12, color: C.textMuted }}>{user.prenom} {user.nom} · {user.email}</p>
           </div>
           <button onClick={onClose} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4, display: "flex" }}><IcoX/></button>
@@ -789,7 +790,7 @@ function TwoFAEmailModal({ user, token, apiUrl, onClose, onSaved }) {
         {/* Info banner */}
         <div style={{ background: `${C.accent}12`, border: `1px solid ${C.accent}30`, borderRadius: 10, padding: "10px 14px", marginBottom: 18, fontSize: 12, color: C.textSecondary, lineHeight: 1.5 }}>
           🔐 Le code de vérification sera envoyé à cette adresse lors de chaque connexion.<br/>
-          Si vide, le code est envoyé à l'email de login (<strong style={{ color: C.white }}>{user.email}</strong>).
+          Si vide, le code est envoyé à l'email de login (<strong style={{ color: C.ink }}>{user.email}</strong>).
         </div>
 
         {/* Email input */}
@@ -803,7 +804,7 @@ function TwoFAEmailModal({ user, token, apiUrl, onClose, onSaved }) {
               value={email}
               onChange={e => { setEmail(e.target.value); setError(""); setTestMsg(""); setTestOk(null); }}
               placeholder={`${user.email} (par défaut)`}
-              style={{ flex: 1, padding: "10px 14px", background: C.bg, border: `1.5px solid ${error ? C.red : email && isValid ? C.green : C.border}`, borderRadius: 9, fontSize: 13, color: C.white, outline: "none", fontFamily: "inherit" }}
+              style={{ flex: 1, padding: "10px 14px", background: C.bg, border: `1.5px solid ${error ? C.red : email && isValid ? C.green : C.border}`, borderRadius: 9, fontSize: 13, color: C.ink, outline: "none", fontFamily: "inherit" }}
             />
             <button onClick={handleTest} disabled={testing || !isValid}
               style={{ padding: "10px 14px", background: testing ? C.bgHover : `${C.blue}22`, border: `1px solid ${C.blue}40`, borderRadius: 9, color: C.blue, cursor: testing || !isValid ? "not-allowed" : "pointer", fontSize: 12, fontWeight: 600, whiteSpace: "nowrap", opacity: !isValid ? 0.4 : 1 }}>
@@ -824,7 +825,7 @@ function TwoFAEmailModal({ user, token, apiUrl, onClose, onSaved }) {
         <div style={{ background: C.bg, borderRadius: 9, padding: "10px 14px", marginBottom: 20, fontSize: 12, color: C.textMuted }}>
           Statut actuel :&nbsp;
           {user.two_fa_email_status === "custom"
-            ? <><span style={{ background: `${C.accent}20`, color: C.accent, padding: "1px 8px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>Custom</span> &nbsp;<span style={{ color: C.white }}>{user.two_fa_email}</span></>
+            ? <><span style={{ background: `${C.accent}20`, color: C.accent, padding: "1px 8px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>Custom</span> &nbsp;<span style={{ color: C.ink }}>{user.two_fa_email}</span></>
             : <><span style={{ background: `${C.textMuted}20`, color: C.textMuted, padding: "1px 8px", borderRadius: 20, fontSize: 11, fontWeight: 600 }}>Fallback</span> &nbsp;<span style={{ color: C.textSecondary }}>{user.email}</span></>
           }
           {user.two_fa_email_updated_at && (
@@ -867,12 +868,12 @@ function UserModal({ user, token, apiUrl, onClose, onDelete }) {
   if (!user) return null;
   const initials = `${user.prenom?.[0]||""}${user.nom?.[0]||""}`.toUpperCase();
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
-      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 400, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }} onClick={onClose}>
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 400, boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }} onClick={e => e.stopPropagation()}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
           <div style={{ width: 52, height: 52, borderRadius: "50%", background: `linear-gradient(135deg, ${C.accent}, ${C.red})`, display: "flex", alignItems: "center", justifyContent: "center", color: C.white, fontSize: 17, fontWeight: 700 }}>{initials}</div>
           <div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: C.white }}>{user.prenom} {user.nom}</div>
+            <div style={{ fontSize: 17, fontWeight: 700, color: C.ink }}>{user.prenom} {user.nom}</div>
             <div style={{ fontSize: 12, color: C.textMuted }}>{user.email}</div>
           </div>
         </div>
@@ -880,7 +881,7 @@ function UserModal({ user, token, apiUrl, onClose, onDelete }) {
           {[["Téléphone", user.telephone || "—"], ["Inscrit le", user.created_at ? new Date(user.created_at).toLocaleDateString("fr-FR") : "—"], ["Conversations", stats?.total_conversations ?? "..."], ["Messages", stats?.total_messages ?? "..."]].map(([k, v]) => (
             <div key={k} style={{ background: C.bg, borderRadius: 9, padding: "11px 14px" }}>
               <div style={{ fontSize: 9, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>{k}</div>
-              <div style={{ fontSize: 14, color: C.white, fontWeight: 500 }}>{String(v)}</div>
+              <div style={{ fontSize: 14, color: C.ink, fontWeight: 500 }}>{String(v)}</div>
             </div>
           ))}
         </div>
@@ -1096,7 +1097,7 @@ function AppointmentsTab({ token, apiUrl }) {
           background: toast.type === "error" ? "#2a1010" : "#0f2a0f",
           border: `1px solid ${toast.type === "error" ? C.red : C.green}`,
           borderRadius: 12, padding: "13px 22px", color: C.white,
-          fontSize: 13, fontWeight: 600, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+          fontSize: 13, fontWeight: 600, boxShadow: "0 8px 28px rgba(27,37,56,0.22)",
           animation: "fadeUp 0.3s ease", maxWidth: 400,
         }}>
           {toast.msg}
@@ -1126,7 +1127,7 @@ function AppointmentsTab({ token, apiUrl }) {
       <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", animation: "fadeIn 0.4s ease" }}>
         <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
-            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white, display: "flex", alignItems: "center", gap: 10 }}>
+            <h2 style={{ fontSize: 15, fontWeight: 700, color: C.ink, display: "flex", alignItems: "center", gap: 10 }}>
               📅 Demandes de rendez-vous en attente
               {stats?.pending > 0 && (
                 <span style={{ background: C.orange, color: "#000", fontSize: 11, fontWeight: 800, padding: "2px 9px", borderRadius: 20 }}>
@@ -1156,7 +1157,7 @@ function AppointmentsTab({ token, apiUrl }) {
         ) : appointments.length === 0 ? (
           <div style={{ padding: 70, textAlign: "center" }}>
             <div style={{ fontSize: 44, marginBottom: 14 }}>✅</div>
-            <div style={{ fontSize: 15, fontWeight: 600, color: C.white, marginBottom: 6 }}>Aucune demande en attente</div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: C.ink, marginBottom: 6 }}>Aucune demande en attente</div>
             <div style={{ fontSize: 12, color: C.textMuted }}>Toutes les demandes ont été traitées</div>
           </div>
         ) : (
@@ -1175,7 +1176,7 @@ function AppointmentsTab({ token, apiUrl }) {
                 {/* Infos RDV */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: C.white }}>{appt.client_name}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: C.ink }}>{appt.client_name}</span>
                     <span style={{ fontSize: 11, color: C.textMuted }}>{appt.client_email}</span>
                     <span style={{ fontSize: 10, color: C.textMuted, marginLeft: "auto", whiteSpace: "nowrap" }}>
                       {fmtRelative(appt.created_at)}
@@ -1229,7 +1230,7 @@ function AppointmentsTab({ token, apiUrl }) {
         <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", marginTop: 20, animation: "fadeIn 0.4s ease" }}>
           <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white, display: "flex", alignItems: "center", gap: 10 }}>
+              <h2 style={{ fontSize: 15, fontWeight: 700, color: C.ink, display: "flex", alignItems: "center", gap: 10 }}>
                 ✅ RDV confirmés — 60 prochains jours
                 <span style={{ background: `${C.green}25`, color: C.green, fontSize: 11, fontWeight: 800, padding: "2px 9px", borderRadius: 20 }}>
                   {confirmedAppointments.length}
@@ -1251,7 +1252,7 @@ function AppointmentsTab({ token, apiUrl }) {
                 {/* Infos */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: C.white }}>{appt.client_name}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: C.ink }}>{appt.client_name}</span>
                     <span style={{ fontSize: 11, color: C.textMuted }}>{appt.client_email}</span>
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -1301,15 +1302,15 @@ function AppointmentsTab({ token, apiUrl }) {
       {/* Modal de refus */}
       {rejectModal && (
         <div
-          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.80)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
+          style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
           onClick={() => { setRejectModal(null); setRejectReason(""); }}>
           <div
-            style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 480, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }}
+            style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 30, width: 480, boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }}
             onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 22 }}>
               <div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.white, marginBottom: 4 }}>Refuser la demande</h3>
-                <p style={{ fontSize: 12, color: C.textMuted }}>Client : <strong style={{ color: C.white }}>{rejectModal.clientName}</strong></p>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.ink, marginBottom: 4 }}>Refuser la demande</h3>
+                <p style={{ fontSize: 12, color: C.textMuted }}>Client : <strong style={{ color: C.ink }}>{rejectModal.clientName}</strong></p>
               </div>
               <button onClick={() => { setRejectModal(null); setRejectReason(""); }}
                 style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4, display: "flex" }}>
@@ -1327,7 +1328,7 @@ function AppointmentsTab({ token, apiUrl }) {
                 placeholder="Ex: Créneau non disponible. Merci de choisir une autre date..."
                 rows={4}
                 autoFocus
-                style={{ width: "100%", padding: "12px 14px", background: C.bg, border: `1.5px solid ${rejectReason.trim() ? C.border : C.red + "50"}`, borderRadius: 10, fontSize: 13, color: C.white, outline: "none", resize: "vertical", fontFamily: "'Source Sans 3', sans-serif", lineHeight: 1.5 }}
+                style={{ width: "100%", padding: "12px 14px", background: C.bg, border: `1.5px solid ${rejectReason.trim() ? C.border : C.red + "50"}`, borderRadius: 10, fontSize: 13, color: C.ink, outline: "none", resize: "vertical", fontFamily: "'Source Sans 3', sans-serif", lineHeight: 1.5 }}
               />
               <div style={{ fontSize: 11, color: rejectReason.trim() ? C.textMuted : "#ff8080", marginTop: 5 }}>
                 {rejectReason.trim() ? `${rejectReason.length} caractères` : "Ce champ est requis — le client recevra ce message"}
@@ -1356,14 +1357,14 @@ function AppointmentsTab({ token, apiUrl }) {
       )}
       {/* Modal reprogrammation — sélection de 2 à 3 créneaux */}
       {reproModal && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.82)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
+        <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
           onClick={() => setReproModal(null)}>
-          <div style={{ background: C.bgCard, border: `1px solid ${C.blue}50`, borderRadius: 20, padding: 28, width: 560, maxHeight: "80vh", display: "flex", flexDirection: "column", boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }}
+          <div style={{ background: C.bgCard, border: `1px solid ${C.blue}50`, borderRadius: 20, padding: 28, width: 560, maxHeight: "80vh", display: "flex", flexDirection: "column", boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }}
             onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
               <div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: C.white, marginBottom: 4 }}>🔄 Reprogrammer le rendez-vous</h3>
-                <p style={{ fontSize: 12, color: C.textMuted }}>Client : <strong style={{ color: C.white }}>{reproModal.clientName}</strong> — Sélectionnez 2 ou 3 créneaux</p>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: C.ink, marginBottom: 4 }}>🔄 Reprogrammer le rendez-vous</h3>
+                <p style={{ fontSize: 12, color: C.textMuted }}>Client : <strong style={{ color: C.ink }}>{reproModal.clientName}</strong> — Sélectionnez 2 ou 3 créneaux</p>
               </div>
               <button onClick={() => setReproModal(null)} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer" }}><IcoX/></button>
             </div>
@@ -1400,7 +1401,7 @@ function AppointmentsTab({ token, apiUrl }) {
                           const disabled = !selected && reproSlots.length >= 3;
                           return (
                             <button key={i} onClick={() => !disabled && toggleSlot(s)}
-                              style={{ padding: "5px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: disabled ? "not-allowed" : "pointer", border: `1px solid ${selected ? C.blue : C.border}`, background: selected ? `${C.blue}30` : C.bgCard, color: selected ? C.blue : disabled ? C.textMuted : C.white, transition: "all 0.15s" }}>
+                              style={{ padding: "5px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: disabled ? "not-allowed" : "pointer", border: `1px solid ${selected ? C.blue : C.border}`, background: selected ? `${C.blue}30` : C.bgCard, color: selected ? C.blue : disabled ? C.textMuted : C.ink, transition: "all 0.15s" }}>
                               {s.start_time}
                             </button>
                           );
@@ -1417,7 +1418,7 @@ function AppointmentsTab({ token, apiUrl }) {
               <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: C.textMuted, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Message (optionnel)</label>
               <input value={reproMessage} onChange={e => setReproMessage(e.target.value)}
                 placeholder="Ex: Choisissez le créneau qui vous convient le mieux..."
-                style={{ width: "100%", padding: "10px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, color: C.white, outline: "none", fontFamily: "'Source Sans 3', sans-serif" }}/>
+                style={{ width: "100%", padding: "10px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, color: C.ink, outline: "none", fontFamily: "'Source Sans 3', sans-serif" }}/>
             </div>
 
             <div style={{ display: "flex", gap: 10 }}>
@@ -1437,16 +1438,16 @@ function AppointmentsTab({ token, apiUrl }) {
       {/* Modal annulation conseiller */}
       {cancelModal && (
         <div
-          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.80)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
+          style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(5px)" }}
           onClick={() => { setCancelModal(null); setCancelReason(""); }}>
           <div
-            style={{ background: C.bgCard, border: `1px solid ${C.orange}50`, borderRadius: 20, padding: 30, width: 480, boxShadow: "0 24px 60px rgba(0,0,0,0.5)", animation: "fadeUp 0.25s ease" }}
+            style={{ background: C.bgCard, border: `1px solid ${C.orange}50`, borderRadius: 20, padding: 30, width: 480, boxShadow: "0 20px 50px rgba(27,37,56,0.16)", animation: "fadeUp 0.25s ease" }}
             onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
               <div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.white, marginBottom: 4 }}>⚠️ Annuler le rendez-vous</h3>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.ink, marginBottom: 4 }}>⚠️ Annuler le rendez-vous</h3>
                 <p style={{ fontSize: 12, color: C.textMuted }}>
-                  Client : <strong style={{ color: C.white }}>{cancelModal.clientName}</strong>
+                  Client : <strong style={{ color: C.ink }}>{cancelModal.clientName}</strong>
                   {" — "}{fmtDate(cancelModal.date)} à {cancelModal.startTime}
                 </p>
               </div>
@@ -1470,7 +1471,7 @@ function AppointmentsTab({ token, apiUrl }) {
                 placeholder="Ex: Réunion urgente imprévue. Nous vous contacterons pour fixer un nouveau créneau..."
                 rows={4}
                 autoFocus
-                style={{ width: "100%", padding: "12px 14px", background: C.bg, border: `1.5px solid ${cancelReason.trim() ? C.border : C.orange + "60"}`, borderRadius: 10, fontSize: 13, color: C.white, outline: "none", resize: "vertical", fontFamily: "'Source Sans 3', sans-serif", lineHeight: 1.5 }}
+                style={{ width: "100%", padding: "12px 14px", background: C.bg, border: `1.5px solid ${cancelReason.trim() ? C.border : C.orange + "60"}`, borderRadius: 10, fontSize: 13, color: C.ink, outline: "none", resize: "vertical", fontFamily: "'Source Sans 3', sans-serif", lineHeight: 1.5 }}
               />
               <div style={{ fontSize: 11, color: cancelReason.trim() ? C.textMuted : C.orange, marginTop: 5 }}>
                 {cancelReason.trim() ? `${cancelReason.length} caractères` : "Ce champ est requis — le client recevra ce motif"}
@@ -1564,7 +1565,7 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
   const fmtDate = iso => iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "2-digit" }) : "—";
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif", color: C.white }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif", color: C.ink }}>
       <style>{`
         ${FONT}
         * { box-sizing:border-box; margin:0; padding:0; }
@@ -1577,7 +1578,7 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
       <header style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, padding: "0 28px", height: 62, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {onBackToChat && (
-            <button onClick={onBackToChat} style={{ background: `${C.accent}18`, border: `1px solid ${C.accent}35`, borderRadius: 8, padding: "6px 12px", color: C.white, cursor: "pointer", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 5 }}>
+            <button onClick={onBackToChat} style={{ background: `${C.accent}18`, border: `1px solid ${C.accent}35`, borderRadius: 8, padding: "6px 12px", color: C.ink, cursor: "pointer", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 5 }}>
               ← Chat
             </button>
           )}
@@ -1589,12 +1590,12 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
             <span style={{ fontSize: 12, color: C.gold, fontWeight: 600 }}>Administrateur</span>
           </div>
           {onGoEvaluations && (
-            <button onClick={onGoEvaluations} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.35)", borderRadius: 9, padding: "7px 13px", color: "#A78BFA", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+            <button onClick={onGoEvaluations} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.30)", borderRadius: 9, padding: "7px 13px", color: "#7C3AED", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
               🛡️ Évaluations
             </button>
           )}
           {onGoSessions && (
-            <button onClick={onGoSessions} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.35)", borderRadius: 9, padding: "7px 13px", color: "#60A5FA", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+            <button onClick={onGoSessions} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(37,99,235,0.10)", border: "1px solid rgba(37,99,235,0.28)", borderRadius: 9, padding: "7px 13px", color: "#2563EB", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
               🌐 Sessions
             </button>
           )}
@@ -1606,7 +1607,7 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 28px" }}>
         <div style={{ marginBottom: 32, animation: "fadeIn 0.4s ease" }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: C.white, fontFamily: "'Playfair Display', serif", marginBottom: 5 }}>Tableau de bord</h1>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: C.ink, fontFamily: "'Playfair Display', serif", marginBottom: 5 }}>Tableau de bord</h1>
           <p style={{ fontSize: 13, color: C.textMuted }}>Vue d'ensemble de l'activité Attijari Bank Assistant</p>
         </div>
 
@@ -1644,12 +1645,12 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
           <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", animation: "fadeIn 0.4s ease" }}>
             <div style={{ padding: "18px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
               <div>
-                <h2 style={{ fontSize: 15, fontWeight: 700, color: C.white }}>Utilisateurs</h2>
+                <h2 style={{ fontSize: 15, fontWeight: 700, color: C.ink }}>Utilisateurs</h2>
                 <p style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{filtered.length} compte{filtered.length !== 1 ? "s" : ""}</p>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, background: C.bg, border: `1px solid ${C.border}`, borderRadius: 9, padding: "7px 13px", minWidth: 220 }}>
                 <span style={{ color: C.textMuted }}><IcoSearch/></span>
-                <input value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder="Rechercher..." style={{ background: "none", border: "none", outline: "none", fontSize: 13, color: C.white, width: "100%" }}/>
+                <input value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder="Rechercher..." style={{ background: "none", border: "none", outline: "none", fontSize: 13, color: C.ink, width: "100%" }}/>
               </div>
               <button onClick={() => { fetchStats(); fetchUsers(); }} style={{ padding: "7px 14px", background: `${C.red}18`, border: `1px solid ${C.red}30`, borderRadius: 9, color: C.red, cursor: "pointer", fontSize: 12 }}>↻ Rafraîchir</button>
             </div>
@@ -1674,11 +1675,11 @@ function Dashboard({ token, apiUrl, onLogout, onBackToChat, onGoEvaluations, onG
                       <td style={{ padding: "13px 18px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                           <div style={{ width: 32, height: 32, borderRadius: "50%", background: `linear-gradient(135deg, ${C.accent}70, ${C.red}70)`, display: "flex", alignItems: "center", justifyContent: "center", color: C.white, fontSize: 11, fontWeight: 700 }}>{`${u.prenom?.[0]||""}${u.nom?.[0]||""}`.toUpperCase()}</div>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: C.white }}>{u.prenom} {u.nom}</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: C.ink }}>{u.prenom} {u.nom}</div>
                         </div>
                       </td>
                       <td style={{ padding: "13px 18px", fontSize: 13, color: C.textSecondary }}>{u.email}</td>
-                      <td style={{ padding: "13px 18px", fontSize: 12, color: u.two_fa_email ? C.white : C.textMuted, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <td style={{ padding: "13px 18px", fontSize: 12, color: u.two_fa_email ? C.ink : C.textMuted, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {u.two_fa_email || <span style={{ fontStyle: "italic" }}>—</span>}
                       </td>
                       <td style={{ padding: "13px 18px" }}>

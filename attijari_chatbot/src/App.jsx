@@ -260,32 +260,6 @@ function LibraryModal({ token, onClose, onSelectPdf }) {
   );
 }
 
-// ═══ SCORE BADGE ═══
-function ScoreBadge({ evalId, autoScore }) {
-  if (!evalId || !autoScore || typeof autoScore.score_global !== "number") return null;
-  const score10 = Math.max(0, Math.min(10, autoScore.score_global));
-  const stars   = Math.round((score10 / 2) * 2) / 2; // 0-5, step 0.5
-  const filled  = Math.floor(stars);
-  const hasHalf = stars - filled >= 0.5;
-  const color   = score10 >= 7.5 ? "#16A34A" : score10 >= 5 ? "#D97706" : "#DC2626";
-  const label   = score10 >= 7.5 ? "Fiabilité élevée" : score10 >= 5 ? "Fiabilité moyenne" : "Fiabilité faible";
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 8, paddingTop: 6, borderTop: "1px solid #F0EDEA", flexWrap: "wrap" }}>
-      <span style={{ fontSize: 10, color: "#9CA3AF", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>Fiabilité</span>
-      <div style={{ display: "flex", gap: 1 }}>
-        {[1, 2, 3, 4, 5].map(i => (
-          <span key={i} style={{ fontSize: 15, lineHeight: 1, color: i <= filled || (i === filled + 1 && hasHalf) ? "#FBBF24" : "#D1D5DB" }}>
-            {i <= filled ? "★" : (i === filled + 1 && hasHalf ? "⯨" : "☆")}
-          </span>
-        ))}
-      </div>
-      <span style={{ fontSize: 11, fontWeight: 700, color }}>{stars.toFixed(1)}/5</span>
-      <span style={{ fontSize: 10, color: "#D1D5DB" }}>·</span>
-      <span style={{ fontSize: 10, color, fontWeight: 500 }}>{label}</span>
-    </div>
-  );
-}
-
 // ═══ FEEDBACK ROW ═══
 function FeedbackRow({ evalId, token }) {
   const [voted, setVoted] = useState(null);      // null | "up" | "down"
@@ -449,10 +423,7 @@ function Message({ msg, user, token = null }) {
           </button>
         )}
         {!isUser && msg.eval_id && (
-          <>
-            <ScoreBadge evalId={msg.eval_id} autoScore={msg.auto_score} />
-            <FeedbackRow evalId={msg.eval_id} token={token} />
-          </>
+          <FeedbackRow evalId={msg.eval_id} token={token} />
         )}
       </div>
     </div>

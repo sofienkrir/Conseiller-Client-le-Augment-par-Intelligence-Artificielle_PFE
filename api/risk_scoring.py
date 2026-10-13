@@ -77,7 +77,7 @@ def calculate_login_risk(
     score   = 0
     factors = []
 
-    # ── 1. Nouveau device (+20) ────────────────────────────────────────────
+    # ── 1. Nouveau device (+25) ────────────────────────────────────────────
     if is_new_device:
         score += S_NEW_DEVICE
         factors.append({
@@ -98,7 +98,7 @@ def calculate_login_risk(
             "icon":    "📍",
         })
 
-    # ── 3. Nouveau pays (+30) ──────────────────────────────────────────────
+    # ── 3. Nouveau pays (+35) ──────────────────────────────────────────────
     if check_new_country(user_id, location, exclude_fp=device_fingerprint):
         country = location.get("country") or "inconnu"
         score += S_NEW_COUNTRY
@@ -119,7 +119,7 @@ def calculate_login_risk(
             "icon":    "🌙",
         })
 
-    # ── 5. Echecs 2FA récents (+25) ────────────────────────────────────────
+    # ── 5. Echecs 2FA récents (+35) ────────────────────────────────────────
     failed = check_failed_2fa_attempts(user_id)
     if failed >= 3:
         score += S_FAILED_2FA
@@ -140,7 +140,7 @@ def calculate_login_risk(
             "icon":    "✈️",
         })
 
-    # ── 7. Device partagé entre comptes (+20) ──────────────────────────────
+    # ── 7. Device partagé entre comptes (+25) ──────────────────────────────
     if check_shared_device(device_fingerprint, user_id):
         score += S_SHARED_DEVICE
         factors.append({
@@ -150,7 +150,7 @@ def calculate_login_risk(
             "icon":    "👥",
         })
 
-    # ── 8. User-Agent suspect (+30) ────────────────────────────────────────
+    # ── 8. User-Agent suspect (+35) ────────────────────────────────────────
     if check_suspicious_user_agent(user_agent):
         score += S_SUSPICIOUS_UA
         factors.append({

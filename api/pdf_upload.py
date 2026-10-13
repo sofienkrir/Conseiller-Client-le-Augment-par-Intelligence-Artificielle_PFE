@@ -7,6 +7,7 @@ Chaque upload crée une collection ChromaDB temporaire (par session).
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import tempfile
 import hashlib
@@ -53,6 +54,105 @@ def session_collection_name(user_id: str, session_id: str) -> str:
     raw = f"{user_id}_{session_id}"
     h = hashlib.md5(raw.encode()).hexdigest()[:16]
     return f"upload_{h}"
+
+
+# ══════════════════════════════════════════════════════════════════════
+# FILTRE DE DOMAINE BANCAIRE
+# L'application est destinée à une banque : on n'accepte que les PDF
+# dont le contenu relève clairement du domaine bancaire/financier.
+# ══════════════════════════════════════════════════════════════════════
+
+class NonBankingPDFError(ValueError):
+    """Levée quand un PDF uploadé n'appartient pas au domaine bancaire."""
+    def __init__(self, matched_terms: list[str]):
+        self.matched_terms = matched_terms
+        super().__init__(
+            "Ce PDF ne semble pas relever du domaine bancaire. "
+            "Seuls les documents bancaires/financiers sont acceptés."
+        )
+
+
+# Le lexique est divisé en DEUX niveaux pour éviter les faux positifs :
+#
+#  • STRONG = vocabulaire propre à un *document bancaire réel* (relevé,
+#    contrat de prêt, brochure produit...). On en trouve plusieurs dans un
+#    vrai document bancaire, mais quasiment aucun dans un CV, une lettre de
+#    motivation ou une plaquette marketing qui se contente de "citer" une banque.
+#
+#  • WEAK = mots contextuels qui apparaissent aussi hors du domaine bancaire
+#    (un nom d'entreprise, un pays, un intitulé de poste...). Ils comptent,
+#    mais ne suffisent JAMAIS à eux seuls à valider un document.
+STRONG_BANKING_TERMS = {
+    # Comptes & opérations bancaires
+    "solde", "relevé", "rib", "iban", "bic", "swift", "virement",
+    "prélèvement", "découvert", "agios", "domiciliation", "guichet",
+    "chèque", "chéquier", "débit",
+    # Crédits & financements
+    "crédit immobilier", "crédit consommation", "crédit à la consommation",
+    "prêt", "emprunt", "mensualité", "échéance", "amortissement",
+    "hypothèque", "remboursement", "endettement", "leasing", "rééchelonnement",
+    # Épargne & placements
+    "épargne", "livret", "dépôt à terme", "compte épargne", "rendement",
+    # Cartes & paiement
+    "carte bancaire", "carte de crédit", "carte de paiement", "plafond",
+    # Taux & assurance
+    "taux d'intérêt", "taux d'interet", "assurance-vie", "cotisation",
+    "prime d'assurance", "sinistre", "souscription",
+}
+
+WEAK_BANKING_TERMS = {
+    "banque", "bancaire", "compte", "compte courant", "agence",
+    "conseiller", "client", "clientèle", "dépôt", "retrait", "crédit",
+    "financement", "capital", "investissement", "placement", "épargnant",
+    "assurance", "frais", "commission", "taux", "intérêt", "intérêts",
+    "paiement", "transaction", "visa", "mastercard", "bourse", "action",
+    "obligation", "titres", "portefeuille", "dividende", "dinar", "dinars",
+    "tnd", "devise", "monnaie", "liquidité", "kyc", "attijari", "tunisie",
+}
+
+
+def _compile_terms(terms: set[str]) -> "re.Pattern":
+    # Alternance triée du plus long au plus court → priorité aux expressions
+    # composées ("carte bancaire" avant "carte"). \b = mots entiers.
+    return re.compile(
+        r"\b(?:" + "|".join(
+            re.escape(t) for t in sorted(terms, key=len, reverse=True)
+        ) + r")\b",
+        re.IGNORECASE,
+    )
+
+
+_STRONG_REGEX = _compile_terms(STRONG_BANKING_TERMS)
+_WEAK_REGEX = _compile_terms(WEAK_BANKING_TERMS)
+
+# Règles d'acceptation :
+#  - au moins MIN_STRONG termes FORTS distincts, OU
+#  - au moins 1 terme fort ET un total (forts+faibles) >= MIN_TOTAL_WITH_STRONG.
+# Un document sans aucun terme fort (CV, marketing...) est toujours rejeté.
+MIN_STRONG = 2
+MIN_TOTAL_WITH_STRONG = 6
+
+
+def _distinct(regex, text: str) -> list[str]:
+    return sorted({m.group(0).lower() for m in regex.finditer(text)})
+
+
+def is_banking_document(text: str) -> tuple[bool, list[str]]:
+    """
+    Détermine si un texte relève réellement du domaine bancaire.
+
+    Returns:
+        (ok, matched_terms) — matched_terms = tous les termes (forts + faibles)
+        distincts trouvés, pour le logging.
+    """
+    if not text:
+        return False, []
+    strong = _distinct(_STRONG_REGEX, text)
+    weak = _distinct(_WEAK_REGEX, text)
+    ok = (len(strong) >= MIN_STRONG) or (
+        len(strong) >= 1 and (len(strong) + len(weak)) >= MIN_TOTAL_WITH_STRONG
+    )
+    return ok, strong + weak
 
 
 def extract_pdf_as_documents(pdf_path: Path, user_id: str, session_id: str, display_name: str = None) -> list[Document]:
@@ -127,6 +227,17 @@ def ingest_pdf(file_path: str, user_id: str, session_id: str, original_file_name
     docs = extract_pdf_as_documents(pdf_path, user_id, session_id, display_name)
     if not docs:
         raise ValueError("Le PDF est vide ou illisible.")
+
+    # 1bis. Filtre domaine bancaire : on rejette les PDF hors-sujet
+    full_text = " ".join(
+        d.page_content for d in docs if d.metadata.get("content_type") == "text"
+    )
+    ok, matched_terms = is_banking_document(full_text)
+    if not ok:
+        print(f"[PDF_UPLOAD] 🚫 PDF rejeté (hors domaine bancaire): "
+              f"{display_name} — termes trouvés: {matched_terms}")
+        raise NonBankingPDFError(matched_terms)
+    print(f"[PDF_UPLOAD] ✅ PDF bancaire validé ({len(matched_terms)} termes): {matched_terms}")
 
     num_pages = max((d.metadata.get("page", 0) for d in docs), default=0)
     chunks = chunk_documents(docs)

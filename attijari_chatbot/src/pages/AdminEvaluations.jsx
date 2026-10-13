@@ -8,12 +8,12 @@ import {
 const API = "";
 
 const C = {
-  bg: "#0F0F1A", bgCard: "#16162A", bgHover: "#1E1E35",
-  border: "#2A2A45", accent: "#E8521A", gold: "#B8964A",
-  white: "#FFFFFF", textPrimary: "#FFFFFF",
-  textSecondary: "#AAAAAA", textMuted: "#555577",
-  green: "#4ADE80", blue: "#3B82F6", orange: "#F59E0B",
-  red: "#EF4444", purple: "#8B5CF6",
+  bg: "#F4F6FB", bgCard: "#FFFFFF", bgHover: "#F0F3F9",
+  border: "#E4E8F0", accent: "#E8521A", gold: "#B7791F",
+  white: "#FFFFFF", ink: "#1B2538", textPrimary: "#1B2538",
+  textSecondary: "#5A6478", textMuted: "#98A0B0",
+  green: "#16A34A", blue: "#2563EB", orange: "#EA8204",
+  red: "#DC2626", purple: "#7C3AED",
 };
 
 const FONT = `@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&display=swap');`;
@@ -37,7 +37,7 @@ function StatCard({ icon, label, value, sub, color }) {
         {icon}
       </div>
       <div>
-        <div style={{ fontSize: 24, fontWeight: 700, color: C.white, lineHeight: 1 }}>{value ?? "—"}</div>
+        <div style={{ fontSize: 24, fontWeight: 700, color: C.ink, lineHeight: 1 }}>{value ?? "—"}</div>
         <div style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>{label}</div>
         {sub && <div style={{ fontSize: 10, color, marginTop: 2 }}>{sub}</div>}
       </div>
@@ -67,7 +67,7 @@ function ScoreChart({ data }) {
   const hasJudge = rows.some(d => d.avg_judge_score != null);
   return (
     <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 16, padding: "24px", fontFamily: "'Source Sans 3', sans-serif" }}>
-      <div style={{ fontSize: 14, fontWeight: 600, color: C.white, marginBottom: 20, display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: C.ink, marginBottom: 20, display: "flex", alignItems: "center", gap: 8 }}>
         <IcoChart /> Évolution des scores quotidiens
       </div>
       {rows.length === 0 ? (
@@ -96,7 +96,7 @@ function ScoreBadge({ score }) {
   if (score == null) return <span style={{ color: C.textMuted, fontSize: 12 }}>—</span>;
   const color = score >= 7.5 ? C.green : score >= 5 ? C.orange : C.red;
   return (
-    <span style={{ display: "inline-block", background: `${color}20`, color, borderRadius: 20, padding: "2px 10px", fontSize: 11, fontWeight: 700 }}>
+    <span style={{ display: "inline-block", background: `${color}20`, color, borderRadius: 20, padding: "2px 10px", fontSize: 11, fontWeight: 700, border: `1px solid ${color}40` }}>
       {score.toFixed(1)}/10
     </span>
   );
@@ -112,7 +112,7 @@ function ProblematicTable({ evals }) {
   return (
     <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", fontFamily: "'Source Sans 3', sans-serif" }}>
       <div style={{ padding: "20px 24px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: C.white, display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: C.ink, display: "flex", alignItems: "center", gap: 8 }}>
           <IcoAlarm /> Réponses à réviser
         </div>
         <span style={{ fontSize: 11, color: C.textMuted }}>{rows.length} résultat(s)</span>
@@ -125,7 +125,7 @@ function ProblematicTable({ evals }) {
       ) : (
         <div>
           {/* Header */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 100px 100px 80px 130px 20px", gap: 12, padding: "10px 24px", background: "#0A0A15", fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 100px 100px 80px 130px 20px", gap: 12, padding: "10px 24px", background: C.bg, fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600 }}>
             <span>Question</span><span style={{ textAlign: "center" }}>Score AUTO</span><span style={{ textAlign: "center" }}>Score JUDGE</span><span style={{ textAlign: "center" }}>Feedback</span><span>Date</span><span />
           </div>
           {rows.map(e => (
@@ -143,7 +143,7 @@ function ProblematicTable({ evals }) {
                 <span style={{ color: C.textMuted, fontSize: 11 }}>{expanded === e.id ? "▲" : "▼"}</span>
               </div>
               {expanded === e.id && (
-                <div style={{ padding: "16px 24px", background: "#0A0A15", borderTop: `1px solid ${C.border}` }}>
+                <div style={{ padding: "16px 24px", background: C.bg, borderTop: `1px solid ${C.border}` }}>
                   <div style={{ marginBottom: 12 }}>
                     <div style={{ fontSize: 10, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 6 }}>Question</div>
                     <div style={{ fontSize: 13, color: C.textSecondary }}>{e.question}</div>
@@ -222,42 +222,77 @@ export default function AdminEvaluations({ token, user, onBack, onLogout }) {
   const avg = v => v != null ? v.toFixed(2) : "—";
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif" }}>
-      <style>{`${FONT} * { box-sizing: border-box; margin: 0; padding: 0; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }`}</style>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif", color: C.ink }}>
+      <style>{`${FONT} * { box-sizing: border-box; margin: 0; padding: 0; } @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background: ${C.border}; border-radius: 3px; }`}</style>
 
       {/* ── Header ── */}
-      <header style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <header style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, padding: "0 28px", height: 62,
+        display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {onBack && (
             <button onClick={onBack}
-              style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.07)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "6px 12px", color: C.textSecondary, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+              style={{ background: `${C.accent}18`, border: `1px solid ${C.accent}35`,
+                borderRadius: 8, padding: "6px 12px", color: C.ink, cursor: "pointer", fontSize: 12, fontWeight: 500,
+                display: "flex", alignItems: "center", gap: 5, fontFamily: "inherit" }}>
               <IcoBack /> Retour Admin
             </button>
-            <div style={{ width: 1, height: 20, background: C.border }} />
-            <h1 style={{ fontSize: 15, fontWeight: 700, color: C.white }}>🛡️ Dashboard Évaluations</h1>
+          )}
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: C.blue }}><IcoChart /></span>
+            <span style={{ fontSize: 16, fontWeight: 700, color: C.ink }}>Dashboard Évaluations</span>
+          </div>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, background: `${C.accent}14`,
+            border: `1px solid ${C.accent}30`, borderRadius: 20, padding: "5px 12px" }}>
+            <span style={{ color: C.accent }}><IcoStar /></span>
+            <span style={{ fontSize: 12, color: C.accent, fontWeight: 600 }}>Suivi qualité IA</span>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <select value={days} onChange={e => setDays(Number(e.target.value))}
-              style={{ background: C.bgHover, border: `1px solid ${C.border}`, borderRadius: 8, padding: "6px 12px", color: C.textSecondary, fontSize: 12, fontFamily: "inherit", cursor: "pointer", outline: "none" }}>
-              {PERIODS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
-            </select>
-
-            <button onClick={() => load(true)} disabled={refreshing}
-              style={{ display: "flex", alignItems: "center", gap: 6, background: C.accent, border: "none", borderRadius: 8, padding: "7px 14px", color: C.white, cursor: refreshing ? "not-allowed" : "pointer", fontSize: 12, fontFamily: "inherit", opacity: refreshing ? 0.7 : 1 }}>
-              <IcoRefresh /> {refreshing ? "..." : "Actualiser"}
-            </button>
-
+          {onLogout && (
             <button onClick={onLogout}
-              style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 8, padding: "7px 12px", color: "#EF4444", cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
+              style={{ display: "flex", alignItems: "center", gap: 5, background: `${C.red}12`, border: `1px solid ${C.red}25`,
+                borderRadius: 8, padding: "7px 12px", color: C.red, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>
               ⎋ Déconnexion
             </button>
-          </div>
+          )}
         </div>
       </header>
 
       {/* ── Body ── */}
-      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "28px 24px" }}>
+      <main style={{ maxWidth: 1400, margin: "0 auto", padding: "32px 28px" }}>
+
+        {/* Title */}
+        <div style={{ marginBottom: 28, animation: "fadeIn 0.4s ease" }}>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: C.ink, marginBottom: 5 }}>
+            Suivi des évaluations IA
+          </h1>
+          <p style={{ fontSize: 13, color: C.textMuted }}>
+            Scores automatiques — LLM-as-Judge — Feedback utilisateur
+          </p>
+        </div>
+
+        {/* Filtres */}
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 14,
+          padding: "16px 20px", marginBottom: 20, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap",
+          animation: "fadeIn 0.4s ease 0.1s both" }}>
+          <span style={{ fontSize: 12, color: C.textMuted, whiteSpace: "nowrap" }}>Période :</span>
+          {PERIODS.map(p => (
+            <button key={p.value} onClick={() => setDays(p.value)}
+              style={{ padding: "5px 12px", borderRadius: 20, border: `1px solid ${days === p.value ? C.accent : C.border}`,
+                background: days === p.value ? `${C.accent}20` : "transparent",
+                color: days === p.value ? C.accent : C.textSecondary, cursor: "pointer", fontSize: 12, fontWeight: 600, fontFamily: "inherit" }}>
+              {p.label}
+            </button>
+          ))}
+          <div style={{ width: 1, height: 24, background: C.border }} />
+          <button onClick={() => load(true)} disabled={refreshing}
+            style={{ padding: "7px 14px", background: `${C.blue}18`, border: `1px solid ${C.blue}30`,
+              borderRadius: 9, color: C.blue, cursor: refreshing ? "not-allowed" : "pointer", fontSize: 12, display: "flex", alignItems: "center", gap: 5, fontFamily: "inherit", opacity: refreshing ? 0.7 : 1 }}>
+            <IcoRefresh /> {refreshing ? "..." : "Actualiser"}
+          </button>
+        </div>
 
         {loading && (
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 300, gap: 14 }}>
@@ -267,9 +302,9 @@ export default function AdminEvaluations({ token, user, onBack, onLogout }) {
         )}
 
         {error && !loading && (
-          <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 12, padding: "14px 20px", color: "#EF4444", fontSize: 13, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ background: `${C.red}10`, border: `1px solid ${C.red}30`, borderRadius: 12, padding: "14px 20px", color: C.red, fontSize: 13, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             ⚠️ {error}
-            <button onClick={() => load()} style={{ background: "none", border: "none", color: "#EF4444", fontSize: 12, cursor: "pointer", textDecoration: "underline", fontFamily: "inherit" }}>Réessayer</button>
+            <button onClick={() => load()} style={{ background: "none", border: "none", color: C.red, fontSize: 12, cursor: "pointer", textDecoration: "underline", fontFamily: "inherit" }}>Réessayer</button>
           </div>
         )}
 

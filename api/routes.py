@@ -35,8 +35,9 @@ from .pdf_upload import (
     search_in_uploaded_pdf,
     delete_session_collection,
     cleanup_old_uploads,
+    NonBankingPDFError,
     UPLOAD_DIR,
-) 
+)
 
 from .pdf_shared import (
     ingest_shared_pdf,
@@ -326,9 +327,14 @@ async def chat(
     )
     # ────────────────────────────────────────────────────────
 
+    # ── En mode client (admin), la réponse n'est pas ancrée dans ChromaDB :
+    #    le score de fiabilité n'a pas de sens et ne doit pas être affiché. ──
+    is_client_mode = bool(client_context)
+    meta_auto_score = None if is_client_mode else auto_score
+
     # SSE streaming
     async def event_stream():
-        yield f"data: {json.dumps({'type': 'meta', 'sources': sources, 'eval_id': eval_id, 'auto_score': auto_score, 'model': model_used})}\n\n"
+        yield f"data: {json.dumps({'type': 'meta', 'sources': sources, 'eval_id': eval_id, 'auto_score': meta_auto_score, 'model': model_used})}\n\n"
         words = answer.split(" ")
         for i, word in enumerate(words):
             text = word if i == 0 else " " + word
@@ -389,6 +395,12 @@ async def upload_pdf(
             "num_chunks": result["num_chunks"],
             "message": f"PDF '{result['file_name']}' ingéré avec succès ({result['num_pages']} pages).",
         }
+    except NonBankingPDFError as e:
+        # PDF hors domaine bancaire → rejet propre (400), on supprime le fichier
+        if file_path.exists():
+            file_path.unlink()
+        print(f"🚫 PDF rejeté (hors domaine bancaire): {pdf.filename}")
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         if file_path.exists():
             file_path.unlink()

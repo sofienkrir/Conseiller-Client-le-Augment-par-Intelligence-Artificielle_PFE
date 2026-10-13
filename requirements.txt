@@ -27,3 +27,8 @@ torch
 pypdf
 python-multipart
 user-agents
+langchain-openai
+langchain-chroma
+langchain-huggingface
+langchain-text-splitters
+locust

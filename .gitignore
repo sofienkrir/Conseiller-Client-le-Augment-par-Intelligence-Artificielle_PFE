@@ -66,3 +66,5 @@ __pycache__/
 node_modules/
 venv/
 .venv/
+# Articles scientifiques telecharges
+science.pdf

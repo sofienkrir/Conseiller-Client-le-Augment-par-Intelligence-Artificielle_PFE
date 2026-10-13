@@ -1,0 +1,1195 @@
+{
+  "_meta": {
+    "titre": "Jeu d'evaluation des reponses IA - Chatbot Attijari Bank",
+    "description": "Echantillon structure de 65 questions pour l'evaluation manuelle (review humain) des reponses du chatbot. Couvre 3 langues et 7 categories bancaires.",
+    "repartition_langue": {
+      "francais": 25,
+      "derja": 25,
+      "mixte": 15,
+      "total": 65
+    },
+    "categories": [
+      "cartes",
+      "credits",
+      "epargne",
+      "assurance",
+      "banque_distance",
+      "offres_packagees",
+      "transverse"
+    ],
+    "instructions_review": "Pose chaque 'question' au chatbot. Colle sa reponse dans 'reponse_chatbot'. Puis remplis 'review_humain': note_sur_10 (0-10), pertinent (true/false), veridique (true/false = conforme au catalogue), langue_respectee (true/false), et un commentaire libre.",
+    "echelle_note": "0-3 = mauvais (faux/hors-sujet) | 4-6 = moyen (partiel/imprecis) | 7-10 = bon (correct et complet)"
+  },
+  "questions": [
+    {
+      "id": "FR-01",
+      "langue": "francais",
+      "categorie": "cartes",
+      "question": "Quelles cartes bancaires proposez-vous chez Attijari Bank ?",
+      "objectif": "Lister l'offre de cartes (rappel large du catalogue).",
+      "reponse_chatbot": "Nous proposons plusieurs types de cartes bancaires chez Attijari Bank, notamment :\n- La carte Visa Internationale, qui permet des retraits et paiements à l'étranger, des achats en ligne sécurisés grâce au système 3D Secure, et des garanties d'assurance.\n- La carte Gold nationale, qui offre des plafonds de retraits et paiements élevés, des achats en ligne sécurisés, et des garanties d'assurance et d'assistance en Tunisie et à l'étranger.\n- La carte Gold internationale, qui propose des plafonds de retraits et paiements élevés à l'étranger, des garanties d'assurance et d'assistance, et des achats en ligne sécurisés.\n- La carte Visa nationale, qui convient pour les besoins au quotidien, avec des capacités de retrait et de paiement confortables, des achats en ligne sécurisés, et des garanties d'assurance.\n- La Carte Corp Internationale, qui est pratique pour une gestion optimale de vos frais de déplacement professionnels à l’étranger.\n- La carte Iddikhar, qui offre une rémunération en intérêts, versée trimestriellement.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Bonne liste de cartes, claire."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 1.3
+    },
+    {
+      "id": "FR-02",
+      "langue": "francais",
+      "categorie": "cartes",
+      "question": "Quelle est la difference entre la Carte Visa Nationale et la Carte Visa Internationale ?",
+      "objectif": "Comparaison precise de deux produits proches.",
+      "reponse_chatbot": "- La Carte Visa Nationale permet d'effectuer des achats en ligne avec le système 3D Secure et offre des capacités de retrait et de paiement confortables, mais elle n'est pas explicitement mentionnée comme étant utilisable à l'étranger.\n- La Carte Visa Internationale, quant à elle, est spécifiquement conçue pour les retraits et les paiements à l'étranger, en plus d'offrir les mêmes avantages que la Carte Visa Nationale, tels que le système 3D Secure et des capacités de retrait et de paiement confortables.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Comparaison correcte Visa Nationale/Internationale."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.73
+    },
+    {
+      "id": "FR-03",
+      "langue": "francais",
+      "categorie": "cartes",
+      "question": "La Carte Technologique fonctionne-t-elle sur les sites etrangers ?",
+      "objectif": "Question fermee factuelle sur un usage precis.",
+      "reponse_chatbot": "- La Carte Technologique est une carte Internationale utilisable exclusivement sur internet.\n- Elle vous permet de régler vos transactions en ligne sur des sites étrangers à concurrence d’une allocation annuelle autorisée.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Reponse factuelle precise (usage international/e-commerce)."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.44
+    },
+    {
+      "id": "FR-04",
+      "langue": "francais",
+      "categorie": "cartes",
+      "question": "Qu'est-ce que la Carte Flex et comment fonctionne le paiement fractionne ?",
+      "objectif": "Explication d'un mecanisme produit specifique.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse: seulement le numero, alors que la Carte Flex est au catalogue. Echec de recuperation."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.35
+    },
+    {
+      "id": "FR-05",
+      "langue": "francais",
+      "categorie": "credits",
+      "question": "Quelles sont les conditions du Credit Melki ?",
+      "objectif": "Restitution des conditions d'un credit nomme.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; conditions du Credit Melki absentes."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.4
+    },
+    {
+      "id": "FR-06",
+      "langue": "francais",
+      "categorie": "credits",
+      "question": "Quels sont les avantages du Credit Tahssin ?",
+      "objectif": "Restitution des avantages d'un credit nomme.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; avantages Tahssin non fournis."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.41
+    },
+    {
+      "id": "FR-07",
+      "langue": "francais",
+      "categorie": "credits",
+      "question": "Quelle est la difference entre le Credit Binaa et le Credit Ardhi ?",
+      "objectif": "Comparaison de deux credits immobiliers.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; comparaison Binaa/Ardhi non fournie."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.47
+    },
+    {
+      "id": "FR-08",
+      "langue": "francais",
+      "categorie": "credits",
+      "question": "Je veux acheter une voiture, quel credit me proposez-vous ?",
+      "objectif": "Orientation vers le bon produit a partir d'un besoin.",
+      "reponse_chatbot": "- Le Crédit Personnel (CREDEX) est une option pour financer l'achat d'une voiture, car il offre :\n  - Un montant plafonné à 10 000 TND\n  - Une durée de remboursement pouvant aller jusqu'à 3 ans\n- Une autre option pourrait être le Crédit Creditau, qui propose :\n  - Un montant plafonné à 50 000 TND\n  - Une durée de remboursement allant jusqu'à 7 ans\nCependant, il est important de noter que l'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Bonne orientation credit auto (CREDEX/Creditau) avec montants et durees."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.69
+    },
+    {
+      "id": "FR-09",
+      "langue": "francais",
+      "categorie": "epargne",
+      "question": "Quels sont les avantages du compte epargne Hissab ?",
+      "objectif": "Restitution des avantages d'un produit d'epargne.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; avantages compte Hissab non fournis."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 0.38
+    },
+    {
+      "id": "FR-10",
+      "langue": "francais",
+      "categorie": "epargne",
+      "question": "Je veux epargner progressivement pour mes enfants, que me conseillez-vous ?",
+      "objectif": "Recommandation a partir d'un objectif d'epargne.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Nous vous recommandons l'Epargne AWLEDI, garanti par Attijari Assurance, comme solution pour constituer progressivement une épargne au profit de vos enfants et anticiper les imprévus. Cette option correspond à vos besoins car elle permet de constituer un capital pour prémunir l'avenir de votre enfant dès son jeune âge, avec une garantie de versement d'une rente éducation trimestrielle et la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident.\n\nALTERNATIVES : Vous pourriez également considérer le plan épargne TOUMOUHI, qui offre une formule à rendement sûr et attrayant avec un taux minimum garanti et des avantages fiscaux importants. Cependant, l'Epargne AWLEDI est spécifiquement conçue pour les enfants, ce qui la rend plus adaptée à vos besoins.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence. Nous vous invitons à contacter nos conseillers pour discuter de vos besoins spécifiques et déterminer la meilleure option pour vous.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Recommandation AWLEDI pertinente et structuree."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 1.04
+    },
+    {
+      "id": "FR-11",
+      "langue": "francais",
+      "categorie": "epargne",
+      "question": "Qu'est-ce que le Plan Epargne Menzili ?",
+      "objectif": "Definition d'un produit d'epargne logement.",
+      "reponse_chatbot": "Le Plan Épargne Menzili est un produit d'épargne qui vous permet d'économiser efficacement et de profiter d'un crédit immobilier avantageux pour réaliser votre rêve de devenir propriétaire. \n- Il vous permet d'économiser efficacement \n- Il vous offre un crédit immobilier avantageux pour réaliser votre projet immobilier.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Definition correcte du Plan Epargne Menzili, un peu courte."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 3.82
+    },
+    {
+      "id": "FR-12",
+      "langue": "francais",
+      "categorie": "assurance",
+      "question": "Quelles assurances prevoyance proposez-vous pour proteger ma famille ?",
+      "objectif": "Lister les produits d'assurance prevoyance.",
+      "reponse_chatbot": "Nous proposons plusieurs assurances de prévoyance pour protéger votre famille, notamment :\n- DHAMEN Wledi : permet de débloquer immédiatement le capital choisi pour aider votre enfant à continuer sa scolarité ou à démarrer une activité, avec la possibilité de choisir le bénéficiaire.\n- SANADI : offre une solution pour maintenir vos revenus et pallier aux frais imprévisibles en cas d'arrêt de travail suite à une hospitalisation, avec des formalités simples et une souplesse pour modifier les conditions du contrat.\n- RAHET BELI : assure la sécurité financière de vos proches en leur offrant une protection appropriée, avec le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez.\n- DHAMEN Elweldine : offre une solution pour prémunir votre famille des circonstances difficiles, avec un versement rapide de la rente en cas de décès de l'assuré et des primes d'assurance adaptées à votre budget et à votre âge.\n- DHAMEN Ikram : permet de régler immédiatement un capital pour aider la famille à faire face aux frais funéraires en cas de décès de l'assuré, avec une souscription simplifiée et sans conditions.\n\nRECOMMANDATION PRINCIPALE : Selon votre demande de protection pour votre famille, nous recommandons RAHET BELI, car il offre une protection appropriée de votre famille avec le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez.\n\nALTERNATIVES : Vous pouvez également considérer DHAMEN Elweldine ou DHAMEN Ikram, selon vos besoins spécifiques et votre situation financière.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à ces assurances dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Excellente liste d'assurances prevoyance + recommandation."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.57
+    },
+    {
+      "id": "FR-13",
+      "langue": "francais",
+      "categorie": "assurance",
+      "question": "Existe-t-il une assurance en cas de baisse de revenus ?",
+      "objectif": "Identification d'un produit a partir d'un risque couvert.",
+      "reponse_chatbot": "- L'assurance SANADI, proposée par Attijari Bank, est une solution adéquate pour maintenir vos revenus et pallier aux frais imprévisibles en cas d'arrêt de travail suite à une hospitalisation.\n- Formalité simple à la souscription : Accomplissement simple des formalités.\n- Souplesse : Modification possible des conditions de votre contrat.\n\nCette assurance semble répondre à vos besoins en cas de baisse de revenus. Cependant, il est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "SANADI bien identifie pour la baisse de revenu."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.95
+    },
+    {
+      "id": "FR-14",
+      "langue": "francais",
+      "categorie": "assurance",
+      "question": "Comment garantir l'avenir scolaire de mes enfants avec une epargne assurance ?",
+      "objectif": "Recommandation sur un produit d'epargne-assurance enfants.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Pour garantir l'avenir scolaire de vos enfants avec une épargne assurance, nous vous recommandons l'Epargne AWLEDI, garanti par Attijari Assurance. Cette solution vous permet de constituer progressivement une épargne au profit de vos enfants et d'anticiper les imprévus. Les critères qui correspondent à ce produit sont la fiscalité avantageuse, la garantie de l'avenir de votre enfant et la possibilité de constituer un capital pour prémunir l'avenir de votre enfant dès son jeune âge.\n\nALTERNATIVES : Une autre option pourrait être le contrat DHAMEN Wledi, qui permet à votre enfant de continuer sa scolarité ou de démarrer une activité en cas de besoin, avec la possibilité de choisir le bénéficiaire. \n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à ces produits dépend du profil complet du client et doit être confirmée en agence. Il est donc recommandé de contacter un conseiller bancaire pour discuter de vos besoins spécifiques et déterminer le produit le plus adapté à votre situation.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "AWLEDI/DHAMEN Wledi bien adaptes a l'epargne scolaire."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.25
+    },
+    {
+      "id": "FR-15",
+      "langue": "francais",
+      "categorie": "banque_distance",
+      "question": "Quel service permet de gerer mes comptes 24h/24 et 7j/7 ?",
+      "objectif": "Identification du service de banque a distance.",
+      "reponse_chatbot": "- L'application Attijari Up permet de gérer vos comptes 24h/24 et 7j/7.\n- Elle est disponible sur les stores (App Store, Play Store, APP Gallery) et offre une connexion sécurisée par biométrie (empreinte digitale ou Face ID) pour un accès facile et rapide.\n- Vous pouvez effectuer vos opérations bancaires en tout temps et en tout lieu, grâce à cette application mobile.\n- Pour plus d'informations sur les fonctionnalités et les avantages de l'application Attijari Up, vous pouvez contacter notre service client.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Attijari Up correctement identifie (24/7, biometrie)."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.95
+    },
+    {
+      "id": "FR-16",
+      "langue": "francais",
+      "categorie": "banque_distance",
+      "question": "Comment effectuer mes operations bancaires a distance sans me deplacer ?",
+      "objectif": "Explication des canaux digitaux.",
+      "reponse_chatbot": "Pour effectuer vos opérations bancaires à distance sans vous déplacer, vous pouvez utiliser les solutions suivantes :\n- Attijari Real Time : permet de suivre et de gérer vos comptes à distance en temps réel, 24h/24 et 7j/7.\n- Attijari Up : une application pour gérer vos comptes à distance, en toute sécurité, avec une expérience améliorée, une interface intuitive et des fonctionnalités enrichies.\n- Attijari SMS : permet de rester informé de la situation de votre compte.\n\nPour utiliser ces solutions, vous pouvez :\n- Télécharger l'application Attijari Up sur les stores (App Store, Play Store, APP Gallery).\n- Effectuer la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquer votre numéro de téléphone et adresse e-mail pour recevoir des codes de validation et de nouveaux accès.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Bons canaux digitaux (Real Time, Up, SMS)."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 8.14
+    },
+    {
+      "id": "FR-17",
+      "langue": "francais",
+      "categorie": "banque_distance",
+      "question": "Quelles sont les etapes pour migrer vers Attijari UP ?",
+      "objectif": "Restitution d'une procedure pas-a-pas.",
+      "reponse_chatbot": "Les étapes pour migrer vers Attijari UP sont les suivantes :\n- 1 Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).\n- 2 Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe). Si vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345.\n- 3 Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail. Ces coordonnées seront utilisées pour vous envoyer vos codes de validation et vos nouveaux accès.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Etapes de migration claires et correctes."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.06
+    },
+    {
+      "id": "FR-18",
+      "langue": "francais",
+      "categorie": "offres_packagees",
+      "question": "Que contient le Pack Senior Plus ?",
+      "objectif": "Contenu d'une offre packagee.",
+      "reponse_chatbot": "- Le Pack Sénior Plus est conçu pour les clients à la retraite, leur offrant les moyens de profiter pleinement de leur retraite.\n- Les avantages spécifiques du Pack Sénior Plus ne sont pas détaillés dans le contexte fourni.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 5,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Identifie le Pack Senior Plus mais admet ne pas avoir les details."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.88
+    },
+    {
+      "id": "FR-19",
+      "langue": "francais",
+      "categorie": "offres_packagees",
+      "question": "Quelle est la difference entre l'Offre Exclusive et l'Offre Signature ?",
+      "objectif": "Comparaison de deux offres packagees.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; comparaison Exclusive/Signature non fournie."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 3.51
+    },
+    {
+      "id": "FR-20",
+      "langue": "francais",
+      "categorie": "offres_packagees",
+      "question": "Quel pack me conseillez-vous si je voyage souvent a l'etranger ?",
+      "objectif": "Recommandation a partir d'un profil voyageur.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : \nJe vous recommande le Pack Privilèges, car il offre des taux avantageux sur vos crédits et un délai réduit sur le traitement de votre demande, ce qui peut être utile pour les personnes qui voyagent souvent à l'étranger et ont besoin d'accéder rapidement à des liquidités. De plus, ce pack semble offrir des avantages qui pourraient être bénéfiques pour les personnes qui ont des besoins financiers variés, y compris lors de voyages à l'étranger.\n\nALTERNATIVES : \nUne autre option pourrait être le Pack PRO ou le Pack PRO-SANTÉ, qui offrent une formule packagée combinant un compte personnel rémunéré et un compte professionnel, une carte Gold, et des services de banque à distance, ce qui peut être utile pour gérer vos finances à distance lors de vos voyages.\n\nPRUDENCE : \nCependant, l'éligibilité définitive à ces packs dépend de votre profil complet et doit être confirmée en agence. Il est important de prendre en compte vos besoins spécifiques et vos habitudes de voyage pour choisir le pack qui vous convient le mieux.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 5,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Recommande Pack Privileges pour un voyageur, justification faible (oriente credit)."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.45
+    },
+    {
+      "id": "FR-21",
+      "langue": "francais",
+      "categorie": "transverse",
+      "question": "Comment ouvrir un compte chez Attijari Bank ?",
+      "objectif": "Procedure d'ouverture de compte.",
+      "reponse_chatbot": "- Pour ouvrir un compte chez Attijari Bank, vous devez suivre les étapes suivantes :\n- Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe). Si vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345.\n- Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail. Ces coordonnées seront utilisées pour vous envoyer vos codes de validation et vos nouveaux accès.\n- Renseignez le mot de passe provisoire reçu par mail /SMS et créez votre nouveau mot de passe en respectant les critères indiqués.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 3,
+        "pertinent": false,
+        "veridique": false,
+        "langue_respectee": true,
+        "commentaire": "ERREUR: decrit la connexion a l'app Attijari Up au lieu de l'ouverture d'un compte. Trompeur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.26
+    },
+    {
+      "id": "FR-22",
+      "langue": "francais",
+      "categorie": "transverse",
+      "question": "Quel numero appeler pour contacter le Centre de Relation Client ?",
+      "objectif": "Information de contact factuelle.",
+      "reponse_chatbot": "Pour contacter le Centre de Relation Client, vous pouvez appeler le numéro suivant : \n- 71 111 345\n\nCe numéro est disponible du lundi au vendredi de 8h à 18h et le samedi de 8h à 13h.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Numero correct + horaires."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.89
+    },
+    {
+      "id": "FR-23",
+      "langue": "francais",
+      "categorie": "transverse",
+      "question": "Je suis etudiant, quelle carte bancaire me recommandez-vous ?",
+      "objectif": "Recommandation a partir d'un profil etudiant.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Nous vous recommandons la Carte Avenir, spécialement conçue pour les étudiants et les jeunes clients. Cette carte s'adapte à vos besoins quotidiens avec des conditions avantageuses et accessibles, notamment :\n- Effectuez vos achats en ligne l'esprit tranquille grâce au système 3D Secure\n- Bénéficiez de capacités de retrait et de paiement confortables pour gérer votre budget quotidien\n\nALTERNATIVES : Si vous avez besoin d'utiliser votre carte à l'étranger, vous pourriez également considérer la Carte Visa Internationale, qui offre des capacités de retrait et de paiement à l'étranger, ainsi que des achats en ligne sécurisés grâce au système 3D Secure.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à ces cartes dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Carte Avenir bien adaptee a l'etudiant."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.92
+    },
+    {
+      "id": "FR-24",
+      "langue": "francais",
+      "categorie": "transverse",
+      "question": "Quels documents faut-il pour souscrire un credit logement ?",
+      "objectif": "Liste de pieces justificatives.",
+      "reponse_chatbot": "Pour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 2,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Non-reponse generique; documents credit logement non fournis."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.65
+    },
+    {
+      "id": "FR-25",
+      "langue": "francais",
+      "categorie": "transverse",
+      "question": "Je veux construire une maison, quelles solutions de financement proposez-vous ?",
+      "objectif": "Orientation multi-produits a partir d'un projet.",
+      "reponse_chatbot": "Pour financer la construction d'une maison, nous proposons plusieurs solutions adaptées à vos besoins.\n\n- **Crédit Binaa** : \n  - Bénéficiez d'une durée de remboursement allant jusqu'à 25 ans\n  - Binaa couvre 80% du coût global des travaux de construction dans la limite de votre capacité de remboursement\n\n- **Crédit Ardhi** : \n  - Vous offre la possibilité de choisir vous-même le rythme et la durée de remboursement allant jusqu'à 15 ans avec un délai de grâce durant les travaux de construction\n  - Ardhi couvre 80% du coût global des travaux de construction dans la limite de 15 ans selon votre capacité de remboursement\n  - Votre taux de crédit est avantageux selon la durée de remboursement\n\nCes deux options sont particulièrement adaptées à la construction d'une maison, offrant des durées de remboursement flexibles et des taux avantageux. Cependant, l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 8,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": true,
+        "commentaire": "Binaa/Ardhi avec couverture 80% et durees, tres bonne reponse."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.22
+    },
+    {
+      "id": "DR-01",
+      "langue": "derja",
+      "categorie": "cartes",
+      "question": "Shnowa el cartes elli 3andkom fi Attijari ?",
+      "objectif": "Comprehension dialectale d'une demande de liste de cartes.",
+      "reponse_chatbot": "Nous proposons plusieurs cartes bancaires à nos clients, notamment :\n- Carte Gold Nationale : offre des plafonds de retraits et paiements élevés, des services d'assistance, et permet d'effectuer des achats en ligne en toute sécurité grâce au système 3D Secure.\n- Carte Gold Internationale : offre des plafonds de retraits et paiements à l'étranger élevés, des services d'assistance, et permet d'effectuer des achats en ligne en toute sécurité grâce au système 3D Secure tout en respectant la réglementation de change.\n- Carte Cib : offre des capacités de retrait et de paiement confortables, une assurance vol et perte de moyens de paiement, et permet d'effectuer des achats en ligne en toute sécurité grâce au système 3D Secure.\n- Carte Visa Nationale : offre des capacités de retrait et de paiement confortables, et permet d'effectuer des achats en ligne en toute sécurité grâce au système 3D Secure.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Bon contenu mais repond en francais pur, pas en derja."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.06
+    },
+    {
+      "id": "DR-02",
+      "langue": "derja",
+      "categorie": "cartes",
+      "question": "Ena nsefer barra barcha, chnowa carte elli twafe9ni ?",
+      "objectif": "Recommandation carte voyage formulee en derja.",
+      "reponse_chatbot": "Pour trouver la carte qui vous convient le mieux, il faudrait considérer vos besoins spécifiques. Cependant, je peux vous proposer quelques options basées sur les informations disponibles.\n\n- **Carte Oulidha** : Cette carte est rechargeable sans compte bancaire et offre une sécurité pour vos achats en ligne grâce au système 3D Secure. Elle est idéale pour ceux qui cherchent une solution simple et sécurisée pour leurs achats en ligne et hors ligne sans nécessiter un compte bancaire.\n- **Carte Gold Nationale** : Elle offre des plafonds de retraits et de paiements élevés, ainsi que des services d'assistance, ce qui la rend adaptée pour ceux qui ont des besoins financiers plus importants et recherchent une carte avec des limites de dépense plus élevées.\n- **Carte Visa Nationale** et **Carte Cib** : Ces cartes offrent également une sécurité pour les achats en ligne et des capacités de retrait et de paiement confortables. La Carte Cib a l'avantage supplémentaire d'une assurance contre le vol et la perte de moyens de paiement.\n- **Carte Gold Internationale** : Elle est idéale pour ceux qui ont besoin de faire des transactions à l'étranger, avec des plafonds de retraits et de paiements élevés et des services d'assistance.\n\nIl est important de noter que l'éligibilité à ces cartes et les avantages spécifiques peuvent varier en fonction de votre situation personnelle et financière. \n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 6,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Reponse correcte mais peu ciblee 'voyage'; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.58
+    },
+    {
+      "id": "DR-03",
+      "langue": "derja",
+      "categorie": "cartes",
+      "question": "9adech el plafond mta3 Carte Flex ?",
+      "objectif": "Donnee chiffree precise demandee en derja.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse alors que le plafond Carte Flex est au catalogue; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.57
+    },
+    {
+      "id": "DR-04",
+      "langue": "derja",
+      "categorie": "cartes",
+      "question": "Ana etudiant, chnowa carte tansa7ni biha ?",
+      "objectif": "Recommandation carte etudiant en derja.",
+      "reponse_chatbot": "En tant qu'étudiant, je vous recommande principalement la Carte Oulidha. Cette carte est particulièrement adaptée à votre profil car elle est rechargeable sans compte bancaire, ce qui peut être pratique pour les étudiants qui n'ont pas nécessairement un compte bancaire. De plus, elle est disponible dans les boutiques Taraji Store ou dans certaines agences Attijari Bank, ce qui facilite son obtention.\n\n- La Carte Oulidha offre également la sécurité des achats en ligne grâce au système 3D Secure.\n- Elle permet d'effectuer des achats en ligne avec tranquillité d'esprit.\n\nEn alternative, vous pourriez également considérer la Carte Visa Nationale, qui offre des capacités de retrait et de paiement confortables, ainsi que la sécurité des achats en ligne grâce au système 3D Secure.\n\nCependant, il est important de noter que l'éligibilité définitive à ces cartes dépend de votre profil complet et doit être confirmée en agence. Il est donc recommandé de contacter directement Attijari Bank pour discuter de vos besoins spécifiques et déterminer la meilleure option pour vous.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Carte Oulidha pertinente pour etudiant; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.22
+    },
+    {
+      "id": "DR-05",
+      "langue": "derja",
+      "categorie": "credits",
+      "question": "9adech el taux mta3 Credit Melki ?",
+      "objectif": "Demande de taux precis en derja (test donnees inventees).",
+      "reponse_chatbot": "- Le taux du Crédit Melki est fixé selon la durée de remboursement.\n- La durée de remboursement est choisie par le client selon sa capacité de remboursement.\n- Le crédit couvre 80% du coût global de l'acquisition.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 6,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Bon: n'invente pas de taux, explique le mecanisme; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.67
+    },
+    {
+      "id": "DR-06",
+      "langue": "derja",
+      "categorie": "credits",
+      "question": "N7eb nebni dar, chnowa el credit elli ysenedni ?",
+      "objectif": "Orientation credit construction en derja.",
+      "reponse_chatbot": "Pour réaliser votre projet de construction, je vous recommande le Crédit Binaa. \n- Bénéficiez d'une durée de remboursement allant jusqu'à 25 ans\n- Binaa couvre 80% du coût global des travaux de construction dans la limite de votre capacité de remboursement.\n\nAlternativement, vous pourriez également considérer le Crédit Ardhi, qui offre une durée de remboursement allant jusqu'à 15 ans avec un délai de grâce durant les travaux de construction.\n\nIl est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence. \n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Binaa correct pour construction; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.77
+    },
+    {
+      "id": "DR-07",
+      "langue": "derja",
+      "categorie": "credits",
+      "question": "Chnowa el far9 bin Credit Binaa w Credit Ardhi ?",
+      "objectif": "Comparaison de credits en derja.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse la comparaison Binaa/Ardhi (info dispo); francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.72
+    },
+    {
+      "id": "DR-08",
+      "langue": "derja",
+      "categorie": "credits",
+      "question": "N7eb nechri karhba, 3andkom credit lel voiture ?",
+      "objectif": "Identification credit auto en derja.",
+      "reponse_chatbot": "Pour l'achat d'une voiture, je vous recommande le Crédit Creditau, qui offre :\n- Une durée de remboursement allant jusqu'à 7 ans\n- Un montant plafonné à 50 000 TND\n\nCependant, si vous avez besoin d'un montant inférieur, vous pouvez également considérer le Crédit Personnel (CREDEX), qui propose :\n- Un montant plafonné à 10 000 TND\n- Une durée de remboursement pouvant aller jusqu'à 3 ans\n\nIl est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Creditau bien identifie; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.84
+    },
+    {
+      "id": "DR-09",
+      "langue": "derja",
+      "categorie": "epargne",
+      "question": "Shnowa lfawaaeed mta3 compte epargne Hissab ?",
+      "objectif": "Avantages produit epargne en derja.",
+      "reponse_chatbot": "- Le compte épargne Hissab n'est pas explicitement mentionné dans le contexte fourni.\n- Les informations disponibles concernent les plans d'épargne TOUMOUHI et AWLEDI, ainsi que le produit CAPITAL PLUS.\n- Pour obtenir des informations sur le compte épargne Hissab, il est recommandé de contacter directement Attijari Bank Tunisie.\n\nCette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 5,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Honnete sur l'absence de Hissab, propose alternatives; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.9
+    },
+    {
+      "id": "DR-10",
+      "langue": "derja",
+      "categorie": "epargne",
+      "question": "N7eb na3mel epargne lel sghar mta3i, chnowa tansa7ni ?",
+      "objectif": "Recommandation epargne enfants en derja.",
+      "reponse_chatbot": "Pour épargner pour les enfants, je vous recommande le plan épargne AWLEDI, garanti par Attijari Assurance. \n- Il permet de constituer progressivement une épargne au profit de vos enfants et d'anticiper les imprévus.\n- Une garantie de l'avenir de votre enfant : Constituez un capital pour prémunir l'avenir de votre enfant dès son jeune âge.\n- Souscrire au contrat Awledi garantit le versement d'une rente éducation trimestrielle, ainsi que la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident.\n- Fiscalité avantageuse : Bénéficiez de l'avantage fiscal.\n\nUne autre option pourrait être le plan épargne TOUMOUHI, également garanti par Attijari Assurance, qui vous permet de constituer progressivement et au rythme qui vous convient, une épargne pour financer vos projets d'avenir, votre retraite ou vous prémunir contre les aléas de la vie.\n\nCependant, l'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence. \nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "AWLEDI pertinent; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.15
+    },
+    {
+      "id": "DR-11",
+      "langue": "derja",
+      "categorie": "epargne",
+      "question": "Kifech na3mel plan epargne 3and Attijari ?",
+      "objectif": "Procedure d'ouverture d'un plan epargne en derja.",
+      "reponse_chatbot": "Pour créer un plan d'épargne chez Attijari, vous pouvez opter pour le plan épargne TOUMOUHI, qui est garanti par Attijari Assurance. \n- Ce plan vous permet d'épargner à votre rythme et à tout moment pour financer vos projets d'avenir, votre retraite ou vous prémunir contre les aléas de la vie.\n- Il offre une solution de précaution pour constituer progressivement une épargne.\n- Vous bénéficiez également d'une fiscalité avantageuse.\n- Le plan épargne TOUMOUHI est accessible et vous permet d'épargner à votre rythme.\n\nAlternativement, vous pouvez également considérer d'autres options de placement telles que les titres de créance négociables émis par les établissements de crédit ou le placement dans Attijari Obligataire SICAV, qui offre un placement rentable, disponible et sécurisé.\n\nCependant, il est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "TOUMOUHI correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.73
+    },
+    {
+      "id": "DR-12",
+      "langue": "derja",
+      "categorie": "assurance",
+      "question": "3andkom assurance bech ne7mi 3a3ilti ?",
+      "objectif": "Identification assurance prevoyance en derja.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Je vous recommande l'assurance \"Rahet Beli\" car elle offre une protection appropriée pour votre famille en cas d'incertitudes de l'avenir. Cette assurance garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez, ce qui correspond aux besoins de protection de votre famille.\n\nALTERNATIVES : Une autre option pourrait être l'assurance \"DHAMEN Wledi\" qui permet de débloquer immédiatement le capital choisi pour permettre à votre enfant de continuer sa scolarité ou de démarrer une activité. \n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à ces assurances dépend de votre profil complet et doit être confirmée en agence. \n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Rahet Beli adapte; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.18
+    },
+    {
+      "id": "DR-13",
+      "langue": "derja",
+      "categorie": "assurance",
+      "question": "Famma assurance ki yon9os el revenu mta3i ?",
+      "objectif": "Produit couvrant la baisse de revenus, en derja.",
+      "reponse_chatbot": "- Le produit qui correspond à votre demande est l'assurance SANADI, proposée par Attijari Bank Tunisie, qui vise à maintenir vos revenus et à pallier les frais imprévisibles en cas d'arrêt de travail suite à une hospitalisation.\n- Les avantages de cette assurance incluent :\n  - Formalité simple à la souscription : Accomplissement simple des formalités.\n  - Souplesse : Modification possible des conditions de votre contrat.\n- Une autre option à considérer pourrait être l'assurance Rahet Beli, qui offre une protection appropriée pour votre famille en garantissant le versement intégral de votre capital ou sous forme d’une rente trimestrielle sur une durée que vous fixez.\n- Il est important de noter que l'éligibilité définitive à ces produits dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "SANADI correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.99
+    },
+    {
+      "id": "DR-14",
+      "langue": "derja",
+      "categorie": "assurance",
+      "question": "N7eb ne7mi mosta9bel sghari, chnowa el 7all ?",
+      "objectif": "Recommandation epargne-assurance enfants en derja.",
+      "reponse_chatbot": "Pour trouver une solution adaptée à votre situation, je vous recommande d'examiner les options d'épargne et d'assurance proposées par Attijari Bank Tunisie. \n\n- L'Epargne AWLEDI pourrait être une option intéressante, car elle permet de constituer progressivement une épargne pour vos enfants tout en bénéficiant d'une garantie pour leur avenir. \n- Cette solution offre une garantie de l'avenir de votre enfant, avec la possibilité de constituer un capital pour prémunir son avenir dès son jeune âge, ainsi que la continuité des versements des primes mensuelles en cas d'incident.\n- De plus, l'Epargne AWLEDI bénéficie d'une fiscalité avantageuse.\n\nAlternativement, vous pourriez également considérer d'autres produits tels que les crédits à la consommation ou les crédits immobiliers, qui pourraient vous aider à atteindre vos objectifs financiers, mais il est important de prendre en compte vos besoins spécifiques et votre situation financière avant de prendre une décision.\n\nIl est essentiel de noter que l'éligibilité définitive à ces produits dépend de votre profil complet et doit être confirmée en agence. \n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "AWLEDI adapte; quelques alternatives hors-sujet; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.53
+    },
+    {
+      "id": "DR-15",
+      "langue": "derja",
+      "categorie": "banque_distance",
+      "question": "Kifech ne9der nconsulti el compte mta3i mel telephone ?",
+      "objectif": "Service mobile en derja.",
+      "reponse_chatbot": "Pour consulter votre compte via votre téléphone, vous devez télécharger l'application Attijari Up sur votre store (App Store, Play Store, APP Gallery). \n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquez votre numéro de téléphone et adresse e-mail, puis renseignez le code confirmation reçu par SMS/mail.\n- Renseignez le mot de passe provisoire reçu par mail/SMS et créez votre nouveau mot de passe.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Consultation via app correcte; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.92
+    },
+    {
+      "id": "DR-16",
+      "langue": "derja",
+      "categorie": "banque_distance",
+      "question": "Chnowa el application bech na3mel 3amaliyet bankiya men dar ?",
+      "objectif": "Identification de l'app de banque a distance en derja.",
+      "reponse_chatbot": "Pour réaliser des opérations bancaires à distance, nous vous recommandons d'utiliser notre application Attijari Up. Voici les étapes pour migrer vers cette nouvelle application :\n- Téléchargez l'application Attijari Up sur votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquez votre numéro de téléphone et adresse e-mail, puis renseignez le code confirmation reçu par SMS ou mail.\n\nRECOMMANDATION PRINCIPALE : L'application Attijari Up est la solution idéale pour gérer vos comptes à distance en toute sécurité, grâce à son interface intuitive et ses fonctionnalités enrichies.\n\nALTERNATIVES : Vous pouvez également utiliser notre service Attijari SMS pour rester informé de la situation de votre compte.\n\nPRUDENCE : L'éligibilité définitive à l'utilisation de l'application Attijari Up dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Attijari Up correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.45
+    },
+    {
+      "id": "DR-17",
+      "langue": "derja",
+      "categorie": "banque_distance",
+      "question": "Kifech na3mel recharge GSM mel application ?",
+      "objectif": "Procedure de recharge GSM en derja.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse la recharge GSM (pourtant au catalogue); francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.53
+    },
+    {
+      "id": "DR-18",
+      "langue": "derja",
+      "categorie": "offres_packagees",
+      "question": "Shnowa fiha l'Offre Etranger ?",
+      "objectif": "Contenu d'une offre packagee en derja.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse l'Offre Etranger (au catalogue); francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.69
+    },
+    {
+      "id": "DR-19",
+      "langue": "derja",
+      "categorie": "offres_packagees",
+      "question": "9adech ya3mel el Pack Privileges ?",
+      "objectif": "Contenu/cout d'un pack en derja.",
+      "reponse_chatbot": "Le Pack Privilèges offre plusieurs avantages, notamment :\n- Des taux avantageux sur vos crédits\n- Un délai réduit sur le traitement de votre demande\n\nCependant, pour obtenir plus d'informations sur les conditions spécifiques et les avantages supplémentaires du Pack Privilèges, il est recommandé de contacter directement Attijari Bank Tunisie.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 6,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Pack Privileges correct mais peu detaille; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.77
+    },
+    {
+      "id": "DR-20",
+      "langue": "derja",
+      "categorie": "offres_packagees",
+      "question": "Chnowa el pack elli yelze9 lel senior ?",
+      "objectif": "Recommandation pack senior en derja.",
+      "reponse_chatbot": "Le pack qui convient le mieux aux seniors est le Pack Sénior Plus, conçu spécifiquement pour les personnes à la retraite. \n- Il offre les moyens nécessaires pour profiter pleinement de la retraite.\n- Il est conçu pour répondre aux besoins spécifiques des seniors.\n\nAlternatives : \n- Le Pack Privilèges pourrait également être une option intéressante, car il propose des taux avantageux sur les crédits et un délai réduit pour le traitement des demandes.\n\nPrudence : \n- L'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Pack Senior Plus correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.92
+    },
+    {
+      "id": "DR-21",
+      "langue": "derja",
+      "categorie": "transverse",
+      "question": "Kifech ne9der naftah compte fi Attijari ?",
+      "objectif": "Procedure ouverture compte en derja.",
+      "reponse_chatbot": "Pour ouvrir un compte chez Attijari Bank Tunisie, vous devez suivre les étapes suivantes :\n- Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe). Si vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345.\n- Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail. Ces coordonnées seront utilisées pour vous envoyer vos codes de validation et vos nouveaux accès.\n- Renseignez le mot de passe provisoire reçu par mail /SMS et créez votre nouveau mot de passe en respectant les critères indiqués.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 3,
+        "pertinent": false,
+        "veridique": false,
+        "langue_respectee": false,
+        "commentaire": "ERREUR: confond ouverture de compte et connexion a l'app; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.22
+    },
+    {
+      "id": "DR-22",
+      "langue": "derja",
+      "categorie": "transverse",
+      "question": "9adech el numero mta3 el centre relation client ?",
+      "objectif": "Contact factuel en derja.",
+      "reponse_chatbot": "Le numéro du centre relation client est le 71 111 345. Vous pouvez les contacter pour toute demande d'information ou pour résoudre un problème lié à votre compte ou à l'application Attijari UP.\n\n- Le centre relation client est disponible du lundi au vendredi de 8h à 18h et le samedi de 8h à 13h.\n- Vous pouvez également contacter le centre relation client par mail à l'adresse CONTACT@ATTIJARIUP.COM.TN.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Numero + email corrects; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.96
+    },
+    {
+      "id": "DR-23",
+      "langue": "derja",
+      "categorie": "transverse",
+      "question": "Chnowa el papiers elli lazemni bech na3mel credit ?",
+      "objectif": "Liste de documents en derja.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse la liste de documents; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.66
+    },
+    {
+      "id": "DR-24",
+      "langue": "derja",
+      "categorie": "transverse",
+      "question": "Chkoun a7san carte 3andkom lel jeune ?",
+      "objectif": "Question ouverte/subjective en derja (test prudence).",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Je vous recommande la Carte Oulidha, car elle est rechargeable sans compte bancaire, ce qui peut être pratique pour les jeunes qui n'ont pas encore de compte bancaire. De plus, elle est disponible dans les boutiques Taraji Store ou dans certaines agences Attijari Bank, ce qui facilite son obtention.\n\nALTERNATIVES : Si vous avez besoin d'une carte avec des plafonds de retraits et de paiements plus élevés, vous pouvez considérer la Carte Gold Nationale ou la Carte Visa Nationale. Cependant, il est important de noter que ces cartes peuvent avoir des exigences et des conditions différentes.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à une carte bancaire dépend du profil complet du client et doit être confirmée en agence. Il est donc recommandé de contacter directement Attijari Bank pour discuter de vos besoins et de vos options.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 6,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Oulidha, reponse prudente; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.01
+    },
+    {
+      "id": "DR-25",
+      "langue": "derja",
+      "categorie": "transverse",
+      "question": "Nheb naftah compte, chnowa el khatwet ?",
+      "objectif": "Procedure ouverture compte (variante) en derja.",
+      "reponse_chatbot": "Pour ouvrir un compte, vous devez suivre les étapes suivantes :\n- Téléchargez l'application Attijari Up sur votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquez votre numéro de téléphone et adresse e-mail, puis renseignez le code confirmation reçu par SMS/mail.\n- Renseignez le mot de passe provisoire reçu par mail/SMS et créez votre nouveau mot de passe en respectant les critères indiqués.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 3,
+        "pertinent": false,
+        "veridique": false,
+        "langue_respectee": false,
+        "commentaire": "ERREUR: etapes app au lieu d'ouverture de compte; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.29
+    },
+    {
+      "id": "MX-01",
+      "langue": "mixte",
+      "categorie": "cartes",
+      "question": "Nheb carte nestaamelha lel achat en ligne, chnowa l'option behya ?",
+      "objectif": "Code-switching derja/francais sur usage e-commerce.",
+      "reponse_chatbot": "Pour effectuer des achats en ligne de manière sécurisée, nous vous recommandons la Carte Gold Nationale ou la Carte Visa Nationale, car elles offrent toutes deux le système 3D Secure, qui garantit une sécurité accrue pour vos transactions en ligne.\n\n- La Carte Gold Nationale offre :\n  - Des plafonds de retraits et de paiements élevés\n  - Un système 3D Secure pour les achats en ligne sécurisés\n  - Des services d'assistance\n\n- La Carte Visa Nationale offre :\n  - Des capacités de retrait et de paiement confortables\n  - Un système 3D Secure pour les achats en ligne sécurisés\n\nCependant, si vous cherchez une option avec une assurance vol et perte de moyens de paiement, la Carte Cib pourrait également être une alternative intéressante.\n\nIl est important de noter que l'éligibilité définitive à ces cartes dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Bonne reco carte e-commerce; repond en francais, pas en mix."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.06
+    },
+    {
+      "id": "MX-02",
+      "langue": "mixte",
+      "categorie": "cartes",
+      "question": "Chnowa el difference bin Carte Gold Internationale w Carte Visa Internationale ?",
+      "objectif": "Comparaison cartes en code-switching.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse comparaison Gold/Visa Internationale; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.53
+    },
+    {
+      "id": "MX-03",
+      "langue": "mixte",
+      "categorie": "cartes",
+      "question": "Ena etudiant, je veux faire une carte bancaire, chnowa tansa7ni ?",
+      "objectif": "Phrase mixte FR-derja, recommandation etudiant.",
+      "reponse_chatbot": "En tant qu'étudiant, je vous recommande principalement la Carte Oulidha. \n- Cette carte est rechargeable sans compte bancaire, ce qui peut être pratique pour les étudiants qui n'ont pas encore de compte bancaire ou qui préfèrent gérer leurs dépenses de manière plus autonome.\n- Elle est disponible dans les boutiques Taraji Store ou dans certaines agences d'Attijari Bank, ce qui facilite son obtention.\n- Elle offre également la sécurité des achats en ligne grâce au système 3D Secure.\n\nEn alternative, vous pourriez également considérer la Carte Visa Nationale, qui offre des capacités de retrait et de paiement confortables, ainsi que la sécurité des achats en ligne avec le système 3D Secure.\n\nCependant, il est important de noter que l'éligibilité définitive à ces cartes dépend de votre profil complet et doit être confirmée en agence. Il est donc recommandé de contacter directement Attijari Bank pour discuter de vos besoins spécifiques et déterminer la meilleure option pour vous.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Oulidha pour etudiant; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.1
+    },
+    {
+      "id": "MX-04",
+      "langue": "mixte",
+      "categorie": "credits",
+      "question": "9adech el duree maximum mta3 le Credit 1er logement ?",
+      "objectif": "Donnee chiffree, code-switching.",
+      "reponse_chatbot": "- La durée de remboursement du Crédit 1er logement est de 12 ans.\n- Il y a une période de grâce de 5 ans.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Duree 12 ans + grace 5 ans (donnee precise); francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.58
+    },
+    {
+      "id": "MX-05",
+      "langue": "mixte",
+      "categorie": "credits",
+      "question": "Nheb nchri voiture, est-ce que famma credit auto ?",
+      "objectif": "Identification credit auto en mixte.",
+      "reponse_chatbot": "Pour acheter une voiture, je vous recommande le Crédit Creditau. Voici les détails pertinents de ce produit :\n- Durée de remboursement allant jusqu'à 7 ans\n- Montant plafonné à 50 000 TND\n\nCependant, si vous recherchez un crédit pour une voiture et que vous avez également d'autres dépenses à financer, vous pourriez également considérer le Crédit Personnel (CREDEX) qui offre :\n- Un montant plafonné à 10 000 TND\n- Une durée de remboursement pouvant aller jusqu'à 3 ans\n\nIl est important de noter que l'éligibilité définitive dépend de votre profil complet et doit être confirmée en agence.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Creditau correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.92
+    },
+    {
+      "id": "MX-06",
+      "langue": "mixte",
+      "categorie": "credits",
+      "question": "Chnowa les conditions mta3 Credit Tahssin ?",
+      "objectif": "Conditions produit en code-switching.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse conditions Tahssin; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.69
+    },
+    {
+      "id": "MX-07",
+      "langue": "mixte",
+      "categorie": "epargne",
+      "question": "Nheb epargner pour mes enfants, chnowa el produit elli yelze9 ?",
+      "objectif": "Recommandation epargne enfants en mixte.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Je vous recommande le produit Epargne AWLEDI, car il est spécifiquement conçu pour permettre aux parents de constituer progressivement une épargne pour leurs enfants, avec une garantie de l'avenir de l'enfant, une rente éducation trimestrielle et la continuité des versements des primes mensuelles jusqu'à la majorité de l'enfant, en cas d'incident. Cela correspond parfaitement à votre besoin d'épargner pour vos enfants.\n\nALTERNATIVES : Une autre option pourrait être le plan épargne TOUMOUHI, qui permet de constituer progressivement une épargne pour financer les projets d'avenir, y compris l'éducation des enfants. Cependant, il est important de noter que le produit AWLEDI est spécifiquement conçu pour les enfants.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence. Il est donc recommandé de contacter un conseiller bancaire pour discuter de vos besoins spécifiques et déterminer le produit le plus adapté à votre situation.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "AWLEDI pertinent; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.39
+    },
+    {
+      "id": "MX-08",
+      "langue": "mixte",
+      "categorie": "epargne",
+      "question": "9adech el taux d'interet mta3 compte epargne ?",
+      "objectif": "Donnee chiffree epargne en mixte (test donnees inventees).",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 6,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Bon reflexe: n'invente pas le taux; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.51
+    },
+    {
+      "id": "MX-09",
+      "langue": "mixte",
+      "categorie": "assurance",
+      "question": "Famma une assurance prevoyance bech ne7mi 3a3ilti ?",
+      "objectif": "Identification assurance en mixte.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : \nJe vous recommande l'assurance \"Rahet Beli\" proposée par Attijari Bank, car elle offre une protection appropriée pour votre famille en cas d'incertitudes de l'avenir. Cette assurance garantit le versement intégral de votre capital ou sous forme d'une rente trimestrielle sur une durée que vous fixez, ce qui correspond à vos besoins de prévoyance pour votre famille.\n\nALTERNATIVES : \nUne autre option pourrait être l'assurance \"DHAMEN Wledi\" qui permet de débloquer immédiatement le capital choisi pour permettre à votre enfant de continuer sa scolarité ou de démarrer une activité. Cependant, il est important de considérer vos besoins spécifiques et les avantages de chaque option.\n\nPRUDENCE : \nIl est essentiel de noter que l'éligibilité définitive à ces assurances dépend de votre profil complet et doit être confirmée en agence. Il est donc recommandé de contacter Attijari Bank pour discuter de vos besoins et déterminer la meilleure option pour vous et votre famille.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Rahet Beli correct; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.17
+    },
+    {
+      "id": "MX-10",
+      "langue": "mixte",
+      "categorie": "assurance",
+      "question": "Nheb assurance lel enfants, qu'est-ce que vous proposez ?",
+      "objectif": "Recommandation assurance enfants en mixte.",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Nous vous proposons l'assurance \"DHAMEN Wledi\" qui permet à votre enfant de continuer sa scolarité ou de démarrer une activité en cas de besoin, avec un déblocage immédiat du capital choisi. Cette assurance est particulièrement adaptée aux parents qui souhaitent assurer l'avenir de leurs enfants, car elle offre la possibilité de choisir le bénéficiaire et de souscrire un contrat pour chaque enfant.\n\nALTERNATIVES : Vous pouvez également considérer l'assurance \"RAHET BELI\" qui offre une protection financière à vos proches en cas de décès, avec la possibilité de choisir l'option de garantie et le mode de paiement qui vous conviennent. \n\nPRUDENCE : Il est important de noter que l'éligibilité définitive à ces assurances dépend de votre profil complet et doit être confirmée en agence. \n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "DHAMEN Wledi adapte enfants; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 6.2
+    },
+    {
+      "id": "MX-11",
+      "langue": "mixte",
+      "categorie": "banque_distance",
+      "question": "Kifech ne9der migrer vers Attijari UP ?",
+      "objectif": "Procedure migration en code-switching.",
+      "reponse_chatbot": "Pour migrer vers Attijari UP, vous devez suivre les étapes suivantes :\n- Téléchargez l'application Attijari Up au niveau de votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquez votre numéro de téléphone et adresse e-mail et renseignez le code confirmation reçu par SMS/mail.\n- Renseignez le mot de passe provisoire reçu par mail /SMS et créez votre nouveau mot de passe en respectant les critères indiqués.\n\nSi vous avez oublié votre identifiant ou mot de passe Attijari Realtime, contactez votre agence ou le call centre au 71 111 345.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Migration Attijari UP correcte; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.99
+    },
+    {
+      "id": "MX-12",
+      "langue": "mixte",
+      "categorie": "banque_distance",
+      "question": "Chnowa les services mta3 la banque a distance ?",
+      "objectif": "Lister les services digitaux en mixte.",
+      "reponse_chatbot": "Pour accéder aux services de la banque à distance, vous pouvez utiliser l'application Attijari Up. Voici les étapes pour y accéder :\n- Téléchargez l'application Attijari Up sur votre store (App Store, Play Store, APP Gallery).\n- Effectuez la première connexion avec vos accès Attijari Realtime (identifiant et mot de passe).\n- Indiquez votre numéro de téléphone et adresse e-mail, puis renseignez le code confirmation reçu par SMS/mail.\n- Renseignez le mot de passe provisoire reçu par mail/SMS et créez votre nouveau mot de passe.\n\nVous pouvez également activer la connexion par biométrie (empreinte digitale ou Face ID) pour accéder à l'application de manière sécurisée.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 5,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Decrit surtout la connexion plutot que la liste des services; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 8.05
+    },
+    {
+      "id": "MX-13",
+      "langue": "mixte",
+      "categorie": "offres_packagees",
+      "question": "Chnowa fiha l'Offre Signature ?",
+      "objectif": "Contenu offre packagee en mixte.",
+      "reponse_chatbot": "Cette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse l'Offre Signature; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 4.48
+    },
+    {
+      "id": "MX-14",
+      "langue": "mixte",
+      "categorie": "transverse",
+      "question": "Nheb ouvrir un compte, chnowa les documents necessaires ?",
+      "objectif": "Documents ouverture compte en mixte.",
+      "reponse_chatbot": "Pour ouvrir un compte chez Attijari Bank Tunisie, les documents nécessaires ne sont pas spécifiés dans le contexte fourni. \n\nCette information n'est pas disponible dans notre base. Appelez le 71 111 345.\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 4,
+        "pertinent": false,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Refuse documents ouverture compte; francais."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 7.03
+    },
+    {
+      "id": "MX-15",
+      "langue": "mixte",
+      "categorie": "offres_packagees",
+      "question": "Chkoun a7san pack pour un jeune etudiant ?",
+      "objectif": "Recommandation pack jeune en mixte (test prudence).",
+      "reponse_chatbot": "RECOMMANDATION PRINCIPALE : Le Pack Avenir est le plus adapté pour un jeune étudiant, car il offre une gamme complète de produits et services bancaires à un tarif avantageux unique, notamment une carte bancaire incluse pour effectuer des retraits et régler des achats en Tunisie, ainsi qu'un accès aux produits de banque à distance.\n\nALTERNATIVES : Une autre option pourrait être le Pack Iddikhar, qui propose une formule sécurisée pour épargner et une carte d'épargne à une tarification avantageuse, ainsi qu'une rémunération trimestrielle du compte.\n\nPRUDENCE : Il est important de noter que l'éligibilité définitive dépend du profil complet du client et doit être confirmée en agence. Les besoins spécifiques de l'étudiant, tels que les plafonds ou les frais, doivent également être pris en compte.\n\nPour confirmer votre éligibilité ou obtenir plus d'informations, appelez le 71 111 345.",
+      "review_humain": {
+        "note_sur_10": 7,
+        "pertinent": true,
+        "veridique": true,
+        "langue_respectee": false,
+        "commentaire": "Pack Avenir adapte etudiant; francais pur."
+      },
+      "_auto_score": null,
+      "_categorie_detectee": null,
+      "_latence_s": 5.0
+    }
+  ]
+}

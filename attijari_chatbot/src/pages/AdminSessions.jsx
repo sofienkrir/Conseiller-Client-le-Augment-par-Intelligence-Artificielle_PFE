@@ -4,12 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 const API = "";
 
 const C = {
-  bg: "#0F0F1A", bgCard: "#16162A", bgHover: "#1E1E35",
-  border: "#2A2A45", accent: "#E8521A", gold: "#B8964A",
-  white: "#FFFFFF", textPrimary: "#FFFFFF",
-  textSecondary: "#AAAAAA", textMuted: "#555577",
-  green: "#4ADE80", blue: "#3B82F6", orange: "#F59E0B",
-  red: "#EF4444", purple: "#8B5CF6",
+  bg: "#F4F6FB", bgCard: "#FFFFFF", bgHover: "#F0F3F9",
+  border: "#E4E8F0", accent: "#E8521A", gold: "#B7791F",
+  white: "#FFFFFF", ink: "#1B2538", textPrimary: "#1B2538",
+  textSecondary: "#5A6478", textMuted: "#98A0B0",
+  green: "#16A34A", blue: "#2563EB", orange: "#EA8204",
+  red: "#DC2626", purple: "#7C3AED",
 };
 
 const FONT = `@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&display=swap');`;
@@ -55,7 +55,7 @@ function StatCard({ icon, label, value, sub, color }) {
       <div style={{ position: "absolute", top: 0, right: 0, width: 60, height: 60, borderRadius: "0 0 0 60px", background: `${color}12`, pointerEvents: "none" }} />
       <div style={{ width: 46, height: 46, borderRadius: 12, background: `${color}20`, display: "flex", alignItems: "center", justifyContent: "center", color, flexShrink: 0 }}>{icon}</div>
       <div>
-        <div style={{ fontSize: 24, fontWeight: 700, color: C.white, lineHeight: 1 }}>{value ?? "—"}</div>
+        <div style={{ fontSize: 24, fontWeight: 700, color: C.ink, lineHeight: 1 }}>{value ?? "—"}</div>
         <div style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>{label}</div>
         {sub && <div style={{ fontSize: 10, color, marginTop: 2 }}>{sub}</div>}
       </div>
@@ -197,15 +197,15 @@ function SessionDetailModal({ session, token, onClose, onRefresh }) {
   const barWidth = Math.min(100, riskScore);
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }}
+    <div style={{ position: "fixed", inset: 0, background: "rgba(27,37,56,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" }}
       onClick={onClose}>
-      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 540, maxHeight: "88vh", overflowY: "auto", boxShadow: "0 24px 60px rgba(0,0,0,0.5)" }}
+      <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, width: 540, maxHeight: "88vh", overflowY: "auto", boxShadow: "0 20px 50px rgba(27,37,56,0.16)" }}
         onClick={e => e.stopPropagation()}>
 
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: C.white, margin: 0 }}>Détails de la session</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: C.ink, margin: 0 }}>Détails de la session</h3>
             <p style={{ fontSize: 12, color: C.textMuted, margin: "4px 0 0" }}>{session.user_email}</p>
           </div>
           <button onClick={onClose} style={{ background: "transparent", border: "none", color: C.textMuted, cursor: "pointer", padding: 4 }}><IcoX/></button>
@@ -356,7 +356,7 @@ function Row({ label, value }) {
   return (
     <tr>
       <td style={{ padding: "4px 0", fontSize: 12, color: C.textMuted, width: 140 }}>{label}</td>
-      <td style={{ padding: "4px 0", fontSize: 12, color: C.white, fontWeight: 500 }}>{value}</td>
+      <td style={{ padding: "4px 0", fontSize: 12, color: C.ink, fontWeight: 500 }}>{value}</td>
     </tr>
   );
 }
@@ -402,7 +402,7 @@ export default function AdminSessions({ token, onBack }) {
     : sessions.filter(s => (s.risk_level || "LOW") === riskFilter);
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif", color: C.white }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Source Sans 3', sans-serif", color: C.ink }}>
       <style>{`
         ${FONT}
         * { box-sizing:border-box; margin:0; padding:0; }
@@ -417,14 +417,14 @@ export default function AdminSessions({ token, onBack }) {
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {onBack && (
             <button onClick={onBack} style={{ background: `${C.accent}18`, border: `1px solid ${C.accent}35`,
-              borderRadius: 8, padding: "6px 12px", color: C.white, cursor: "pointer", fontSize: 12, fontWeight: 500,
+              borderRadius: 8, padding: "6px 12px", color: C.ink, cursor: "pointer", fontSize: 12, fontWeight: 500,
               display: "flex", alignItems: "center", gap: 5 }}>
               <IcoBack/> Retour Admin
             </button>
           )}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ color: C.blue }}><IcoGlobe/></span>
-            <span style={{ fontSize: 16, fontWeight: 700, color: C.white }}>Sessions & Devices</span>
+            <span style={{ fontSize: 16, fontWeight: 700, color: C.ink }}>Sessions & Devices</span>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: `${C.accent}14`,
@@ -438,7 +438,7 @@ export default function AdminSessions({ token, onBack }) {
 
         {/* Title */}
         <div style={{ marginBottom: 28, animation: "fadeIn 0.4s ease" }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: C.white, marginBottom: 5 }}>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: C.ink, marginBottom: 5 }}>
             Surveillance des connexions
           </h1>
           <p style={{ fontSize: 13, color: C.textMuted }}>
@@ -527,7 +527,7 @@ export default function AdminSessions({ token, onBack }) {
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Rechercher par email..."
             style={{ flex: 1, minWidth: 180, padding: "7px 13px", background: C.bg,
-              border: `1px solid ${C.border}`, borderRadius: 9, fontSize: 13, color: C.white, outline: "none" }}/>
+              border: `1px solid ${C.border}`, borderRadius: 9, fontSize: 13, color: C.ink, outline: "none" }}/>
 
           <button onClick={load}
             style={{ padding: "7px 14px", background: `${C.blue}18`, border: `1px solid ${C.blue}30`,
@@ -541,7 +541,7 @@ export default function AdminSessions({ token, onBack }) {
           overflow: "hidden", animation: "fadeIn 0.4s ease 0.15s both" }}>
 
           <div style={{ padding: "16px 22px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: C.white }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: C.ink }}>
               {displayed.length} session{displayed.length !== 1 ? "s" : ""}
               {riskFilter !== "all" && <span style={{ fontSize: 12, color: C.textMuted, marginLeft: 8 }}>· filtre: {riskFilter}</span>}
             </span>
@@ -599,7 +599,7 @@ export default function AdminSessions({ token, onBack }) {
 
                       {/* Utilisateur */}
                       <td style={{ padding: "12px 16px" }}>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: C.white }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: C.ink }}>
                           {s.user_email || "—"}
                         </div>
                         {(s.user_prenom || s.user_nom) && (
@@ -619,7 +619,7 @@ export default function AdminSessions({ token, onBack }) {
                         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                           <DeviceIcon type={d.device_type}/>
                           <div>
-                            <div style={{ fontSize: 12, color: C.white, fontWeight: 500 }}>
+                            <div style={{ fontSize: 12, color: C.ink, fontWeight: 500 }}>
                               {d.browser || "—"} {d.browser_version ? `${d.browser_version.split(".")[0]}` : ""}
                             </div>
                             <div style={{ fontSize: 11, color: C.textMuted }}>{d.os || "—"}</div>
@@ -651,7 +651,7 @@ export default function AdminSessions({ token, onBack }) {
                       </td>
 
                       {/* Login count */}
-                      <td style={{ padding: "12px 16px", fontSize: 13, color: C.white, fontWeight: 600, textAlign: "center" }}>
+                      <td style={{ padding: "12px 16px", fontSize: 13, color: C.ink, fontWeight: 600, textAlign: "center" }}>
                         {s.login_count ?? 1}
                       </td>
 

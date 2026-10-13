@@ -1,0 +1,482 @@
+{
+  "_meta": {
+    "titre": "Jeu d'evaluation des reponses IA - Chatbot Attijari Bank",
+    "description": "Echantillon structure de 65 questions pour l'evaluation manuelle (review humain) des reponses du chatbot. Couvre 3 langues et 7 categories bancaires.",
+    "repartition_langue": {
+      "francais": 25,
+      "derja": 25,
+      "mixte": 15,
+      "total": 65
+    },
+    "categories": [
+      "cartes",
+      "credits",
+      "epargne",
+      "assurance",
+      "banque_distance",
+      "offres_packagees",
+      "transverse"
+    ],
+    "instructions_review": "Pose chaque 'question' au chatbot. Colle sa reponse dans 'reponse_chatbot'. Puis remplis 'review_humain': note_sur_10 (0-10), pertinent (true/false), veridique (true/false = conforme au catalogue), langue_respectee (true/false), et un commentaire libre.",
+    "echelle_note": "0-3 = mauvais (faux/hors-sujet) | 4-6 = moyen (partiel/imprecis) | 7-10 = bon (correct et complet)"
+  },
+  "questions": [
+    {
+      "id": "FR-01", "langue": "francais", "categorie": "cartes",
+      "question": "Quelles cartes bancaires proposez-vous chez Attijari Bank ?",
+      "objectif": "Lister l'offre de cartes (rappel large du catalogue).",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-02", "langue": "francais", "categorie": "cartes",
+      "question": "Quelle est la difference entre la Carte Visa Nationale et la Carte Visa Internationale ?",
+      "objectif": "Comparaison precise de deux produits proches.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-03", "langue": "francais", "categorie": "cartes",
+      "question": "La Carte Technologique fonctionne-t-elle sur les sites etrangers ?",
+      "objectif": "Question fermee factuelle sur un usage precis.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-04", "langue": "francais", "categorie": "cartes",
+      "question": "Qu'est-ce que la Carte Flex et comment fonctionne le paiement fractionne ?",
+      "objectif": "Explication d'un mecanisme produit specifique.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-05", "langue": "francais", "categorie": "credits",
+      "question": "Quelles sont les conditions du Credit Melki ?",
+      "objectif": "Restitution des conditions d'un credit nomme.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-06", "langue": "francais", "categorie": "credits",
+      "question": "Quels sont les avantages du Credit Tahssin ?",
+      "objectif": "Restitution des avantages d'un credit nomme.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-07", "langue": "francais", "categorie": "credits",
+      "question": "Quelle est la difference entre le Credit Binaa et le Credit Ardhi ?",
+      "objectif": "Comparaison de deux credits immobiliers.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-08", "langue": "francais", "categorie": "credits",
+      "question": "Je veux acheter une voiture, quel credit me proposez-vous ?",
+      "objectif": "Orientation vers le bon produit a partir d'un besoin.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-09", "langue": "francais", "categorie": "epargne",
+      "question": "Quels sont les avantages du compte epargne Hissab ?",
+      "objectif": "Restitution des avantages d'un produit d'epargne.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-10", "langue": "francais", "categorie": "epargne",
+      "question": "Je veux epargner progressivement pour mes enfants, que me conseillez-vous ?",
+      "objectif": "Recommandation a partir d'un objectif d'epargne.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-11", "langue": "francais", "categorie": "epargne",
+      "question": "Qu'est-ce que le Plan Epargne Menzili ?",
+      "objectif": "Definition d'un produit d'epargne logement.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-12", "langue": "francais", "categorie": "assurance",
+      "question": "Quelles assurances prevoyance proposez-vous pour proteger ma famille ?",
+      "objectif": "Lister les produits d'assurance prevoyance.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-13", "langue": "francais", "categorie": "assurance",
+      "question": "Existe-t-il une assurance en cas de baisse de revenus ?",
+      "objectif": "Identification d'un produit a partir d'un risque couvert.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-14", "langue": "francais", "categorie": "assurance",
+      "question": "Comment garantir l'avenir scolaire de mes enfants avec une epargne assurance ?",
+      "objectif": "Recommandation sur un produit d'epargne-assurance enfants.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-15", "langue": "francais", "categorie": "banque_distance",
+      "question": "Quel service permet de gerer mes comptes 24h/24 et 7j/7 ?",
+      "objectif": "Identification du service de banque a distance.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-16", "langue": "francais", "categorie": "banque_distance",
+      "question": "Comment effectuer mes operations bancaires a distance sans me deplacer ?",
+      "objectif": "Explication des canaux digitaux.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-17", "langue": "francais", "categorie": "banque_distance",
+      "question": "Quelles sont les etapes pour migrer vers Attijari UP ?",
+      "objectif": "Restitution d'une procedure pas-a-pas.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-18", "langue": "francais", "categorie": "offres_packagees",
+      "question": "Que contient le Pack Senior Plus ?",
+      "objectif": "Contenu d'une offre packagee.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-19", "langue": "francais", "categorie": "offres_packagees",
+      "question": "Quelle est la difference entre l'Offre Exclusive et l'Offre Signature ?",
+      "objectif": "Comparaison de deux offres packagees.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-20", "langue": "francais", "categorie": "offres_packagees",
+      "question": "Quel pack me conseillez-vous si je voyage souvent a l'etranger ?",
+      "objectif": "Recommandation a partir d'un profil voyageur.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-21", "langue": "francais", "categorie": "transverse",
+      "question": "Comment ouvrir un compte chez Attijari Bank ?",
+      "objectif": "Procedure d'ouverture de compte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-22", "langue": "francais", "categorie": "transverse",
+      "question": "Quel numero appeler pour contacter le Centre de Relation Client ?",
+      "objectif": "Information de contact factuelle.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-23", "langue": "francais", "categorie": "transverse",
+      "question": "Je suis etudiant, quelle carte bancaire me recommandez-vous ?",
+      "objectif": "Recommandation a partir d'un profil etudiant.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-24", "langue": "francais", "categorie": "transverse",
+      "question": "Quels documents faut-il pour souscrire un credit logement ?",
+      "objectif": "Liste de pieces justificatives.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "FR-25", "langue": "francais", "categorie": "transverse",
+      "question": "Je veux construire une maison, quelles solutions de financement proposez-vous ?",
+      "objectif": "Orientation multi-produits a partir d'un projet.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+
+    {
+      "id": "DR-01", "langue": "derja", "categorie": "cartes",
+      "question": "Shnowa el cartes elli 3andkom fi Attijari ?",
+      "objectif": "Comprehension dialectale d'une demande de liste de cartes.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-02", "langue": "derja", "categorie": "cartes",
+      "question": "Ena nsefer barra barcha, chnowa carte elli twafe9ni ?",
+      "objectif": "Recommandation carte voyage formulee en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-03", "langue": "derja", "categorie": "cartes",
+      "question": "9adech el plafond mta3 Carte Flex ?",
+      "objectif": "Donnee chiffree precise demandee en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-04", "langue": "derja", "categorie": "cartes",
+      "question": "Ana etudiant, chnowa carte tansa7ni biha ?",
+      "objectif": "Recommandation carte etudiant en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-05", "langue": "derja", "categorie": "credits",
+      "question": "9adech el taux mta3 Credit Melki ?",
+      "objectif": "Demande de taux precis en derja (test donnees inventees).",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-06", "langue": "derja", "categorie": "credits",
+      "question": "N7eb nebni dar, chnowa el credit elli ysenedni ?",
+      "objectif": "Orientation credit construction en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-07", "langue": "derja", "categorie": "credits",
+      "question": "Chnowa el far9 bin Credit Binaa w Credit Ardhi ?",
+      "objectif": "Comparaison de credits en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-08", "langue": "derja", "categorie": "credits",
+      "question": "N7eb nechri karhba, 3andkom credit lel voiture ?",
+      "objectif": "Identification credit auto en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-09", "langue": "derja", "categorie": "epargne",
+      "question": "Shnowa lfawaaeed mta3 compte epargne Hissab ?",
+      "objectif": "Avantages produit epargne en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-10", "langue": "derja", "categorie": "epargne",
+      "question": "N7eb na3mel epargne lel sghar mta3i, chnowa tansa7ni ?",
+      "objectif": "Recommandation epargne enfants en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-11", "langue": "derja", "categorie": "epargne",
+      "question": "Kifech na3mel plan epargne 3and Attijari ?",
+      "objectif": "Procedure d'ouverture d'un plan epargne en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-12", "langue": "derja", "categorie": "assurance",
+      "question": "3andkom assurance bech ne7mi 3a3ilti ?",
+      "objectif": "Identification assurance prevoyance en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-13", "langue": "derja", "categorie": "assurance",
+      "question": "Famma assurance ki yon9os el revenu mta3i ?",
+      "objectif": "Produit couvrant la baisse de revenus, en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-14", "langue": "derja", "categorie": "assurance",
+      "question": "N7eb ne7mi mosta9bel sghari, chnowa el 7all ?",
+      "objectif": "Recommandation epargne-assurance enfants en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-15", "langue": "derja", "categorie": "banque_distance",
+      "question": "Kifech ne9der nconsulti el compte mta3i mel telephone ?",
+      "objectif": "Service mobile en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-16", "langue": "derja", "categorie": "banque_distance",
+      "question": "Chnowa el application bech na3mel 3amaliyet bankiya men dar ?",
+      "objectif": "Identification de l'app de banque a distance en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-17", "langue": "derja", "categorie": "banque_distance",
+      "question": "Kifech na3mel recharge GSM mel application ?",
+      "objectif": "Procedure de recharge GSM en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-18", "langue": "derja", "categorie": "offres_packagees",
+      "question": "Shnowa fiha l'Offre Etranger ?",
+      "objectif": "Contenu d'une offre packagee en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-19", "langue": "derja", "categorie": "offres_packagees",
+      "question": "9adech ya3mel el Pack Privileges ?",
+      "objectif": "Contenu/cout d'un pack en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-20", "langue": "derja", "categorie": "offres_packagees",
+      "question": "Chnowa el pack elli yelze9 lel senior ?",
+      "objectif": "Recommandation pack senior en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-21", "langue": "derja", "categorie": "transverse",
+      "question": "Kifech ne9der naftah compte fi Attijari ?",
+      "objectif": "Procedure ouverture compte en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-22", "langue": "derja", "categorie": "transverse",
+      "question": "9adech el numero mta3 el centre relation client ?",
+      "objectif": "Contact factuel en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-23", "langue": "derja", "categorie": "transverse",
+      "question": "Chnowa el papiers elli lazemni bech na3mel credit ?",
+      "objectif": "Liste de documents en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-24", "langue": "derja", "categorie": "transverse",
+      "question": "Chkoun a7san carte 3andkom lel jeune ?",
+      "objectif": "Question ouverte/subjective en derja (test prudence).",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "DR-25", "langue": "derja", "categorie": "transverse",
+      "question": "Nheb naftah compte, chnowa el khatwet ?",
+      "objectif": "Procedure ouverture compte (variante) en derja.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+
+    {
+      "id": "MX-01", "langue": "mixte", "categorie": "cartes",
+      "question": "Nheb carte nestaamelha lel achat en ligne, chnowa l'option behya ?",
+      "objectif": "Code-switching derja/francais sur usage e-commerce.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-02", "langue": "mixte", "categorie": "cartes",
+      "question": "Chnowa el difference bin Carte Gold Internationale w Carte Visa Internationale ?",
+      "objectif": "Comparaison cartes en code-switching.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-03", "langue": "mixte", "categorie": "cartes",
+      "question": "Ena etudiant, je veux faire une carte bancaire, chnowa tansa7ni ?",
+      "objectif": "Phrase mixte FR-derja, recommandation etudiant.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-04", "langue": "mixte", "categorie": "credits",
+      "question": "9adech el duree maximum mta3 le Credit 1er logement ?",
+      "objectif": "Donnee chiffree, code-switching.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-05", "langue": "mixte", "categorie": "credits",
+      "question": "Nheb nchri voiture, est-ce que famma credit auto ?",
+      "objectif": "Identification credit auto en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-06", "langue": "mixte", "categorie": "credits",
+      "question": "Chnowa les conditions mta3 Credit Tahssin ?",
+      "objectif": "Conditions produit en code-switching.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-07", "langue": "mixte", "categorie": "epargne",
+      "question": "Nheb epargner pour mes enfants, chnowa el produit elli yelze9 ?",
+      "objectif": "Recommandation epargne enfants en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-08", "langue": "mixte", "categorie": "epargne",
+      "question": "9adech el taux d'interet mta3 compte epargne ?",
+      "objectif": "Donnee chiffree epargne en mixte (test donnees inventees).",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-09", "langue": "mixte", "categorie": "assurance",
+      "question": "Famma une assurance prevoyance bech ne7mi 3a3ilti ?",
+      "objectif": "Identification assurance en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-10", "langue": "mixte", "categorie": "assurance",
+      "question": "Nheb assurance lel enfants, qu'est-ce que vous proposez ?",
+      "objectif": "Recommandation assurance enfants en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-11", "langue": "mixte", "categorie": "banque_distance",
+      "question": "Kifech ne9der migrer vers Attijari UP ?",
+      "objectif": "Procedure migration en code-switching.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-12", "langue": "mixte", "categorie": "banque_distance",
+      "question": "Chnowa les services mta3 la banque a distance ?",
+      "objectif": "Lister les services digitaux en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-13", "langue": "mixte", "categorie": "offres_packagees",
+      "question": "Chnowa fiha l'Offre Signature ?",
+      "objectif": "Contenu offre packagee en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-14", "langue": "mixte", "categorie": "transverse",
+      "question": "Nheb ouvrir un compte, chnowa les documents necessaires ?",
+      "objectif": "Documents ouverture compte en mixte.",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    },
+    {
+      "id": "MX-15", "langue": "mixte", "categorie": "offres_packagees",
+      "question": "Chkoun a7san pack pour un jeune etudiant ?",
+      "objectif": "Recommandation pack jeune en mixte (test prudence).",
+      "reponse_chatbot": "",
+      "review_humain": {"note_sur_10": null, "pertinent": null, "veridique": null, "langue_respectee": null, "commentaire": ""}
+    }
+  ]
+}
