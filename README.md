@@ -80,6 +80,30 @@ flowchart LR
 3. **Groq RAG pipeline**: used when Gemini is disabled or fails, or in client mode. This path runs the full hybrid pipeline described below.
 4. Every answer is scored, saved to MongoDB and streamed to the UI over Server-Sent Events.
 
+```mermaid
+flowchart LR
+    Q["Question + session context"] --> AUTH{"Authenticated?<br/>JWT · 2FA · risk score"}
+    AUTH -- "BLOCK / ALERT" --> STOP(["2FA challenge or refusal"])
+    AUTH -- "ALLOW" --> MODE{"A PDF selected<br/>for this session?"}
+
+    MODE -- "yes" --> PDFR["Retrieve from that<br/>document's own collection"]
+    PDFR --> GEN
+
+    MODE -- "no" --> CLIENT{"Advisor in client mode?"}
+    CLIENT -- "yes" --> HYB
+    CLIENT -- "no" --> GEMCHK{"USE_GEMINI<br/>and question in French?"}
+
+    GEMCHK -- "yes" --> GEM["Gemini Flash<br/>dense retrieval, top 5"]
+    GEM -- "failure" --> HYB
+    GEM -- "success" --> SCORE
+
+    GEMCHK -- "no" --> HYB["Hybrid pipeline<br/>Derja rewrite · dense + keyword · k 5-8"]
+    HYB --> GEN["Llama 3.3 70B via Groq<br/>context-only prompt, temp 0.1"]
+    GEN --> SCORE["Auto-score, then<br/>LLM-as-a-judge in background"]
+    SCORE --> DB[("MongoDB")]
+    SCORE --> SSE(["Answer + cited sources<br/>streamed over SSE"])
+```
+
 ---
 
 ## 🔎 RAG Pipeline
@@ -98,6 +122,51 @@ flowchart LR
 | **10. Evaluation** | Weighted auto-score (groundedness, citation, coverage, length) + Gemini 2.5 Flash judge (accuracy, relevance, clarity, language; hallucination flags) | `api/evaluation.py`, `api/llm_judge.py` |
 
 > **About the embedding model.** According to [`RAPPORT_TECHNIQUE.md`](RAPPORT_TECHNIQUE.md), `attijari-model-v2` was fine-tuned from `paraphrase-multilingual-MiniLM-L12-v2` on a French / Derja parallel corpus with `MultipleNegativesRankingLoss`. The model weights and training script are **not** included in this repository.
+
+---
+
+## 📈 Evaluation & Measured Results
+
+Retrieval quality is measured against an annotated gold set rather than asserted.
+`rag_build_gold.py` collects the retrieved passages for each evaluation question,
+`rag_preannotate.py` labels their relevance, and `rag_metrics_success_only.py`
+computes the metrics and emits the LaTeX table used in the report.
+
+**Retrieval on the annotated gold set** — 46 usable questions
+(`rag_metrics_success_only_table.tex`, regenerate with `python rag_metrics_success_only.py`):
+
+| k | Recall@k | Precision@k |
+| :---: | :---: | :---: |
+| 1 | 12.8 % | 32.6 % |
+| 3 | 32.9 % | 32.6 % |
+| 5 | 47.6 % | 31.3 % |
+| 10 | **69.6 %** | 24.1 % |
+
+**Mean Reciprocal Rank: 0.449.**
+
+**How to read these numbers — and how not to.** Three caveats are built into the method,
+and all three are in the scripts:
+
+- **The gold labels come from an LLM pre-annotation that has not been manually verified.** The
+  figures are therefore indicative, not a validated benchmark.
+- **The gold set was built by pooling over the top 10 retrieved passages.** A relevant passage
+  that never entered the pool was never labelled, so Recall@10 measures recall *within the pool*
+  and cannot be compared to a benchmark with exhaustive judgments.
+- **Exclusions are explicit**: 5 out-of-corpus questions are excluded entirely, while questions
+  where no retrieved passage was relevant count as genuine failures (Recall = Precision = RR = 0)
+  rather than being dropped — which is why Recall@10 is 69.6 % and not ≈ 100 %.
+
+Precision falling as *k* rises while recall climbs is the expected trade-off: the pipeline
+passes up to 6 passages to the generator, so *k* = 5 is the operating point that matters.
+
+**Also measured**
+
+- **Per-answer auto-score** (`api/evaluation.py`): a weighted heuristic over groundedness,
+  citation, coverage and length, computed for every answer and stored in MongoDB.
+- **LLM-as-a-judge** (`api/llm_judge.py`): a background Gemini 2.5 Flash pass scoring accuracy,
+  relevance, clarity and language, with hallucination flags surfaced in the admin dashboard.
+- **Load tests** (`locustfile.py`): Locust runs at 50 and 100 concurrent users, with the
+  generated reports kept as `rapport_50_users.html` and `rapport_100_users.html`.
 
 ---
 
@@ -144,9 +213,30 @@ flowchart LR
 ├── scripts/                 # Seeding, migrations, maintenance
 ├── rag_*.py                 # Gold set & retrieval metrics
 ├── locustfile.py            # Load-test scenarios
+├── figures/                 # Diagrams used in the report
+├── docs/screenshots/        # Application captures used in this README
 ├── RAPPORT_TECHNIQUE.md     # Technical report (French)
 └── PROJECT_SUMMARY.md       # Earlier architecture notes
 ```
+
+### Where to look first
+
+The repository keeps its full development history, including superseded code. If you are
+reading it to judge the engineering, these are the files that matter:
+
+| To understand | Read |
+| --- | --- |
+| **The RAG engine** | [`chatbot.py`](chatbot.py) — Derja detection, `hybrid_search()`, `format_docs()`, `answer_question()` |
+| **Request routing** | [`api/routes.py`](api/routes.py) — the `/chat` decision tree diagrammed above |
+| **Index construction** | [`load_documents.py`](load_documents.py) → [`build_vector_store.py`](build_vector_store.py) |
+| **Security design** | [`api/risk_scoring.py`](api/risk_scoring.py), [`api/two_factor.py`](api/two_factor.py), [`api/crypto_utils.py`](api/crypto_utils.py) |
+| **Quality measurement** | [`api/evaluation.py`](api/evaluation.py), [`api/llm_judge.py`](api/llm_judge.py), [`rag_metrics_success_only.py`](rag_metrics_success_only.py) |
+| **Full technical write-up** | [`RAPPORT_TECHNIQUE.md`](RAPPORT_TECHNIQUE.md) (French) |
+
+**Active vs. superseded.** `attijari_chatbot/` is the frontend in use; `client/` is an earlier
+Tailwind variant kept for reference, and `backup/` and `backup_before_conflict_cleanup/` are
+pre-refactor snapshots. None of the three is wired into the running stack — ignore them when
+reading the code.
 
 ---
 
@@ -268,18 +358,74 @@ locust -f locustfile.py --host http://127.0.0.1:8000    # UI on http://localhost
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ Screenshots & Diagrams
 
-No screenshots are included yet. A security architecture diagram is available in [`figures/architecture_securite.svg`](figures/architecture_securite.svg).
+### Security architecture
 
-Suggested captures to add to `docs/screenshots/`:
+<p align="center">
+  <img src="figures/architecture_securite.svg" alt="Security architecture: authentication, 2FA, risk-based authentication and field encryption" width="100%">
+</p>
 
-- [ ] Chat interface: a French question and a Derja question, with cited sources and the confidence score
-- [ ] PDF upload and question answering on the uploaded document
-- [ ] 2FA verification screen and the risk-based alert email
-- [ ] Appointment booking (customer) and the approval calendar (advisor)
-- [ ] Advisor view: client file and AI-generated meeting brief
-- [ ] Admin dashboard: evaluation statistics and flagged answers
+<sub>Source: <a href="figures/architecture_securite.svg"><code>figures/architecture_securite.svg</code></a></sub>
+
+### The conversational advisor
+
+<p align="center">
+  <img src="docs/screenshots/01-chat-french.png" alt="Chat interface answering a question about building a house with the Crédit Binaa product" width="100%">
+</p>
+
+<sub><b>RAG chat.</b> The answer to <i>« Je veux construire une maison »</i> is built only from the
+indexed product corpus — it names <b>Crédit Binaa</b> with its repayment term and financing ceiling,
+then proposes <b>Crédit Ardhi</b> as an alternative. The sidebar shows the segment switch
+(<i>Particulier</i>), the FR / تونسي language toggle, PDF attachment and voice input, and a history
+mixing French and Derja questions (<i>« ena etudiant n7eb naaml carte bancaire »</i>).</sub>
+
+### Advisor &amp; admin workspace
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/02-admin-clients.png" alt="Admin dashboard, client base with AI summaries"><br/>
+<sub><b>Clients &amp; AI briefs</b> — 30 synthetic client files segmented <i>Particulier</i> /
+<i>Professionnel</i>, with product counts, alerts and a <i>Préparer RDV</i> action that generates the
+meeting brief.</sub></td>
+<td width="50%"><img src="docs/screenshots/05-shared-pdfs.png" alt="Admin dashboard, shared PDF documents with read tracking"><br/>
+<sub><b>Shared PDFs</b> — documents pushed to named recipients, each with page count and a read
+counter (<code>0 / 2</code>), so an advisor can see what was actually opened.</sub></td>
+</tr>
+</table>
+
+### Measured quality, in the product
+
+<p align="center">
+  <img src="docs/screenshots/03-admin-evaluations.png" alt="AI evaluation dashboard: auto-score, LLM judge score and answers flagged for review" width="100%">
+</p>
+
+<sub><b>Evaluation dashboard.</b> The heuristic auto-score and the LLM-as-a-judge score are tracked
+as two separate daily series, deliberately not collapsed into one number — the judge sits
+consistently below the auto-score, which is the gap worth watching. Answers scoring under 5 are
+queued for review; the flagged example here is a <b>Derja</b> question, which is where the pipeline
+is weakest.</sub>
+
+### Authentication &amp; session monitoring
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/04-sessions-rba.png" alt="Session and device monitoring with risk-based authentication scores"><br/>
+<sub><b>Risk-based authentication</b> — every session carries a device, a location, a risk band and
+a score (<code>LOW · 20</code>). Sessions can be filtered by risk and revoked by an admin; the
+<i>Partagé</i> tag marks a device seen on more than one account.</sub></td>
+<td width="50%"><img src="docs/screenshots/06-login.png" alt="Login screen"><br/>
+<sub><b>Sign-in</b> — the entry point to the JWT + bcrypt flow, which hands off to e-mail 2FA when
+the risk score or an untrusted device requires it.</sub></td>
+</tr>
+</table>
+
+<sub>All client records, accounts and documents shown are <b>synthetic</b>
+(<code>generate_fake_clients.py</code>, <code>scripts/seed_demo_users.py</code>). IP addresses are
+masked by the application itself.</sub>
+
+**Not yet captured:** a Derja question answered end to end, the 2FA verification screen and its
+alert e-mail, the appointment booking and approval calendar, and the Locust load-test summary.
 
 ---
 
@@ -301,6 +447,10 @@ These are **future improvements**, not current features:
 
 **Sofien Krir**, Data Science & AI Engineer (TEK-UP University, 2026)
 Final-year project carried out at the **Digital Center of Attijari Bank Tunisia**.
+
+See also [**LangGraph AI Research Agent**](https://github.com/sofienkrir/langgraph-ai-agent) — a
+research agent whose retry loop is driven by a measured coverage gate, and which declares the
+sub-questions it could not answer instead of inventing an answer.
 
 [![GitHub](https://img.shields.io/badge/GitHub-sofienkrir-181717?style=flat-square&logo=github)](https://github.com/sofienkrir)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sofien_Krir-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/sofien-krir-28b34b34b)
